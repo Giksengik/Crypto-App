@@ -16,15 +16,15 @@ import com.ru.crypto.R;
 
 public class NewsFragment extends Fragment {
 
-    private NewsViewModel homeViewModel;
+    private NewsViewModel newsViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel =
+        newsViewModel =
                 new ViewModelProvider(this).get(NewsViewModel.class);
         View root = inflater.inflate(R.layout.fragment_news, container, false);
         final TextView textView = root.findViewById(R.id.text_home);
-        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        newsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);

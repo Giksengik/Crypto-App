@@ -7,4 +7,9 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="dark_turquoise">#FF2B616D</color>
+    <color name="arctic">#FFB2DBD5</color>
+    <color name="brick">#FFFA8D62</color>
+    <color name="brickSecond">#FFF0A313</color>
+    <color name="textColor">#FF2C3539</color>
 </resources>

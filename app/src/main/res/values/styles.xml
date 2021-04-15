@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="Toolbar" parent = "Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">?attr/actionBarSize</item>
         <item name="android:background">@color/purple_700</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="menu">@menu/app_bar_menu</item>
+    </style>
+    <style name = "textOfCurrencyInMarketList">
+        <item name="android:textColor">@color/textColor</item>
+
     </style>
 </resources>
