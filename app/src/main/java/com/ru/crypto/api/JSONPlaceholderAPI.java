@@ -1,5 +1,6 @@
 package com.ru.crypto.api;
 
+import com.ru.crypto.models.CryptoID;
 import com.ru.crypto.models.Cryptocurrency;
 
 import java.util.List;
@@ -16,4 +17,6 @@ public interface JSONPlaceholderAPI {
             defaultPerPage + "&price_change_percentage=" + defaultPriceChangePercentage + "&sparkline=true")
     Call<List<Cryptocurrency>> getDefaultInfo(@Query("vs_currency") String currency, @Query("ids") String ids);
 
+    @GET("/api/v3/coins/markets?order=" + defaultOrder + "&per_page=" + defaultPerPage  +"&page=1&sparkline=false")
+    Call<List<CryptoID>> getDefaultList(@Query("vs_currency") String currency);
 }

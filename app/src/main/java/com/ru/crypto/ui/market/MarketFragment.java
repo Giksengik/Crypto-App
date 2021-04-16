@@ -55,6 +55,6 @@ public class MarketFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        mMarketViewModel.updateCurrencies();
+        mMarketViewModel.updateCurrencies(getActivity().getApplication());
     }
 }

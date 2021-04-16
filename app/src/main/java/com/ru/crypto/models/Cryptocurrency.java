@@ -1,5 +1,7 @@
 package com.ru.crypto.models;
 
+import android.graphics.Bitmap;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -68,6 +70,26 @@ public class Cryptocurrency {
     @SerializedName("last_updated")
     @Expose
     String lastUpdated;
+
+    String iconString;
+
+    Bitmap icon;
+
+    public String getIconString() {
+        return iconString;
+    }
+
+    public void setIconString(String iconString) {
+        this.iconString = iconString;
+    }
+
+    public Bitmap getIcon() {
+        return icon;
+    }
+
+    public void setIcon(Bitmap icon) {
+        this.icon = icon;
+    }
 
     public String getId() {
         return id;
