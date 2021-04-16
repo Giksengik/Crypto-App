@@ -4,32 +4,57 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.ru.crypto.R;
+import com.ru.crypto.adapters.CryptoCurrencyAdapter;
+import com.ru.crypto.di.components.CryptoCurrencyAdapterComponent;
+import com.ru.crypto.di.components.DaggerCryptoCurrencyAdapterComponent;
+import com.ru.crypto.models.Cryptocurrency;
+
+import java.util.List;
+
+import javax.inject.Inject;
 
 public class MarketFragment extends Fragment {
 
-    private MarketViewModel dashboardViewModel;
+    private MarketViewModel mMarketViewModel;
+    @Inject CryptoCurrencyAdapter currencyAdapter;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        dashboardViewModel =
-                new ViewModelProvider(this).get(MarketViewModel.class);
+
+        CryptoCurrencyAdapterComponent component = DaggerCryptoCurrencyAdapterComponent.create();
+        component.inject(this);
+
+        mMarketViewModel = new ViewModelProvider(this).get(MarketViewModel.class);
+
         View root = inflater.inflate(R.layout.fragment_market, container, false);
-        final TextView textView = root.findViewById(R.id.text_dashboard);
-        dashboardViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
+        RecyclerView currenciesList = root.findViewById(R.id.currenciesList);
+        currenciesList.setLayoutManager(new LinearLayoutManager(getContext()));
+        currenciesList.setAdapter(currencyAdapter);
+        mMarketViewModel.getAllCurrencies().observe(getViewLifecycleOwner(), cryptocurrencies -> {
+            currencyAdapter.setCurrencies(cryptocurrencies);
         });
         return root;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mMarketViewModel.updateCurrencies();
     }
 }

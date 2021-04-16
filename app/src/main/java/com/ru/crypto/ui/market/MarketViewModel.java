@@ -4,16 +4,31 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class MarketViewModel extends ViewModel {
+import com.ru.crypto.di.components.CryptoCurrencyRepositoryComponent;
+import com.ru.crypto.di.components.DaggerCryptoCurrencyRepositoryComponent;
+import com.ru.crypto.di.modules.CryptoCurrencyRepoModule;
+import com.ru.crypto.models.Cryptocurrency;
+import com.ru.crypto.repositories.CryptoCurrencyRepository;
 
-    private MutableLiveData<String> mText;
+import java.util.Currency;
+import java.util.List;
+
+import javax.inject.Inject;
+
+public class MarketViewModel extends ViewModel {
+    @Inject
+    CryptoCurrencyRepository mRepository;
 
     public MarketViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is dashboard fragment");
+        CryptoCurrencyRepositoryComponent component = DaggerCryptoCurrencyRepositoryComponent.create();
+        component.inject(this);
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    public LiveData<List<Cryptocurrency>> getAllCurrencies() {
+        return mRepository.getCurrencies();
     }
+    public void updateCurrencies() {
+        mRepository.updateCurrencies();
+    }
+
 }
