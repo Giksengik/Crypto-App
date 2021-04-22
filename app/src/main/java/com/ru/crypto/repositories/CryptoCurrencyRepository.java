@@ -4,11 +4,13 @@ import android.app.Application;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.recyclerview.widget.DiffUtil;
 
 import com.ru.crypto.Converters;
+import com.ru.crypto.adapters.CryptoCurrencyDiffUtilCallback;
 import com.ru.crypto.api.NetworkService;
 import com.ru.crypto.models.CryptoID;
-import com.ru.crypto.models.Cryptocurrency;
+import com.ru.crypto.models.CryptoCurrency;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
@@ -26,23 +28,39 @@ import retrofit2.Response;
 public class CryptoCurrencyRepository {
     private static String CURRENT_CURRENCY = "USD";
     NetworkService mNetworkService;
-    MutableLiveData<List<Cryptocurrency>> mAllCurrencies;
+    MutableLiveData<List<CryptoCurrency>> mAllCurrencies;
+    MutableLiveData<DiffUtil.DiffResult> mCryptoCurrencyDiffResult;
+
     public CryptoCurrencyRepository(NetworkService networkService){
         this.mNetworkService = networkService;
         mAllCurrencies = new MutableLiveData<>();
+        mCryptoCurrencyDiffResult = new MutableLiveData<>();
     }
 
-    public LiveData<List<Cryptocurrency>> getCurrencies(){
+    public LiveData<DiffUtil.DiffResult> getCryptoCurrencyDiffResult() {
+        return mCryptoCurrencyDiffResult;
+    }
+    public void countCryptoCurrencyDiffResult(List<CryptoCurrency> oldData) {
+        new Thread(){
+            @Override
+            public void run() {
+                CryptoCurrencyDiffUtilCallback diffUtilCallback =
+                        new CryptoCurrencyDiffUtilCallback(oldData, mAllCurrencies.getValue());
+                mCryptoCurrencyDiffResult.postValue(DiffUtil.calculateDiff(diffUtilCallback));
+            }
+        }.start();
+    }
+    public LiveData<List<CryptoCurrency>> getCurrencies(){
         return mAllCurrencies;
     }
 
     public void loadCurrenciesInfo(String currencies, Application application) {
         mNetworkService.getJSONApi()
                 .getDefaultInfo(CURRENT_CURRENCY,currencies)
-                .enqueue(new Callback<List<Cryptocurrency>>() {
+                .enqueue(new Callback<List<CryptoCurrency>>() {
                     @Override
-                    public void onResponse(Call<List<Cryptocurrency>> call, Response<List<Cryptocurrency>> response) {
-                        List<Cryptocurrency> currenciesList = response.body();
+                    public void onResponse(Call<List<CryptoCurrency>> call, Response<List<CryptoCurrency>> response) {
+                        List<CryptoCurrency> currenciesList = response.body();
                         if (currenciesList != null) {
                             new Thread(){
                                 @Override
@@ -65,7 +83,7 @@ public class CryptoCurrencyRepository {
                         }
                         }
                     @Override
-                    public void onFailure(Call<List<Cryptocurrency>> call, Throwable t) {
+                    public void onFailure(Call<List<CryptoCurrency>> call, Throwable t) {
 
                     }
                 });

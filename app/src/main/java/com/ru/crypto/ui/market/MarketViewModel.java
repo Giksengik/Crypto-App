@@ -4,10 +4,11 @@ import android.app.Application;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
+import androidx.recyclerview.widget.DiffUtil;
 
 import com.ru.crypto.di.components.CryptoCurrencyRepositoryComponent;
 import com.ru.crypto.di.components.DaggerCryptoCurrencyRepositoryComponent;
-import com.ru.crypto.models.Cryptocurrency;
+import com.ru.crypto.models.CryptoCurrency;
 import com.ru.crypto.repositories.CryptoCurrencyRepository;
 
 import java.util.List;
@@ -23,11 +24,18 @@ public class MarketViewModel extends ViewModel {
         component.inject(this);
     }
 
-    public LiveData<List<Cryptocurrency>> getAllCurrencies() {
+    public LiveData<List<CryptoCurrency>> getAllCurrencies() {
         return mRepository.getCurrencies();
     }
+
     public void updateCurrencies(Application application) {
         mRepository.loadCurrenciesInfo(application);
+    }
+    public LiveData<DiffUtil.DiffResult> getDiffResult() {
+        return mRepository.getCryptoCurrencyDiffResult();
+    }
+    public void countDiffResult (List<CryptoCurrency> oldCurrencies) {
+        mRepository.countCryptoCurrencyDiffResult(oldCurrencies);
     }
 
 }

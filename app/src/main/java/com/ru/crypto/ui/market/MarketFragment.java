@@ -10,16 +10,16 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ru.crypto.R;
 import com.ru.crypto.adapters.CryptoCurrencyAdapter;
+import com.ru.crypto.adapters.CryptoCurrencyDiffUtilCallback;
 import com.ru.crypto.di.components.CryptoCurrencyAdapterComponent;
 import com.ru.crypto.di.components.DaggerCryptoCurrencyAdapterComponent;
-import com.ru.crypto.models.Cryptocurrency;
-
-import java.util.List;
+import com.ru.crypto.models.CryptoCurrency;
 
 import javax.inject.Inject;
 
@@ -46,9 +46,17 @@ public class MarketFragment extends Fragment {
         RecyclerView currenciesList = root.findViewById(R.id.currenciesList);
         currenciesList.setLayoutManager(new LinearLayoutManager(getContext()));
         currenciesList.setAdapter(currencyAdapter);
+
         mMarketViewModel.getAllCurrencies().observe(getViewLifecycleOwner(), cryptocurrencies -> {
+            mMarketViewModel.countDiffResult(currencyAdapter.getData());
             currencyAdapter.setCurrencies(cryptocurrencies);
         });
+
+        mMarketViewModel.getDiffResult().observe(getViewLifecycleOwner(), diffResult -> {
+            diffResult.dispatchUpdatesTo(currencyAdapter);
+        });
+
+
         return root;
     }
 

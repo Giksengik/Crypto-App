@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class Cryptocurrency {
+public class CryptoCurrency {
     @SerializedName("id")
     @Expose
     String id;
@@ -62,9 +62,9 @@ public class Cryptocurrency {
     @Expose
     double priceChangePercentage24H;
 
-    @SerializedName("price")
+    @SerializedName("sparkline_in_7d")
     @Expose
-    List<Double> priceChange;
+    Sparkline sparkline;
 
 
     @SerializedName("last_updated")
@@ -195,14 +195,6 @@ public class Cryptocurrency {
         this.priceChangePercentage24H = priceChangePercentage24H;
     }
 
-    public List<Double> getPriceChange() {
-        return priceChange;
-    }
-
-    public void setPriceChange(List<Double> priceChange) {
-        this.priceChange = priceChange;
-    }
-
     public String getLastUpdated() {
         return lastUpdated;
     }
@@ -217,6 +209,14 @@ public class Cryptocurrency {
 
     public void setCurrency(String curency) {
         this.currency = curency;
+    }
+
+    public Sparkline getSparkline() {
+        return sparkline;
+    }
+
+    public void setSparkline(Sparkline sparkline) {
+        this.sparkline = sparkline;
     }
 
     String currency = "USD";
