@@ -90,9 +90,9 @@ public class CryptoCurrencyAdapter extends RecyclerView.Adapter<CryptoCurrencyAd
     private void setData(LineChart chart, CryptoCurrency currency) {
         if (currency.getSparkline() != null) {
             ArrayList<Entry> values = new ArrayList<>();
-            for (int i = 0; i < 72; i++) {
-                double temp_val = currency.getSparkline().getPriceChange().get(
-                        currency.getSparkline().getPriceChange().size() - i -1);
+            for (int i = currency.getSparkline().getPriceChange().size() - 72;
+                 i < currency.getSparkline().getPriceChange().size(); i++) {
+                double temp_val = currency.getSparkline().getPriceChange().get(i);
                 float val = (float) temp_val;
                 values.add(new Entry(i, val));
             }

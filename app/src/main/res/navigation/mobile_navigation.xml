@@ -3,20 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    android:label="@"
+    android:label=""
     app:startDestination="@id/navigation_market">
 
     <fragment
         android:id="@+id/navigation_news"
         android:name="com.ru.crypto.ui.news.NewsFragment"
         android:label="@string/title_news"
-        tools:layout="@layout/fragment_news">
-        <action
-            android:id="@+id/action_navigation_news_to_navigation_dashboard"
-            app:destination="@id/navigation_market"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out" />
-    </fragment>
+        tools:layout="@layout/fragment_news"/>
 
     <fragment
         android:id="@+id/navigation_market"
@@ -29,4 +23,10 @@
         android:name="com.ru.crypto.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
+    <fragment
+        android:id="@+id/navigation_global"
+        android:name="com.ru.crypto.ui.global.GlobalFragment"
+        android:label="@string/global_title"
+        tools:layout="@layout/fragment_global"
+        />
 </navigation>
