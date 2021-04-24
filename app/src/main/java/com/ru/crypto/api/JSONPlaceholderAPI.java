@@ -2,6 +2,7 @@ package com.ru.crypto.api;
 
 import com.ru.crypto.models.CryptoID;
 import com.ru.crypto.models.CryptoCurrency;
+import com.ru.crypto.models.GlobalCryptoData;
 
 import java.util.List;
 
@@ -19,4 +20,7 @@ public interface JSONPlaceholderAPI {
 
     @GET("/api/v3/coins/markets?order=" + defaultOrder + "&per_page=" + defaultPerPage  +"&page=1&sparkline=true")
     Call<List<CryptoID>> getDefaultList(@Query("vs_currency") String currency);
+
+    @GET("/api/v3/global")
+    Call<GlobalCryptoData> getGlobalData();
 }

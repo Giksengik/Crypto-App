@@ -18,10 +18,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ru.crypto.R;
 import com.ru.crypto.adapters.CryptoCurrencyAdapter;
-import com.ru.crypto.adapters.CryptoCurrencyDiffUtilCallback;
 import com.ru.crypto.di.components.CryptoCurrencyAdapterComponent;
+
 import com.ru.crypto.di.components.DaggerCryptoCurrencyAdapterComponent;
-import com.ru.crypto.models.CryptoCurrency;
+
 
 import javax.inject.Inject;
 

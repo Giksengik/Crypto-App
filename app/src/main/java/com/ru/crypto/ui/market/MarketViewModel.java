@@ -6,8 +6,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.DiffUtil;
 
-import com.ru.crypto.di.components.CryptoCurrencyRepositoryComponent;
-import com.ru.crypto.di.components.DaggerCryptoCurrencyRepositoryComponent;
+import com.ru.crypto.di.components.RepositoryComponent;
+import com.ru.crypto.di.components.DaggerRepositoryComponent;
 import com.ru.crypto.models.CryptoCurrency;
 import com.ru.crypto.repositories.CryptoCurrencyRepository;
 
@@ -20,7 +20,7 @@ public class MarketViewModel extends ViewModel {
     CryptoCurrencyRepository mRepository;
 
     public MarketViewModel() {
-        CryptoCurrencyRepositoryComponent component = DaggerCryptoCurrencyRepositoryComponent.create();
+        RepositoryComponent component = DaggerRepositoryComponent.create();
         component.inject(this);
     }
 

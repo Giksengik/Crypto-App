@@ -47,7 +47,7 @@ public class CryptoCurrencyAdapter extends RecyclerView.Adapter<CryptoCurrencyAd
         CryptoCurrency currency = currencies.get(position);
         DecimalFormat decimalFormat = new DecimalFormat("#.##");
         initializeChart(holder);
-        setData(holder.chart,currency);
+        setChartData(holder.chart,currency);
         holder.currencyName.setText(currency.getName());
         holder.currencySymbol.setText(currency.getSymbol().toUpperCase());
         holder.price.setText(Converters.getCurrencySymbol(currency.getCurrency()) + decimalFormat.format(currency.getCurrentPrice()));
@@ -63,13 +63,20 @@ public class CryptoCurrencyAdapter extends RecyclerView.Adapter<CryptoCurrencyAd
     public void initializeChart(CryptoCurrencyAdapter.ViewHolder holder) {
         LineChart chart = holder.chart;
         chart.setBackgroundColor(Color.WHITE);
-        chart.getAxisLeft().setDrawGridLines(false);
+        chart.setDrawGridBackground(false);
         chart.getXAxis().setDrawGridLines(false);
-        chart.getAxisRight().setDrawGridLines(false);
-        chart.getDescription().setEnabled(false);
-        chart.getAxisLeft().setDrawLabels(false);
-        chart.getAxisRight().setDrawLabels(false);
         chart.getXAxis().setDrawLabels(false);
+        chart.getXAxis().setDrawAxisLine(false);
+
+        chart.getAxisLeft().setDrawGridLines(false);
+        chart.getAxisLeft().setDrawLabels(false);
+        chart.getAxisLeft().setDrawAxisLine(false);
+
+        chart.getAxisRight().setDrawGridLines(false);
+        chart.getAxisRight().setDrawLabels(false);
+        chart.getAxisRight().setDrawAxisLine(false);
+
+        chart.getDescription().setEnabled(false);
         chart.getLegend().setEnabled(false);
         chart.setTouchEnabled(false);
         chart.setDrawGridBackground(false);
@@ -87,7 +94,8 @@ public class CryptoCurrencyAdapter extends RecyclerView.Adapter<CryptoCurrencyAd
     public void setCurrencies(List<CryptoCurrency> currencies) {
         this.currencies = currencies;
     }
-    private void setData(LineChart chart, CryptoCurrency currency) {
+
+    private void setChartData(LineChart chart, CryptoCurrency currency) {
         if (currency.getSparkline() != null) {
             ArrayList<Entry> values = new ArrayList<>();
             for (int i = currency.getSparkline().getPriceChange().size() - 72;

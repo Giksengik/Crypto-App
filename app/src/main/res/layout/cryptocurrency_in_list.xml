@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="50dp"
+    android:layout_height="55dp"
     android:layout_marginTop="5dp"
     android:layout_marginBottom="5dp">
 
@@ -22,12 +22,13 @@
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/currencyChart"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="match_parent"
         android:layout_marginTop="10dp"
         app:layout_constrainedWidth="true"
         app:layout_constraintEnd_toStartOf="@+id/constraintLayout2"
         app:layout_constraintStart_toEndOf="@+id/constraintLayout"
         app:layout_constraintTop_toTopOf="@+id/currencyPrice" />
+
     <ImageButton
         android:id="@+id/iconIsFavouriteCurrency"
         android:layout_width="20dp"
@@ -35,13 +36,12 @@
         android:layout_marginTop="5dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="5dp"
-        android:background="@drawable/light_is_favourite_icon"
-        android:src="@drawable/light_is_favourite_icon"
+        android:background="@drawable/icon_not_favourite"
+        
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/light_is_favourite_icon"
-        tools:srcCompat="@drawable/light_is_favourite_icon" />
+        />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
@@ -55,8 +55,12 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center|left"
-            android:orientation="vertical">
+            android:gravity="left"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:id="@+id/currencyName"

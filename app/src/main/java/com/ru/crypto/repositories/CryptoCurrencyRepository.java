@@ -8,9 +8,11 @@ import androidx.recyclerview.widget.DiffUtil;
 
 import com.ru.crypto.Converters;
 import com.ru.crypto.adapters.CryptoCurrencyDiffUtilCallback;
-import com.ru.crypto.api.NetworkService;
+import com.ru.crypto.api.CryptoCurrencyNetworkService;
+import com.ru.crypto.api.INetworkService;
 import com.ru.crypto.models.CryptoID;
 import com.ru.crypto.models.CryptoCurrency;
+import com.ru.crypto.models.GlobalCryptoData;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
@@ -27,12 +29,12 @@ import retrofit2.Response;
 
 public class CryptoCurrencyRepository {
     private static String CURRENT_CURRENCY = "USD";
-    NetworkService mNetworkService;
+    INetworkService mCryptoCurrencyNetworkService;
     MutableLiveData<List<CryptoCurrency>> mAllCurrencies;
     MutableLiveData<DiffUtil.DiffResult> mCryptoCurrencyDiffResult;
 
-    public CryptoCurrencyRepository(NetworkService networkService){
-        this.mNetworkService = networkService;
+    public CryptoCurrencyRepository(INetworkService cryptoCurrencyNetworkService){
+        this.mCryptoCurrencyNetworkService = cryptoCurrencyNetworkService;
         mAllCurrencies = new MutableLiveData<>();
         mCryptoCurrencyDiffResult = new MutableLiveData<>();
     }
@@ -55,7 +57,7 @@ public class CryptoCurrencyRepository {
     }
 
     public void loadCurrenciesInfo(String currencies, Application application) {
-        mNetworkService.getJSONApi()
+        mCryptoCurrencyNetworkService.getJSONApi()
                 .getDefaultInfo(CURRENT_CURRENCY,currencies)
                 .enqueue(new Callback<List<CryptoCurrency>>() {
                     @Override
@@ -81,7 +83,7 @@ public class CryptoCurrencyRepository {
                                 }
                             }.start();
                         }
-                        }
+                    }
                     @Override
                     public void onFailure(Call<List<CryptoCurrency>> call, Throwable t) {
 
@@ -89,7 +91,7 @@ public class CryptoCurrencyRepository {
                 });
     }
     public void loadCurrenciesInfo(Application application) {
-        Single.create((SingleOnSubscribe<List<CryptoID>>) emitter -> mNetworkService.getJSONApi()
+        Single.create((SingleOnSubscribe<List<CryptoID>>) emitter -> mCryptoCurrencyNetworkService.getJSONApi()
                 .getDefaultList(CURRENT_CURRENCY)
                 .enqueue(new Callback<List<CryptoID>>() {
                     @Override
