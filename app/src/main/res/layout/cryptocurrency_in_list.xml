@@ -26,7 +26,8 @@
         android:layout_marginTop="10dp"
         app:layout_constrainedWidth="true"
         app:layout_constraintEnd_toStartOf="@+id/constraintLayout2"
-        app:layout_constraintStart_toEndOf="@+id/constraintLayout"
+
+        app:layout_constraintStart_toEndOf="@+id/scrollView2"
         app:layout_constraintTop_toTopOf="@+id/currencyPrice" />
 
     <ImageButton
@@ -37,35 +38,35 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="5dp"
         android:background="@drawable/icon_not_favourite"
-        
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
-        android:layout_width="60dp"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="10dp"
+
+        app:layout_constrainedWidth="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/currencyIcon"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <RelativeLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="60dp"
             android:layout_height="match_parent"
-            android:gravity="left"
-            android:orientation="vertical"
+            android:layout_marginStart="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/currencyIcon"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:id="@+id/currencyName"
                 style="@style/textOfCurrencyInMarketList"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:text="TextView"
@@ -74,17 +75,16 @@
             <TextView
                 android:id="@+id/currencySymbol"
                 style="@style/textOfCurrencyInMarketList"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/currencyName"
                 android:layout_marginStart="4dp"
-                android:layout_marginTop="-20dp"
+                android:layout_marginTop="-15dp"
                 android:fontFamily="@font/notosansjp_black"
                 android:text="TextView"
                 android:textSize="@dimen/currency_symbol_text_size" />
-        </LinearLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
+        </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout2"
         android:layout_width="80dp"
@@ -116,7 +116,7 @@
         android:text="TextView"
         android:textSize="@dimen/currency_price_text_size"
         app:layout_constraintEnd_toStartOf="@+id/constraintLayout2"
-        app:layout_constraintStart_toEndOf="@+id/constraintLayout"
+        app:layout_constraintStart_toEndOf="@+id/scrollView2"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

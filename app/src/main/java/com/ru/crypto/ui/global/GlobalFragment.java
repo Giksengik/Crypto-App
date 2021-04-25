@@ -6,11 +6,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.github.mikephil.charting.charts.PieChart;
@@ -50,8 +52,15 @@ public class GlobalFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_global, container, false);
         PieChart chart = root.findViewById(R.id.globalPercentageChart);
         getViewLifecycleOwner();
+
+        GlobalStatsFragment globalStatsFragment = new GlobalStatsFragment();
+        getChildFragmentManager().beginTransaction()
+                .add(R.id.marketStatsContainer,globalStatsFragment)
+                .commit();
+
         mGlobalViewModel.getGlobalData().observe(getViewLifecycleOwner(), globalCryptoData -> {
             setPieChartData(globalCryptoData.getData().getMarketCapPercentage(), chart);
+            globalStatsFragment.setData(globalCryptoData);
         });
         return root;
     }
@@ -65,6 +74,7 @@ public class GlobalFragment extends Fragment {
     public void setPieChartData(TreeMap<String,Double> pieData, PieChart chart) {
         chart.setUsePercentValues(true);
         chart.getDescription().setEnabled(false);
+        chart.animate();
         if (pieData != null) {
             ArrayList<PieEntry> entries = new ArrayList<>();
             for (Double percentage : pieData.values()) {

@@ -6,4 +6,7 @@
     <string name="action_settings">Settings</string>
     <string name="action_search">Search</string>
     <string name="global_title">Global</string>
+    <string name="global_stats_active_currencies">Active currencies</string>
+    <string name="global_stats_total_market_cap_change">Total market cap change</string>
+    <string name="global_stats_number_of_markets">Number of markets</string>
 </resources>

@@ -8,6 +8,10 @@
     </style>
     <style name = "textOfCurrencyInMarketList">
         <item name="android:textColor">@color/textColor</item>
-
+    </style>
+    <style name = "globalStatsTextStyle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/arctic</item>
+        <item name="fontFamily">@font/notosansjp_bold</item>
     </style>
 </resources>
