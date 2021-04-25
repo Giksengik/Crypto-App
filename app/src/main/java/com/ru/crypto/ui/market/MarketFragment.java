@@ -18,8 +18,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ru.crypto.R;
 import com.ru.crypto.adapters.CryptoCurrencyAdapter;
-import com.ru.crypto.di.components.CryptoCurrencyAdapterComponent;
-import com.ru.crypto.di.components.DaggerCryptoCurrencyAdapterComponent;
+//import com.ru.crypto.di.components.CryptoCurrencyAdapterComponent;
+//import com.ru.crypto.di.components.DaggerCryptoCurrencyAdapterComponent;
 
 
 import javax.inject.Inject;
@@ -27,7 +27,9 @@ import javax.inject.Inject;
 public class MarketFragment extends Fragment {
 
     private MarketViewModel mMarketViewModel;
-    @Inject CryptoCurrencyAdapter currencyAdapter;
+
+//    @Inject
+    CryptoCurrencyAdapter currencyAdapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,9 +48,9 @@ public class MarketFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        CryptoCurrencyAdapterComponent component = DaggerCryptoCurrencyAdapterComponent.create();
-        component.inject(this);
-
+//        CryptoCurrencyAdapterComponent component = DaggerCryptoCurrencyAdapterComponent.create();
+//        component.inject(this);
+        currencyAdapter = new CryptoCurrencyAdapter();
         mMarketViewModel = new ViewModelProvider(this).get(MarketViewModel.class);
 
         View root = inflater.inflate(R.layout.fragment_market, container, false);
