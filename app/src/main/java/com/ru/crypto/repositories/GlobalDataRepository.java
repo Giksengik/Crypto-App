@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.ru.crypto.api.CryptoCurrencyNetworkService;
 import com.ru.crypto.api.INetworkService;
 import com.ru.crypto.models.GlobalCryptoData;
+import com.ru.crypto.models.HistoricalCurrencyData;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -15,10 +16,11 @@ public class GlobalDataRepository {
 
     private INetworkService mNetworkService;
     private MutableLiveData<GlobalCryptoData> mGlobalCryptoData;
-
+    private MutableLiveData<HistoricalCurrencyData> bitcoinData;
     public GlobalDataRepository (INetworkService networkService) {
         this.mNetworkService = networkService;
         mGlobalCryptoData = new MutableLiveData<>();
+        bitcoinData = new MutableLiveData<>();
     }
 
     public LiveData<GlobalCryptoData> getGlobalData() {
@@ -42,5 +44,23 @@ public class GlobalDataRepository {
                     }
                 });
     }
+    public void loadAllBitcoinData() {
+        mNetworkService.getJSONApi()
+                .getAllBitcoinData()
+                .enqueue(new Callback<HistoricalCurrencyData>() {
+                    @Override
+                    public void onResponse(Call<HistoricalCurrencyData> call, Response<HistoricalCurrencyData> response) {
+                        HistoricalCurrencyData data = response.body();
+                        int a = 5;
+                    }
+
+                    @Override
+                    public void onFailure(Call<HistoricalCurrencyData> call, Throwable t) {
+                        t.printStackTrace();
+                    }
+                });
+    }
+
+
 
 }

@@ -19,7 +19,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.ru.crypto.R;
 import com.ru.crypto.adapters.CryptoCurrencyAdapter;
 import com.ru.crypto.di.components.CryptoCurrencyAdapterComponent;
-
 import com.ru.crypto.di.components.DaggerCryptoCurrencyAdapterComponent;
 
 

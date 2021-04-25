@@ -29,4 +29,7 @@ public class GlobalViewModel extends ViewModel {
         mRepository.loadGlobalData();
     }
 
+    public void loadBitcoinInfo () {
+        mRepository.loadAllBitcoinData();
+    }
 }

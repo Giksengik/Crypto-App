@@ -3,6 +3,7 @@ package com.ru.crypto.api;
 import com.ru.crypto.models.CryptoID;
 import com.ru.crypto.models.CryptoCurrency;
 import com.ru.crypto.models.GlobalCryptoData;
+import com.ru.crypto.models.HistoricalCurrencyData;
 
 import java.util.List;
 
@@ -14,6 +15,7 @@ public interface JSONPlaceholderAPI {
     String defaultOrder = "market_cap_desc";
     int defaultPerPage = 100;
     String defaultPriceChangePercentage = "24H";
+
     @GET("/api/v3/coins/markets?order=" + defaultOrder + "&per_page=" +
             defaultPerPage + "&price_change_percentage=" + defaultPriceChangePercentage + "&sparkline=true")
     Call<List<CryptoCurrency>> getDefaultInfo(@Query("vs_currency") String currency, @Query("ids") String ids);
@@ -23,4 +25,7 @@ public interface JSONPlaceholderAPI {
 
     @GET("/api/v3/global")
     Call<GlobalCryptoData> getGlobalData();
+
+    @GET("/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=max")
+    Call<HistoricalCurrencyData> getAllBitcoinData();
 }

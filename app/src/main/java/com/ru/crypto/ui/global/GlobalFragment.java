@@ -68,7 +68,9 @@ public class GlobalFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+
         mGlobalViewModel.loadGlobalData();
+
     }
 
     public void setPieChartData(TreeMap<String,Double> pieData, PieChart chart) {
