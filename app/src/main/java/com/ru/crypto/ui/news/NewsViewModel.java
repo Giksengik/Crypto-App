@@ -1,19 +1,20 @@
 package com.ru.crypto.ui.news;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
+
 import androidx.lifecycle.ViewModel;
 
-public class NewsViewModel extends ViewModel {
+import com.ru.crypto.di.components.CryptoNewsRepoComponent;
+import com.ru.crypto.di.components.DaggerCryptoNewsRepoComponent;
+import com.ru.crypto.repositories.CryptoNewsRepository;
 
-    private MutableLiveData<String> mText;
+import javax.inject.Inject;
+
+public class NewsViewModel extends ViewModel {
+    @Inject CryptoNewsRepository mRepository;
 
     public NewsViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is home fragment");
+        CryptoNewsRepoComponent component = DaggerCryptoNewsRepoComponent.create();
+        component.inject(this);
     }
 
-    public LiveData<String> getText() {
-        return mText;
-    }
 }

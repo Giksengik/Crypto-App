@@ -1,7 +1,11 @@
 package com.ru.crypto.di.modules;
 
+import androidx.room.Room;
+
 import com.ru.crypto.api.CryptoNewsNetworkService;
 import com.ru.crypto.api.INetworkService;
+import com.ru.crypto.db.CryptoArticleDatabase;
+import com.ru.crypto.di.App;
 import com.ru.crypto.repositories.CryptoNewsRepository;
 
 import javax.inject.Singleton;
@@ -14,8 +18,17 @@ public class CryptoNewsModule {
 
     @Singleton
     @Provides
-    CryptoNewsRepository provideRepo(INetworkService networkService) {
-        return new CryptoNewsRepository(networkService);
+    CryptoNewsRepository provideRepo(INetworkService networkService, CryptoArticleDatabase db) {
+        return new CryptoNewsRepository(networkService, db);
+    }
+
+    @Singleton
+    @Provides
+    CryptoArticleDatabase provideDB() {
+        return Room.databaseBuilder(App.getInstance(),
+                CryptoArticleDatabase.class, "database-name")
+                .fallbackToDestructiveMigration()
+                .build();
     }
 
 }
