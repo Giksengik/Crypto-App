@@ -1,5 +1,7 @@
 package com.ru.crypto.ui.news;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,7 +31,10 @@ public class NewsFragment extends Fragment {
         mNewsViewModel =
                 new ViewModelProvider(this).get(NewsViewModel.class);
         View root = inflater.inflate(R.layout.fragment_news, container, false);
-        CryptoArticlesAdapter adapter = new CryptoArticlesAdapter();
+        CryptoArticlesAdapter adapter = new CryptoArticlesAdapter((cryptoArticle, position) -> {
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(cryptoArticle.getArticleURL()));
+            startActivity(browserIntent);
+        });
         RecyclerView recyclerView = root.findViewById(R.id.articlesRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);

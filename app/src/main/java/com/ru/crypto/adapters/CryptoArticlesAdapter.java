@@ -4,9 +4,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.paging.PagedListAdapter;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,6 +23,15 @@ import java.util.List;
 public class CryptoArticlesAdapter extends RecyclerView.Adapter<CryptoArticlesAdapter.ViewHolder> {
     List<CryptoArticle> articles = new ArrayList<>();
 
+    public CryptoArticlesAdapter(OnArticleClickListener onClickListener) {
+        this.onClickListener = onClickListener;
+    }
+
+    private final OnArticleClickListener onClickListener;
+
+    public interface OnArticleClickListener{
+        void onArticleClick(CryptoArticle cryptoArticle, int position);
+    }
 
     @NonNull
     @Override
@@ -34,6 +45,7 @@ public class CryptoArticlesAdapter extends RecyclerView.Adapter<CryptoArticlesAd
         holder.articleSource.setText(article.getSource());
         holder.articleTitle.setText(article.getArticleTitle());
         holder.articleIcon.setImageBitmap(Converters.decodeBase64(article.getIconString()));
+        holder.itemView.setOnClickListener(v -> onClickListener.onArticleClick(article,position));
     }
 
     @Override
@@ -48,10 +60,8 @@ public class CryptoArticlesAdapter extends RecyclerView.Adapter<CryptoArticlesAd
 
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
-
         TextView articleTitle, articleSource;
         ImageView articleIcon;
-
         ViewHolder(View v) {
             super(v);
             articleIcon = v.findViewById(R.id.articleIcon);
