@@ -1,32 +1,65 @@
 package com.ru.crypto.repositories;
 
-import android.widget.ImageButton;
+import android.app.Application;
 
-import com.ru.crypto.api.CryptoNewsNetworkService;
+import androidx.lifecycle.LiveData;
+
+import com.ru.crypto.Converters;
 import com.ru.crypto.api.INetworkService;
 import com.ru.crypto.db.CryptoArticleDatabase;
+import com.ru.crypto.di.App;
+import com.ru.crypto.models.CryptoArticle;
 import com.ru.crypto.models.CryptoNews;
+import com.squareup.picasso.Picasso;
+
+import java.io.IOException;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class CryptoNewsRepository {
-    INetworkService newsNetworkService;
-    CryptoArticleDatabase database;
-    public CryptoNewsRepository(INetworkService networkService, CryptoArticleDatabase database) {
-        this.newsNetworkService = networkService;
-        this.database = database;
+    private INetworkService mNewsNetworkService;
+    private CryptoArticleDatabase mDatabase;
+    private LiveData<List<CryptoArticle>> mArticles;
+    public CryptoNewsRepository(INetworkService networkService, CryptoArticleDatabase mDatabase) {
+        this.mNewsNetworkService = networkService;
+        this.mDatabase = mDatabase;
+        mArticles = mDatabase.cryptoArticleDao()
+                .getAll();
         loadNews();
     }
+    public  LiveData<List<CryptoArticle>> getArticles() {
+        return mArticles;
+    }
+
     public void loadNews() {
-        newsNetworkService.getJSONApi()
+        mNewsNetworkService.getJSONApi()
                 .getLatestNews()
                 .enqueue(new Callback<CryptoNews>() {
                     @Override
                     public void onResponse(Call<CryptoNews> call, Response<CryptoNews> response) {
-                        CryptoNews news = response.body();
-                        int a  = 5;
+                        new Thread() {
+                            @Override
+                            public void run() {
+                                super.run();
+                                if(response.body() != null) {
+                                    List<CryptoArticle> articles = response.body().getArticles();
+                                    for (int i = 0; i < articles.size(); i++) {
+                                            try {
+                                                articles.get(i).setIconString(
+                                                        Converters.encodeToBase64(Picasso.with(App.getInstance())
+                                                                .load(articles.get(i).getArticleImageURL()).get()));
+                                            } catch (IOException e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    }
+                                    mDatabase.cryptoArticleDao()
+                                            .insertAll(response.body().getArticles());
+                                }
+                        }.start();
                     }
 
                     @Override

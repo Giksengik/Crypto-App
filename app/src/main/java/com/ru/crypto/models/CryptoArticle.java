@@ -40,10 +40,23 @@ public class CryptoArticle {
     @Expose
     String categories;
 
+
+
     @SerializedName("source_info")
     @Expose
     @Ignore
     ArticleSource sourceInfo;
+
+    String iconString;
+
+
+    public String getIconString() {
+        return iconString;
+    }
+
+    public void setIconString(String iconString) {
+        this.iconString = iconString;
+    }
 
     public int getId() {
         return id;

@@ -51,7 +51,7 @@ public class GlobalDataRepository {
                     @Override
                     public void onResponse(Call<HistoricalCurrencyData> call, Response<HistoricalCurrencyData> response) {
                         HistoricalCurrencyData data = response.body();
-                        int a = 5;
+
                     }
 
                     @Override

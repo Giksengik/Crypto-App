@@ -11,19 +11,29 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.ru.crypto.R;
+import com.ru.crypto.adapters.CryptoArticlesAdapter;
+import com.ru.crypto.models.CryptoArticle;
+
+import java.util.List;
 
 public class NewsFragment extends Fragment {
 
-    private NewsViewModel newsViewModel;
+    private NewsViewModel mNewsViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        newsViewModel =
+        mNewsViewModel =
                 new ViewModelProvider(this).get(NewsViewModel.class);
         View root = inflater.inflate(R.layout.fragment_news, container, false);
-
+        CryptoArticlesAdapter adapter = new CryptoArticlesAdapter();
+        RecyclerView recyclerView = root.findViewById(R.id.articlesRecyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(adapter);
+        mNewsViewModel.getArticles().observe(getViewLifecycleOwner(), adapter::setArticles);
         return root;
     }
 }

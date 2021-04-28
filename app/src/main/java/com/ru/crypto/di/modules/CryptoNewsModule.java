@@ -2,6 +2,7 @@ package com.ru.crypto.di.modules;
 
 import androidx.room.Room;
 
+import com.ru.crypto.adapters.CryptoArticlesAdapter;
 import com.ru.crypto.api.CryptoNewsNetworkService;
 import com.ru.crypto.api.INetworkService;
 import com.ru.crypto.db.CryptoArticleDatabase;

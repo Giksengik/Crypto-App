@@ -1,5 +1,6 @@
 package com.ru.crypto.adapters;
 
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -10,26 +11,39 @@ import androidx.paging.PagedListAdapter;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ru.crypto.Converters;
 import com.ru.crypto.R;
 import com.ru.crypto.models.CryptoArticle;
 
-public class CryptoArticlesAdapter extends PagedListAdapter<CryptoArticle, CryptoArticlesAdapter.ViewHolder> {
+import java.util.ArrayList;
+import java.util.List;
 
-    public CryptoArticlesAdapter() {
-        super(DIFF_CALLBACK);
-    }
+public class CryptoArticlesAdapter extends RecyclerView.Adapter<CryptoArticlesAdapter.ViewHolder> {
+    List<CryptoArticle> articles = new ArrayList<>();
+
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
+        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.arcticle_in_list, parent, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        CryptoArticle article = getItem(position);
+        CryptoArticle article = articles.get(position);
         holder.articleSource.setText(article.getSource());
         holder.articleTitle.setText(article.getArticleTitle());
+        holder.articleIcon.setImageBitmap(Converters.decodeBase64(article.getIconString()));
+    }
+
+    @Override
+    public int getItemCount() {
+        return articles.size();
+    }
+
+    public void setArticles(List<CryptoArticle> articles) {
+        this.articles = articles;
+        notifyDataSetChanged();
     }
 
 
@@ -46,18 +60,4 @@ public class CryptoArticlesAdapter extends PagedListAdapter<CryptoArticle, Crypt
         }
 
     }
-
-    private static DiffUtil.ItemCallback<CryptoArticle> DIFF_CALLBACK =
-            new DiffUtil.ItemCallback<CryptoArticle>() {
-                @Override
-                public boolean areItemsTheSame(@NonNull CryptoArticle oldItem, @NonNull CryptoArticle newItem) {
-                    return oldItem.getArticleURL().equals(newItem.getArticleURL());
-                }
-
-                @Override
-                public boolean areContentsTheSame(@NonNull CryptoArticle oldItem, @NonNull CryptoArticle newItem) {
-                    return oldItem.getArticleTitle().equals(newItem.getArticleTitle());
-                }
-
-            };
 }
