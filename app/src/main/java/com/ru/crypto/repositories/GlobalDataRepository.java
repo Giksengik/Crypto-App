@@ -21,6 +21,7 @@ public class GlobalDataRepository {
         this.mNetworkService = networkService;
         mGlobalCryptoData = new MutableLiveData<>();
         bitcoinData = new MutableLiveData<>();
+        loadAllBitcoinData();
     }
 
     public LiveData<GlobalCryptoData> getGlobalData() {
@@ -50,7 +51,9 @@ public class GlobalDataRepository {
                 .enqueue(new Callback<HistoricalCurrencyData>() {
                     @Override
                     public void onResponse(Call<HistoricalCurrencyData> call, Response<HistoricalCurrencyData> response) {
-                        HistoricalCurrencyData data = response.body();
+                        if(response.body() != null) {
+                            bitcoinData.setValue(response.body());
+                        }
 
                     }
 
@@ -61,6 +64,9 @@ public class GlobalDataRepository {
                 });
     }
 
+    public LiveData<HistoricalCurrencyData> getBitcoinGlobalData() {
+        return bitcoinData;
+    }
 
 
 }

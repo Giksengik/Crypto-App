@@ -14,4 +14,9 @@
         <item name="android:textColor">@color/arctic</item>
         <item name="fontFamily">@font/notosansjp_bold</item>
     </style>
+    <style name="articleStyle">
+        <item name="color"> @color/black </item>
+        <item name="android:textSize"> 15sp</item>
+        <item name="fontFamily">@font/notosansjp_bold</item>
+    </style>
 </resources>

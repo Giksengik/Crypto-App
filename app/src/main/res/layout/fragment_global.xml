@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp">
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -14,18 +12,26 @@
             android:id="@+id/marketStatsContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"/>
+            android:orientation="vertical"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp" />
 
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/globalPercentageChart"
             android:layout_width="match_parent"
             android:layout_height="400dp"
             android:layout_below="@id/marketStatsContainer"
-            android:layout_marginTop="10dp" />
+            android:layout_marginTop="10dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp" />
 
-        <Button
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/bitcoinPriceLineChart"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/globalPercentageChart" />
+            android:layout_height="400dp"
+            android:layout_below="@id/globalPercentageChart"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp" />
     </RelativeLayout>
 </ScrollView>

@@ -6,6 +6,8 @@ import android.graphics.BitmapFactory;
 import android.util.Base64;
 
 import java.io.ByteArrayOutputStream;
+import java.time.Instant;
+import java.util.Date;
 
 public class Converters {
     public static String encodeToBase64(Bitmap image) {
@@ -26,5 +28,8 @@ public class Converters {
             default:
                 return currency;
         }
+    }
+    public static Date convertUnixTimestamp(double timeStamp) {
+       return new Date((long)timeStamp*1000);
     }
 }

@@ -11,4 +11,8 @@ public class HistoricalCurrencyData {
     @SerializedName("prices")
     @Expose
     ArrayList<ArrayList<Double>> prices;
+
+    public ArrayList<ArrayList<Double>> getPrices() {
+        return prices;
+    }
 }

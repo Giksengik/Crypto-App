@@ -1,5 +1,6 @@
 package com.ru.crypto;
 
+import android.content.ContentValues;
 import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -14,6 +15,8 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import java.util.Date;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -26,13 +29,16 @@ public class MainActivity extends AppCompatActivity {
         NavHostFragment navHostFragment =(NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
         NavController navController = navHostFragment.getNavController();
         NavigationUI.setupWithNavController(navView, navController);
-
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.app_name,R.string.app_name);
         drawerLayout.addDrawerListener(toggle);
         toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.white));
         toggle.setDrawerSlideAnimationEnabled(true);
         toggle.syncState();
 
+        double timeStamp = 1415145600000d;
+        Date date = Converters.convertUnixTimestamp(timeStamp);
+        String dateS = date.toString();
+        int a = 5;
     }
 
 }

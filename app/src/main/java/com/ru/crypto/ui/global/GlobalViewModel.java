@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel;
 import com.ru.crypto.di.components.DaggerGlobalDataRepoComponent;
 import com.ru.crypto.di.components.GlobalDataRepoComponent;
 import com.ru.crypto.models.GlobalCryptoData;
+import com.ru.crypto.models.HistoricalCurrencyData;
 import com.ru.crypto.repositories.GlobalDataRepository;
 
 import javax.inject.Inject;
@@ -31,5 +32,9 @@ public class GlobalViewModel extends ViewModel {
 
     public void loadBitcoinInfo () {
         mRepository.loadAllBitcoinData();
+    }
+
+    public LiveData<HistoricalCurrencyData> getBitcoinData () {
+        return mRepository.getBitcoinGlobalData();
     }
 }
