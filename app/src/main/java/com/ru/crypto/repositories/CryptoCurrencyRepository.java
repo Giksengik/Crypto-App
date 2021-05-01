@@ -6,13 +6,11 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.DiffUtil;
 
-import com.ru.crypto.Converters;
+import com.ru.crypto.utils.Converters;
 import com.ru.crypto.adapters.CryptoCurrencyDiffUtilCallback;
-import com.ru.crypto.api.CryptoCurrencyNetworkService;
 import com.ru.crypto.api.INetworkService;
 import com.ru.crypto.models.CryptoID;
 import com.ru.crypto.models.CryptoCurrency;
-import com.ru.crypto.models.GlobalCryptoData;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;

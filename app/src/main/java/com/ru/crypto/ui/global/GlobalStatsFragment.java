@@ -37,9 +37,8 @@ public class GlobalStatsFragment extends Fragment {
 
     @SuppressLint("SetTextI18n")
     public void setData(GlobalCryptoData data) {
-        DecimalFormat format = new DecimalFormat("#.###");
         numOfCurrencies.setText(data.getData().getActiveCryptoCurrenciesNum()+ "");
-        marketCapChange.setText(format.format(data.getData().getMarketCapChangePercentage24H())+ "");
+        marketCapChange.setText(data.getData().getMarketCapChangePercentage24H().substring(0,6));
         numOfMarkets.setText(data.getData().getMarketsNum()+ "");
 
     }

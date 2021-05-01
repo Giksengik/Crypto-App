@@ -1,10 +1,8 @@
 package com.ru.crypto.repositories;
 
-import android.app.Application;
-
 import androidx.lifecycle.LiveData;
 
-import com.ru.crypto.Converters;
+import com.ru.crypto.utils.Converters;
 import com.ru.crypto.api.INetworkService;
 import com.ru.crypto.db.CryptoArticleDatabase;
 import com.ru.crypto.di.App;

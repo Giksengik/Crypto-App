@@ -7,6 +7,11 @@ import com.ru.crypto.api.CryptoCurrencyNetworkService;
 import com.ru.crypto.api.INetworkService;
 import com.ru.crypto.models.GlobalCryptoData;
 import com.ru.crypto.models.HistoricalCurrencyData;
+import com.ru.crypto.utils.factories.DefaultLineChartTuner;
+import com.ru.crypto.utils.factories.DefaultLineChartTunerFactory;
+import com.ru.crypto.utils.factories.DefaultPieChartTunerFactory;
+import com.ru.crypto.utils.factories.ILineChartTuner;
+import com.ru.crypto.utils.factories.IPieChartTuner;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -17,6 +22,7 @@ public class GlobalDataRepository {
     private INetworkService mNetworkService;
     private MutableLiveData<GlobalCryptoData> mGlobalCryptoData;
     private MutableLiveData<HistoricalCurrencyData> bitcoinData;
+
     public GlobalDataRepository (INetworkService networkService) {
         this.mNetworkService = networkService;
         mGlobalCryptoData = new MutableLiveData<>();
@@ -68,5 +74,14 @@ public class GlobalDataRepository {
         return bitcoinData;
     }
 
+    public ILineChartTuner getDefaultLineChartTuner() {
+          DefaultLineChartTunerFactory factory = new DefaultLineChartTunerFactory();
+      return factory.getLineChartTuner();
+    }
+
+    public IPieChartTuner getDefaultPieChartTuner() {
+        DefaultPieChartTunerFactory factory = new DefaultPieChartTunerFactory();
+        return factory.getTuner();
+    }
 
 }

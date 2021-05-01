@@ -18,7 +18,7 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.ru.crypto.Converters;
+import com.ru.crypto.utils.Converters;
 import com.ru.crypto.R;
 import com.ru.crypto.models.CryptoCurrency;
 

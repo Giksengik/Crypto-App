@@ -1,5 +1,6 @@
 package com.ru.crypto.di.components;
 
+import com.ru.crypto.MainActivity;
 import com.ru.crypto.api.CryptoCurrencyNetworkService;
 import com.ru.crypto.di.modules.CryptoCurrencyNetworkServiceModule;
 import com.ru.crypto.di.modules.GlobalDataModule;
@@ -18,4 +19,5 @@ public interface GlobalDataRepoComponent {
     GlobalDataRepository getRepo();
 
     void inject(GlobalViewModel viewModel);
+    void inject(MainActivity mainActivity);
 }

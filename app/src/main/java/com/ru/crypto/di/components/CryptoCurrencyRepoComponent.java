@@ -17,4 +17,5 @@ public interface CryptoCurrencyRepoComponent {
 
     CryptoCurrencyRepository getRepo();
     void inject(MarketViewModel viewModel);
+
 }

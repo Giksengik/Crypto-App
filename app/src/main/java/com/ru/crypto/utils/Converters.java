@@ -1,4 +1,4 @@
-package com.ru.crypto;
+package com.ru.crypto.utils;
 
 
 import android.graphics.Bitmap;
@@ -6,8 +6,10 @@ import android.graphics.BitmapFactory;
 import android.util.Base64;
 
 import java.io.ByteArrayOutputStream;
+import java.text.DateFormat;
 import java.time.Instant;
 import java.util.Date;
+import java.util.Locale;
 
 public class Converters {
     public static String encodeToBase64(Bitmap image) {
@@ -29,7 +31,12 @@ public class Converters {
                 return currency;
         }
     }
-    public static Date convertUnixTimestamp(double timeStamp) {
-       return new Date((long)timeStamp*1000);
+    public static String getFormattedDataStringByUnixTimestamp(double timeStamp) {
+        Date timeMilliseconds = convertUnixTimestamp(timeStamp);
+        DateFormat dateTimeFormat = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.getDefault());
+        return dateTimeFormat.format(timeMilliseconds);
+    }
+    private static Date convertUnixTimestamp(double timeStamp) {
+       return new Date((long)timeStamp);
     }
 }

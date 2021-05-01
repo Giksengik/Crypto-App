@@ -19,4 +19,19 @@
         <item name="android:textSize"> 15sp</item>
         <item name="fontFamily">@font/notosansjp_bold</item>
     </style>
+
+    <style name="textInGlobalInfoPageStyle">
+        <item name="android:textColor">@color/arctic</item>
+        <item name="android:textSize">15sp</item>
+        <item name="fontFamily">@font/notosansjp_black</item>
+    </style>
+
+    <style name="headerText">
+        <item name = "layout_goneMarginTop">5dp</item>
+        <item name = "android:layout_height">wrap_content</item>
+        <item name = "android:layout_width">match_parent</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/arctic</item>
+    </style>
 </resources>

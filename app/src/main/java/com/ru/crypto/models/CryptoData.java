@@ -9,7 +9,7 @@ public class CryptoData {
 
     @SerializedName("market_cap_change_percentage_24h_usd")
     @Expose
-    double marketCapChangePercentage24H;
+    String marketCapChangePercentage24H;
 
     @SerializedName("active_cryptocurrencies")
     @Expose
@@ -31,7 +31,7 @@ public class CryptoData {
     @Expose
     TreeMap<String , Double> marketCapPercentage;
 
-    public double getMarketCapChangePercentage24H() {
+    public String getMarketCapChangePercentage24H() {
         return marketCapChangePercentage24H;
     }
 

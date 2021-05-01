@@ -8,7 +8,13 @@
         android:layout_height="wrap_content"
         android:paddingTop="10dp">
 
+        <TextView
+            style="@style/headerText"
+            android:id="@+id/globalShares"
+            android:text="@string/global_shares" />
+
         <FrameLayout
+            android:layout_below="@id/globalShares"
             android:id="@+id/marketStatsContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -24,14 +30,36 @@
             android:layout_marginTop="10dp"
             android:paddingLeft="16dp"
             android:paddingRight="16dp" />
+        <TextView
+            style="@style/headerText"
+            android:layout_below="@id/globalPercentageChart"
+            android:id="@+id/bitcoinPrice"
+            android:text="@string/bitcoin_price" />
+        <TextView
+            android:id="@+id/bitcoinValue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/bitcoinPrice"
+            android:gravity="center"
+            android:textColor="@color/arctic"
+            android:text="TextView" />
 
         <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/bitcoinPriceLineChart"
             android:layout_width="match_parent"
             android:layout_height="400dp"
-            android:layout_below="@id/globalPercentageChart"
+            android:layout_below="@id/bitcoinValue"
             android:layout_marginTop="10dp"
             android:paddingLeft="16dp"
-            android:paddingRight="16dp" />
+            android:paddingRight="16dp"
+            />
+        <FrameLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/bitcoinTimeRanges"
+            android:layout_below="@id/bitcoinPriceLineChart"
+            />
+
     </RelativeLayout>
 </ScrollView>

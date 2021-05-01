@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="globalStats"
+            type="com.ru.crypto.models.GlobalCryptoData" />
+
+    </data>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -24,6 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="end"
+            android:text="@{globalStats.data.activeCryptoCurrenciesNum}"
             style="@style/globalStatsTextStyle"/>
     </LinearLayout>
 
@@ -49,6 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="end"
+            android:text="@{globalStats.data.marketCapChangePercentage24H}"
             style="@style/globalStatsTextStyle"/>
     </LinearLayout>
 
@@ -77,3 +86,4 @@
             style="@style/globalStatsTextStyle"/>
     </LinearLayout>
 </RelativeLayout>
+</layout>
