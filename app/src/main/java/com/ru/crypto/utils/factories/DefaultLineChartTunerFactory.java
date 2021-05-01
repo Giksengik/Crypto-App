@@ -1,8 +1,8 @@
-package com.ru.crypto.utils;
+package com.ru.crypto.utils.factories;
 
-public class DefaultLineChartTunerFactory implements  ILineChartTunerFactory{
+public class DefaultLineChartTunerFactory implements ILineChartTunerFactory {
     @Override
     public ILineChartTuner getLineChartTuner() {
-        return new 
+        return new DefaultLineChartTuner();
     }
 }

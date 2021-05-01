@@ -1,4 +1,4 @@
-package com.ru.crypto.utils;
+package com.ru.crypto.utils.factories;
 
 import android.graphics.Color;
 
@@ -8,6 +8,10 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.ru.crypto.R;
+import com.ru.crypto.utils.LineChartXAxisValueFormatterBitcoin;
+import com.ru.crypto.utils.LineChatYAxisValueFormatterBitcoin;
+import com.ru.crypto.utils.factories.ILineChartTuner;
 
 import java.util.ArrayList;
 
@@ -61,7 +65,7 @@ public class DefaultLineChartTuner implements ILineChartTuner {
             lineChartSet = new LineDataSet(chartValues, "Default Line Chart");
             lineChartSet.setLineWidth(3f);
 
-
+            lineChartSet.setColor(R.color.arctic);
             lineChartSet.setDrawCircleHole(false);
             lineChartSet.setDrawCircles(false);
 

@@ -1,4 +1,4 @@
-package com.ru.crypto.utils;
+package com.ru.crypto.utils.factories;
 
 import com.github.mikephil.charting.charts.LineChart;
 
