@@ -4,7 +4,7 @@ import com.github.mikephil.charting.charts.LineChart;
 
 import java.util.ArrayList;
 
-public interface ILineChartTuner {
+public interface ILineChartTuner  {
 
     void setChartProperties(LineChart chart);
 

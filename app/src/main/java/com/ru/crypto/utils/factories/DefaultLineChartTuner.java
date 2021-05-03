@@ -19,6 +19,7 @@ public class DefaultLineChartTuner implements ILineChartTuner {
 
     @Override
     public void setChartProperties(LineChart chart) {
+        chart.setNoDataText("");
 
         chart.setBackgroundColor(Color.WHITE);
         chart.setDrawGridBackground(false);

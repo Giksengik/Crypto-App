@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -57,6 +58,8 @@ public class GlobalFragment extends Fragment implements TimeRangeFragment.onTime
         PieChart globalPercentageChart = root.findViewById(R.id.globalPercentageChart);
         LineChart bitcoinPriceChart = root.findViewById(R.id.bitcoinPriceLineChart);
         TextView bitcoinValue = root.findViewById(R.id.bitcoinValue);
+        ProgressBar globalDataProgressBar = root.findViewById(R.id.progressBarGlobalData);
+        ProgressBar bitcoinDataProgressBar = root.findViewById(R.id.progressBarBitcoinData);
 
         TimeRangeFragment bitcoinTimeRangeFragment = new TimeRangeFragment();
         getChildFragmentManager().beginTransaction()
@@ -67,25 +70,27 @@ public class GlobalFragment extends Fragment implements TimeRangeFragment.onTime
         getChildFragmentManager().beginTransaction()
                 .add(R.id.marketStatsContainer,globalStatsFragment)
                 .commit();
+        DefaultPieChartTuner pieTuner = (DefaultPieChartTuner) mGlobalViewModel.getDefaultPieChartTuner();
+        DefaultLineChartTuner lineTuner = (DefaultLineChartTuner) mGlobalViewModel.getDefaultLineChartTuner();
 
+        lineTuner.setChartProperties(bitcoinPriceChart);
+        pieTuner.setChartProperties(globalPercentageChart);
 
         bitcoinPriceChart.setOnChartValueSelectedListener(OnClick.onLineChartValue(bitcoinValue));
 
         mGlobalViewModel.getGlobalData().observe(getViewLifecycleOwner(), globalCryptoData -> {
-            DefaultPieChartTuner tuner = (DefaultPieChartTuner) mGlobalViewModel.getDefaultPieChartTuner();
-            tuner.setChartProperties(globalPercentageChart);
-            tuner.setData(globalPercentageChart, globalCryptoData.getData().getMarketCapPercentage());
+            pieTuner.setData(globalPercentageChart, globalCryptoData.getData().getMarketCapPercentage());
             globalStatsFragment.setData(globalCryptoData);
+            globalDataProgressBar.setVisibility(View.INVISIBLE);
         });
 
 
 
         mGlobalViewModel.getBitcoinData().observe(getViewLifecycleOwner(), historicalCurrencyData -> {
-            DefaultLineChartTuner tuner = (DefaultLineChartTuner) mGlobalViewModel.getDefaultLineChartTuner();
-            tuner.setChartProperties(bitcoinPriceChart);
-            tuner.setLinearChartData(bitcoinPriceChart, historicalCurrencyData.getPrices());
+            lineTuner.setLinearChartData(bitcoinPriceChart, historicalCurrencyData.getPrices());
             ArrayList<Double> lastPrice = historicalCurrencyData.getPrices().get(historicalCurrencyData.getPrices().size()-1);
             bitcoinValue.setText(Converters.getFormattedWithHourDataStringByUnixTimestamp(lastPrice.get(0)) + " : " + lastPrice.get(1) + "$");
+            bitcoinDataProgressBar.setVisibility(View.INVISIBLE);
         });
 
         return root;

@@ -22,6 +22,7 @@ import java.util.TreeMap;
 public class DefaultPieChartTuner implements IPieChartTuner {
     @Override
     public void setChartProperties(PieChart chart) {
+        chart.setNoDataText("");
         chart.setUsePercentValues(true);
         chart.getDescription().setEnabled(false);
         chart.animate();

@@ -8,7 +8,7 @@ import com.ru.crypto.models.CryptoCurrency;
 import com.ru.crypto.models.Sparkline;
 import com.ru.crypto.utils.SparklineConverter;
 
-@Database(entities = {CryptoCurrency.class}, version = 2, exportSchema = false)
+@Database(entities = {CryptoCurrency.class}, version = 1, exportSchema = false)
 public abstract class CryptoCurrencyDatabase extends RoomDatabase {
 
     public abstract CryptoCurrencyDao cryptoCurrencyDao();
