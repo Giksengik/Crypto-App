@@ -19,7 +19,7 @@ public class OnClick {
             @SuppressLint("SetTextI18n")
             @Override
             public void onValueSelected(Entry e, Highlight h) {
-                priceValue.setText(Converters.getFormattedDataStringByUnixTimestamp(e.getX()) + " " + e.getY() + "$");
+                priceValue.setText(Converters.getFormattedWithHourDataStringByUnixTimestamp(e.getX()) + " : " + e.getY() + "$");
             }
 
             @Override

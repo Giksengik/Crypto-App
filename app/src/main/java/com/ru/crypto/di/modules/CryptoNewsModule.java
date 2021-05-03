@@ -27,7 +27,7 @@ public class CryptoNewsModule {
     @Provides
     CryptoArticleDatabase provideDB() {
         return Room.databaseBuilder(App.getInstance(),
-                CryptoArticleDatabase.class, "database-name")
+                CryptoArticleDatabase.class, "crypto article db")
                 .fallbackToDestructiveMigration()
                 .build();
     }

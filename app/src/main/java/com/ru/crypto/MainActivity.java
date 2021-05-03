@@ -6,7 +6,6 @@ import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.ru.crypto.api.INetworkService;
-import com.ru.crypto.di.components.DaggerGlobalDataRepoComponent;
 import com.ru.crypto.di.components.GlobalDataRepoComponent;
 import com.ru.crypto.models.GlobalCryptoData;
 import com.ru.crypto.repositories.CryptoCurrencyRepository;

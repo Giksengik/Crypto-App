@@ -21,7 +21,7 @@ public interface JSONPlaceholderAPI {
 
     //COIN GECKO
     String defaultOrder = "market_cap_desc";
-    int defaultPerPage = 100;
+    int defaultPerPage = 250;
     String defaultPriceChangePercentage = "24H";
 
     //COIN GECKO
@@ -29,8 +29,8 @@ public interface JSONPlaceholderAPI {
             defaultPerPage + "&price_change_percentage=" + defaultPriceChangePercentage + "&sparkline=true")
     Call<List<CryptoCurrency>> getDefaultInfo(@Query("vs_currency") String currency, @Query("ids") String ids);
 
-    @GET("/api/v3/coins/markets?order=" + defaultOrder + "&per_page=" + defaultPerPage  +"&page=1&sparkline=true")
-    Call<List<CryptoID>> getDefaultList(@Query("vs_currency") String currency);
+    @GET("/api/v3/coins/markets?order=" + defaultOrder + "&per_page=" + defaultPerPage  +"&sparkline=true")
+    Call<List<CryptoID>> getCryptoCurrencyList(@Query("vs_currency") String currency, @Query("page") int page);
 
     @GET("/api/v3/global")
     Call<GlobalCryptoData> getGlobalData();

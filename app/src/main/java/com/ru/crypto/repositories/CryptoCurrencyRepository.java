@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.DiffUtil;
 
+import com.ru.crypto.db.CryptoCurrencyDatabase;
 import com.ru.crypto.utils.Converters;
 import com.ru.crypto.adapters.CryptoCurrencyDiffUtilCallback;
 import com.ru.crypto.api.INetworkService;
@@ -26,13 +27,17 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class CryptoCurrencyRepository {
+
     private static String CURRENT_CURRENCY = "USD";
+    private static int PAGE_LIMIT = 6;
+    private CryptoCurrencyDatabase mDatabase;
     INetworkService mCryptoCurrencyNetworkService;
     MutableLiveData<List<CryptoCurrency>> mAllCurrencies;
     MutableLiveData<DiffUtil.DiffResult> mCryptoCurrencyDiffResult;
 
-    public CryptoCurrencyRepository(INetworkService cryptoCurrencyNetworkService){
+    public CryptoCurrencyRepository(INetworkService cryptoCurrencyNetworkService, CryptoCurrencyDatabase database) {
         this.mCryptoCurrencyNetworkService = cryptoCurrencyNetworkService;
+        this.mDatabase = database;
         mAllCurrencies = new MutableLiveData<>();
         mCryptoCurrencyDiffResult = new MutableLiveData<>();
     }
@@ -54,7 +59,7 @@ public class CryptoCurrencyRepository {
         return mAllCurrencies;
     }
 
-    public void loadCurrenciesInfo(String currencies, Application application) {
+    private void loadCurrenciesInfo(String currencies, Application application) {
         mCryptoCurrencyNetworkService.getJSONApi()
                 .getDefaultInfo(CURRENT_CURRENCY,currencies)
                 .enqueue(new Callback<List<CryptoCurrency>>() {
@@ -88,9 +93,11 @@ public class CryptoCurrencyRepository {
                     }
                 });
     }
-    public void loadCurrenciesInfo(Application application) {
+    public void loadCurrenciesInfo(Application application, int page) {
+        final int currentPage = page;
+        final int nextPage = ++page;
         Single.create((SingleOnSubscribe<List<CryptoID>>) emitter -> mCryptoCurrencyNetworkService.getJSONApi()
-                .getDefaultList(CURRENT_CURRENCY)
+                .getCryptoCurrencyList(CURRENT_CURRENCY,currentPage)
                 .enqueue(new Callback<List<CryptoID>>() {
                     @Override
                     public void onResponse(Call<List<CryptoID>> call, Response<List<CryptoID>> response) {
@@ -107,6 +114,8 @@ public class CryptoCurrencyRepository {
                     @Override
                     public void onSuccess(@NonNull List<CryptoID> cryptoIDS) {
                         loadCurrenciesInfo(parseCryptoIDsToOneString(cryptoIDS), application);
+//                        if(nextPage <= PAGE_LIMIT)
+//                            loadCurrenciesInfo(application, nextPage);
                     }
 
                     @Override

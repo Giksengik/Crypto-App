@@ -2,14 +2,24 @@ package com.ru.crypto.models;
 
 import android.graphics.Bitmap;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.ru.crypto.utils.SparklineConverter;
 
 import java.util.List;
 
+@Entity
 public class CryptoCurrency {
+    @NonNull
     @SerializedName("id")
     @Expose
+    @PrimaryKey
     String id;
 
     @SerializedName("symbol")
@@ -64,6 +74,7 @@ public class CryptoCurrency {
 
     @SerializedName("sparkline_in_7d")
     @Expose
+    @Ignore
     Sparkline sparkline;
 
 
@@ -73,6 +84,7 @@ public class CryptoCurrency {
 
     String iconString;
 
+    @Ignore
     Bitmap icon;
 
     public String getIconString() {

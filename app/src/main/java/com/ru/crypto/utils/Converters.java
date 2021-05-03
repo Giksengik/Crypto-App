@@ -36,6 +36,12 @@ public class Converters {
         DateFormat dateTimeFormat = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.getDefault());
         return dateTimeFormat.format(timeMilliseconds);
     }
+    public static String getFormattedWithHourDataStringByUnixTimestamp(double timeStamp) {
+        Date timeMilliseconds = convertUnixTimestamp(timeStamp);
+        DateFormat dateTimeFormat = DateFormat.getTimeInstance(DateFormat.DEFAULT, Locale.getDefault());
+        return getFormattedDataStringByUnixTimestamp(timeStamp) + " " + dateTimeFormat.format(timeMilliseconds);
+
+    }
     private static Date convertUnixTimestamp(double timeStamp) {
        return new Date((long)timeStamp);
     }

@@ -5,11 +5,12 @@ import androidx.lifecycle.ViewModel;
 
 
 import com.ru.crypto.di.components.DaggerGlobalDataRepoComponent;
+
 import com.ru.crypto.di.components.GlobalDataRepoComponent;
 import com.ru.crypto.models.GlobalCryptoData;
 import com.ru.crypto.models.HistoricalCurrencyData;
 import com.ru.crypto.repositories.GlobalDataRepository;
-import com.ru.crypto.utils.factories.DefaultLineChartTunerFactory;
+
 import com.ru.crypto.utils.factories.ILineChartTuner;
 import com.ru.crypto.utils.factories.IPieChartTuner;
 

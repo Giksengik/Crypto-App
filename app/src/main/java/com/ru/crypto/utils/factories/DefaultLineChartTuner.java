@@ -23,6 +23,7 @@ public class DefaultLineChartTuner implements ILineChartTuner {
         chart.setBackgroundColor(Color.WHITE);
         chart.setDrawGridBackground(false);
 
+
         chart.getDescription().setEnabled(false);
 
         chart.setTouchEnabled(true);
@@ -68,7 +69,7 @@ public class DefaultLineChartTuner implements ILineChartTuner {
             ArrayList<ILineDataSet> dataSets = new ArrayList<>();
             dataSets.add(lineChartSet);
             LineData chartData = new LineData(dataSets);
-
+            chartData.setDrawValues(false);
             chart.setData(chartData);
             if(isNeedToUpdate) {
                 chart.invalidate();

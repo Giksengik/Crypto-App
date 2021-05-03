@@ -31,7 +31,7 @@ public class MarketViewModel extends ViewModel {
     }
 
     public void updateCurrencies(Application application) {
-        mRepository.loadCurrenciesInfo(application);
+        mRepository.loadCurrenciesInfo(application, 1);
     }
     public LiveData<DiffUtil.DiffResult> getDiffResult() {
         return mRepository.getCryptoCurrencyDiffResult();

@@ -14,9 +14,6 @@ import androidx.fragment.app.Fragment;
 import com.ru.crypto.R;
 import com.ru.crypto.models.GlobalCryptoData;
 
-import org.w3c.dom.Text;
-
-import java.text.DecimalFormat;
 
 public class GlobalStatsFragment extends Fragment {
     private TextView numOfCurrencies;
