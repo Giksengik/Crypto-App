@@ -2,6 +2,7 @@ package com.ru.crypto.ui.market;
 
 import android.app.Application;
 
+import androidx.lifecycle.LifecycleObserver;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.DiffUtil;
@@ -39,5 +40,6 @@ public class MarketViewModel extends ViewModel {
     public void countDiffResult (List<CryptoCurrency> oldCurrencies) {
         mRepository.countCryptoCurrencyDiffResult(oldCurrencies);
     }
+
 
 }

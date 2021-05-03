@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DiffUtil;
@@ -18,17 +19,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ru.crypto.R;
 import com.ru.crypto.adapters.CryptoCurrencyAdapter;
-//import com.ru.crypto.di.components.CryptoCurrencyAdapterComponent;
-//import com.ru.crypto.di.components.DaggerCryptoCurrencyAdapterComponent;
+import com.ru.crypto.di.components.CryptoCurrencyAdapterComponent;
+import com.ru.crypto.di.components.DaggerCryptoCurrencyAdapterComponent;
 
 
 import javax.inject.Inject;
 
-public class MarketFragment extends Fragment {
+public class MarketFragment extends Fragment implements LifecycleOwner {
 
     private MarketViewModel mMarketViewModel;
 
-//    @Inject
+    @Inject
     CryptoCurrencyAdapter currencyAdapter;
 
     @Override
@@ -48,8 +49,8 @@ public class MarketFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-//        CryptoCurrencyAdapterComponent component = DaggerCryptoCurrencyAdapterComponent.create();
-//        component.inject(this);
+        CryptoCurrencyAdapterComponent component = DaggerCryptoCurrencyAdapterComponent.create();
+        component.inject(this);
         currencyAdapter = new CryptoCurrencyAdapter();
         mMarketViewModel = new ViewModelProvider(this).get(MarketViewModel.class);
 

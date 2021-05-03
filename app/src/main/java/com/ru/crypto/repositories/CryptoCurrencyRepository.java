@@ -127,6 +127,8 @@ public class CryptoCurrencyRepository {
                 });
 
     }
+
+
     private String parseCryptoIDsToOneString(List<CryptoID> ids){
         StringBuilder result = new StringBuilder();
         for(CryptoID item : ids) {

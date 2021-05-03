@@ -89,7 +89,7 @@ public class GlobalDataRepository {
 
                     @Override
                     public void onFailure(Call<HistoricalCurrencyData> call, Throwable t) {
-                        t.printStackTrace();
+                        loadBitcoinDataInRange(range);
                     }
                 });
     }

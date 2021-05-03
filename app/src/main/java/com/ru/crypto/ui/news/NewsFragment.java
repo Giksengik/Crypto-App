@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.ru.crypto.R;
 import com.ru.crypto.adapters.CryptoArticlesAdapter;
 
-public class NewsFragment extends Fragment {
+public class NewsFragment extends Fragment implements LifecycleOwner {
 
     private NewsViewModel mNewsViewModel;
 
@@ -33,6 +34,8 @@ public class NewsFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
         mNewsViewModel.getArticles().observe(getViewLifecycleOwner(), adapter::setArticles);
+
+        getLifecycle().addObserver(mNewsViewModel);
         return root;
     }
 }

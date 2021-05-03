@@ -1,7 +1,10 @@
 package com.ru.crypto.ui.news;
 
 
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleObserver;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.OnLifecycleEvent;
 import androidx.lifecycle.ViewModel;
 
 import com.ru.crypto.di.components.CryptoNewsRepoComponent;
@@ -15,7 +18,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-public class NewsViewModel extends ViewModel {
+public class NewsViewModel extends ViewModel implements LifecycleObserver {
     @Inject CryptoNewsRepository mRepository;
 
     public NewsViewModel() {
@@ -24,6 +27,11 @@ public class NewsViewModel extends ViewModel {
     }
     public LiveData<List<CryptoArticle>> getArticles () {
         return mRepository.getArticles();
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+    public void deleteAllArticles() {
+        mRepository.deleteAllArticles();
     }
 
 }

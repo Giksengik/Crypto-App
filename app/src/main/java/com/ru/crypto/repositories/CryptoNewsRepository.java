@@ -66,5 +66,15 @@ public class CryptoNewsRepository {
                     }
                 });
     }
+    public void deleteAllArticles() {
+        new Thread(){
+            @Override
+            public void run() {
+                super.run();
+                mDatabase.cryptoArticleDao().deleteAll(mArticles.getValue());
+            }
+        }.start();
+
+    }
 
 }
