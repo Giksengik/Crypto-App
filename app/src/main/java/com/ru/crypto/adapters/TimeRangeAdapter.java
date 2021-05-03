@@ -12,12 +12,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.ru.crypto.R;
 import com.ru.crypto.ui.fragments.TimeRangeFragment;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.sql.Time;
+import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class TimeRangeAdapter extends RecyclerView.Adapter<TimeRangeAdapter.ViewHolder> {
-    List<String> ranges = new ArrayList(Arrays.asList("1D","7D","1M", "3M", "6M", "1Y", "3Y", "ALL"));
+
+    List<String> ranges = new ArrayList(Arrays.asList(TimeRange.ONE_DAY_TIME_RANGE.toString(),
+            TimeRange.ONE_WEEK_TIME_RANGE.toString(),TimeRange.ONE_MONTH_TIME_RANGE.toString(),TimeRange.THREE_MONTH_TIME_RANGE.toString(),
+            TimeRange.SIX_MONTH_TIME_RANGE.toString(),TimeRange.ONE_YEAR_TIME_RANGE.toString(),TimeRange.THREE_YEAR_TIME_RANGE.toString(),
+            TimeRange.ALL_TIME_RANGE.toString()));
+
     String pressedTimeRange;
     TimeRangeFragment.onTimeRangeClickListener onTimeChangedListener;
     public TimeRangeAdapter (TimeRangeFragment.onTimeRangeClickListener onTimeChangedListener) {

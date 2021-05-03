@@ -36,7 +36,7 @@ import com.ru.crypto.utils.factories.DefaultPieChartTuner;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
-public class GlobalFragment extends Fragment{
+public class GlobalFragment extends Fragment implements TimeRangeFragment.onTimeRangeClickListener{
 
      private GlobalViewModel mGlobalViewModel;
 
@@ -111,4 +111,8 @@ public class GlobalFragment extends Fragment{
     }
 
 
+    @Override
+    public void onTimeRangeClick(String timeRange) {
+        mGlobalViewModel.loadBitcoinInformationInTimeRange(timeRange);
+    }
 }

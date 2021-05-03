@@ -1,5 +1,6 @@
 package com.ru.crypto.ui.fragments;
 
+import android.app.Application;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,23 +11,32 @@ import android.widget.TimePicker;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ru.crypto.MainActivity;
 import com.ru.crypto.R;
 import com.ru.crypto.adapters.TimeRangeAdapter;
 
 public class TimeRangeFragment extends Fragment {
 
+
+
         RecyclerView rangesList;
         TimeRangeAdapter timeRangeAdapter;
+
+
         private onTimeRangeClickListener onTimeChangedListener = null;
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        if(context instanceof onTimeRangeClickListener) {
-            onTimeChangedListener = (onTimeRangeClickListener) context;
+        MainActivity mainActivity =(MainActivity) context;
+        NavHostFragment navHostFragment = (NavHostFragment) mainActivity.getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+        Fragment fragment = navHostFragment.getChildFragmentManager().getFragments().get(0);
+        if(fragment instanceof onTimeRangeClickListener) {
+            onTimeChangedListener = (onTimeRangeClickListener) fragment;
         }
     }
 

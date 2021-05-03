@@ -26,9 +26,7 @@ import java.util.Date;
 
 import javax.inject.Inject;
 
-public class MainActivity extends AppCompatActivity  implements TimeRangeFragment.onTimeRangeClickListener  {
-    @Inject
-    GlobalDataRepository globalDataRepository;
+public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,12 +48,6 @@ public class MainActivity extends AppCompatActivity  implements TimeRangeFragmen
         toggle.setDrawerSlideAnimationEnabled(true);
         toggle.syncState();
 
-        GlobalDataRepoComponent component = DaggerGlobalDataRepoComponent.create();
-        component.inject(this);
     }
 
-    @Override
-    public void onTimeRangeClick(String timeRange) {
-        Toast.makeText(this,"hui", Toast.LENGTH_LONG);
-    }
 }

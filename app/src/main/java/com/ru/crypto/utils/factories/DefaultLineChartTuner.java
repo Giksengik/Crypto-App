@@ -52,16 +52,12 @@ public class DefaultLineChartTuner implements ILineChartTuner {
         }
 
         LineDataSet lineChartSet;
+        boolean isNeedToUpdate = false;
         if (chart.getData() != null &&
                 chart.getData().getDataSetCount() > 0) {
-            lineChartSet = (LineDataSet) chart.getData().getDataSetByIndex(0);
-            lineChartSet.setValues(chartValues);
-            lineChartSet.notifyDataSetChanged();
-
-//            chart.getData().notifyDataChanged();
-//            chart.notifyDataSetChanged();
+            isNeedToUpdate = true;
         }
-        else {
+
             lineChartSet = new LineDataSet(chartValues, "Default Line Chart");
             lineChartSet.setLineWidth(3f);
 
@@ -74,6 +70,8 @@ public class DefaultLineChartTuner implements ILineChartTuner {
             LineData chartData = new LineData(dataSets);
 
             chart.setData(chartData);
-        }
+            if(isNeedToUpdate) {
+                chart.invalidate();
+            }
     }
 }

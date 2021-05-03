@@ -42,7 +42,7 @@
             android:layout_below="@id/bitcoinPrice"
             android:gravity="center"
             android:textColor="@color/arctic"
-            android:text="TextView" />
+            />
 
         <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/bitcoinPriceLineChart"

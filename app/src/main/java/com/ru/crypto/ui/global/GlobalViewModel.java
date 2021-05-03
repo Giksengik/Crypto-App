@@ -41,11 +41,12 @@ public class GlobalViewModel extends ViewModel {
         mRepository.loadGlobalData();
     }
 
-    public void loadBitcoinInfo () {
-        mRepository.loadAllBitcoinData();
-    }
 
     public LiveData<HistoricalCurrencyData> getBitcoinData () {
         return mRepository.getBitcoinGlobalData();
+    }
+
+    public void loadBitcoinInformationInTimeRange(String timeRange) {
+        mRepository.loadAllBitcoinInTimeRange(timeRange);
     }
 }

@@ -10,6 +10,7 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface JSONPlaceholderAPI {
@@ -36,7 +37,8 @@ public interface JSONPlaceholderAPI {
 
     @GET("/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=max")
     Call<HistoricalCurrencyData> getAllBitcoinData();
-
+    @GET("/api/v3/coins/{currency}/market_chart?vs_currency=usd")
+    Call<HistoricalCurrencyData> getCurrencyDataForTimeRange(@Path("currency") String currency, @Query("days") String  days);
     // CRYPTO NEWS
 
     @GET("/data/v2/news/?lang=EN&api_key=be192f39a76e19ab11d3cfe72e31952110b643da9fb0cad97df93ea312a4b626")
