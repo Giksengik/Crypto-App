@@ -25,13 +25,15 @@ import com.ru.crypto.utils.factories.MinimalisticLineChartTuner;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
 
 public class CryptoCurrencyAdapter extends RecyclerView.Adapter<CryptoCurrencyAdapter.ViewHolder> {
     List<CryptoCurrency> currencies = new ArrayList<>();
-
+    List<CryptoCurrency> unfilteredCurrencies = new ArrayList<>();
+    List<CryptoCurrency> filteredCurrencies = new ArrayList<>();
     @Inject
     public CryptoCurrencyAdapter(){ }
 
@@ -61,8 +63,24 @@ public class CryptoCurrencyAdapter extends RecyclerView.Adapter<CryptoCurrencyAd
 
     public void setCurrencies(List<CryptoCurrency> currencies) {
         this.currencies = currencies;
+        this.unfilteredCurrencies = new ArrayList<>(currencies);
     }
 
+    public void filterCurrencies(String query) {
+        if (!query.replaceAll("\\s+","").equals("")) {
+            filteredCurrencies.clear();
+            for (CryptoCurrency item : unfilteredCurrencies) {
+                if (item.getCurrency().startsWith(query) || item.getId().startsWith(query))
+                    filteredCurrencies.add(item);
+            }
+            currencies.clear();
+            currencies = new ArrayList<>(filteredCurrencies);
+        }else {
+            currencies.clear();
+            currencies = new ArrayList<>(unfilteredCurrencies);
+        }
+        notifyDataSetChanged();
+    }
     public List<CryptoCurrency> getData() {
         return currencies;
     }

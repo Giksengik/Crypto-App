@@ -54,7 +54,6 @@ public class GlobalFragment extends Fragment implements TimeRangeFragment.onTime
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_global, container, false);
-
         PieChart globalPercentageChart = root.findViewById(R.id.globalPercentageChart);
         LineChart bitcoinPriceChart = root.findViewById(R.id.bitcoinPriceLineChart);
         TextView bitcoinValue = root.findViewById(R.id.bitcoinValue);
