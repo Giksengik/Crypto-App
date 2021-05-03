@@ -15,6 +15,7 @@ import com.ru.crypto.utils.SparklineConverter;
 import java.util.List;
 
 @Entity
+
 public class CryptoCurrency {
     @NonNull
     @SerializedName("id")
@@ -74,7 +75,7 @@ public class CryptoCurrency {
 
     @SerializedName("sparkline_in_7d")
     @Expose
-    @Ignore
+    @TypeConverters({SparklineConverter.class})
     Sparkline sparkline;
 
 

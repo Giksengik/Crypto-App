@@ -32,14 +32,18 @@ public class CryptoCurrencyRepository {
     private static int PAGE_LIMIT = 6;
     private CryptoCurrencyDatabase mDatabase;
     INetworkService mCryptoCurrencyNetworkService;
-    MutableLiveData<List<CryptoCurrency>> mAllCurrencies;
+    LiveData<List<CryptoCurrency>> mAllCurrencies;
     MutableLiveData<DiffUtil.DiffResult> mCryptoCurrencyDiffResult;
 
     public CryptoCurrencyRepository(INetworkService cryptoCurrencyNetworkService, CryptoCurrencyDatabase database) {
         this.mCryptoCurrencyNetworkService = cryptoCurrencyNetworkService;
         this.mDatabase = database;
-        mAllCurrencies = new MutableLiveData<>();
+        mAllCurrencies = mDatabase.cryptoCurrencyDao().getAll();
         mCryptoCurrencyDiffResult = new MutableLiveData<>();
+    }
+
+    public LiveData<List<CryptoCurrency>> getCurrencies(){
+        return mAllCurrencies;
     }
 
     public LiveData<DiffUtil.DiffResult> getCryptoCurrencyDiffResult() {
@@ -55,9 +59,7 @@ public class CryptoCurrencyRepository {
             }
         }.start();
     }
-    public LiveData<List<CryptoCurrency>> getCurrencies(){
-        return mAllCurrencies;
-    }
+
 
     private void loadCurrenciesInfo(String currencies, Application application) {
         mCryptoCurrencyNetworkService.getJSONApi()
@@ -82,7 +84,7 @@ public class CryptoCurrencyRepository {
                                             }
                                         }
                                     }
-                                    mAllCurrencies.postValue(currenciesList);
+                                    mDatabase.cryptoCurrencyDao().insertAll(currenciesList);
                                 }
                             }.start();
                         }
@@ -114,8 +116,8 @@ public class CryptoCurrencyRepository {
                     @Override
                     public void onSuccess(@NonNull List<CryptoID> cryptoIDS) {
                         loadCurrenciesInfo(parseCryptoIDsToOneString(cryptoIDS), application);
-//                        if(nextPage <= PAGE_LIMIT)
-//                            loadCurrenciesInfo(application, nextPage);
+                        if(nextPage <= PAGE_LIMIT)
+                            loadCurrenciesInfo(application, nextPage);
                     }
 
                     @Override

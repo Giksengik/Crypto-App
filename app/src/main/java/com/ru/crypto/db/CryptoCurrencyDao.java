@@ -1,6 +1,8 @@
 package com.ru.crypto.db;
 
+
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
@@ -15,7 +17,7 @@ import java.util.List;
 @Dao
 public interface CryptoCurrencyDao {
 
-    @Query("SELECT * FROM cryptocurrency ")
+    @Query("SELECT * FROM cryptocurrency Order by marketCapRank ASC")
     LiveData<List<CryptoCurrency>> getAll();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -23,4 +25,7 @@ public interface CryptoCurrencyDao {
 
     @Update
     void updateAll(List<CryptoCurrency> cryptoCurrencies);
+
+    @Query("SELECT COUNT(id) FROM cryptocurrency")
+    Integer getRowCount();
 }

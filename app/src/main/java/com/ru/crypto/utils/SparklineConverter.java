@@ -17,11 +17,13 @@ public class SparklineConverter {
 
     @TypeConverter
     public String toJSON(Sparkline sparkline) {
-        return gson.toJson(sparkline);
+        String json = gson.toJson(sparkline);
+        return json;
     }
 
     @TypeConverter
     public Sparkline toSparkline(String data) {
-        return gson.fromJson(data,Sparkline.class);
+        Sparkline sparkline = gson.fromJson(data,Sparkline.class);
+        return sparkline;
     }
 }

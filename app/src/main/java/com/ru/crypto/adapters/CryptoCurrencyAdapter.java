@@ -53,6 +53,7 @@ public class CryptoCurrencyAdapter extends RecyclerView.Adapter<CryptoCurrencyAd
         holder.priceChange.setText(decimalFormat.format(currency.getPriceChangePercentage24H()) + "%");
         MinimalisticLineChartTuner chartTuner = new MinimalisticLineChartTuner();
         chartTuner.setChartProperties(holder.chart);
+        if(currency.getSparkline() != null)
         chartTuner.setLinearChartData(holder.chart, currency.getSparkline().getPriceChange());
         if (currency.getIconString() != null)
                 holder.currencyIcon.setImageBitmap(Converters.decodeBase64(currency.getIconString()));
