@@ -139,4 +139,7 @@ public class CryptoCurrencyRepository {
         }
         return result.toString();
     }
+    public void refreshData() {
+
+    }
 }

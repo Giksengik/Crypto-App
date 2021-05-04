@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,6 +30,7 @@ public class MarketFragment extends Fragment implements LifecycleOwner {
     private MarketViewModel mMarketViewModel;
     private Toolbar mToolbar;
     CryptoCurrencyAdapter currencyAdapter;
+    private ProgressBar cryptoCurrencyListProgressBar;
 
     private final CryptoCurrencyAdapter.OnCurrencyClickListener mCurrencyClickListener = (currency, position) -> {
         CurrencyProfileFragment profileFragment = new CurrencyProfileFragment();
@@ -55,6 +57,7 @@ public class MarketFragment extends Fragment implements LifecycleOwner {
                              ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_market, container, false);
+        cryptoCurrencyListProgressBar  = root.findViewById(R.id.cryptoCurrencyListProgressBar);
         RecyclerView currenciesList = root.findViewById(R.id.currenciesList);
         currenciesList.setItemAnimator(null);
 
@@ -62,12 +65,19 @@ public class MarketFragment extends Fragment implements LifecycleOwner {
         currenciesList.setAdapter(currencyAdapter);
 
         mMarketViewModel.getAllCurrencies().observe(getViewLifecycleOwner(), cryptocurrencies -> {
-            mMarketViewModel.countDiffResult(currencyAdapter.getData());
-            currencyAdapter.setCurrencies(cryptocurrencies);
+            if( currencyAdapter.getData().size() == 0) {
+                currencyAdapter.setCurrencies(cryptocurrencies);
+                currencyAdapter.notifyDataSetChanged();
+            }else {
+                currencyAdapter.setCurrencies(cryptocurrencies);
+                mMarketViewModel.countDiffResult(currencyAdapter.getData());
+            }
+            cryptoCurrencyListProgressBar.setVisibility(View.INVISIBLE);
         });
 
         mMarketViewModel.getDiffResult().observe(getViewLifecycleOwner(), diffResult -> {
             diffResult.dispatchUpdatesTo(currencyAdapter);
+            cryptoCurrencyListProgressBar.setVisibility(View.INVISIBLE);
         });
 
         return root;
@@ -78,6 +88,7 @@ public class MarketFragment extends Fragment implements LifecycleOwner {
         super.onStart();
         setNavVisibility(true);
         initializeToolbar();
+        mMarketViewModel.refreshData();
         mMarketViewModel.updateCurrencies(getActivity().getApplication());
         setSearchActions();
     }

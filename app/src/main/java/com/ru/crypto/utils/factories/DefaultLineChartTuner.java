@@ -9,9 +9,9 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.ru.crypto.R;
-import com.ru.crypto.utils.LineChartXAxisValueFormatterBitcoin;
-import com.ru.crypto.utils.LineChatYAxisValueFormatterBitcoin;
-import com.ru.crypto.utils.factories.ILineChartTuner;
+import com.ru.crypto.utils.DefaultLineChartXAxisValueFormatter;
+import com.ru.crypto.utils.DefaultLineChatYAxisValueFormatter;
+
 
 import java.util.ArrayList;
 
@@ -31,8 +31,8 @@ public class DefaultLineChartTuner implements ILineChartTuner {
 
         chart.getLegend().setEnabled(false);
 
-        chart.getAxisRight().setValueFormatter(new LineChatYAxisValueFormatterBitcoin());
-        chart.getXAxis().setValueFormatter(new LineChartXAxisValueFormatterBitcoin());
+        chart.getAxisRight().setValueFormatter(new DefaultLineChatYAxisValueFormatter());
+        chart.getXAxis().setValueFormatter(new DefaultLineChartXAxisValueFormatter());
 
         chart.getAxisLeft().setDrawGridLines(false);
         chart.getAxisLeft().setDrawLabels(false);

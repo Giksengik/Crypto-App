@@ -7,7 +7,6 @@ import android.util.Base64;
 
 import java.io.ByteArrayOutputStream;
 import java.text.DateFormat;
-import java.time.Instant;
 import java.util.Date;
 import java.util.Locale;
 
