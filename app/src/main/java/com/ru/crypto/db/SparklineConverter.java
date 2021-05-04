@@ -1,4 +1,4 @@
-package com.ru.crypto.utils;
+package com.ru.crypto.db;
 
 import androidx.room.TypeConverter;
 
@@ -17,13 +17,11 @@ public class SparklineConverter {
 
     @TypeConverter
     public String toJSON(Sparkline sparkline) {
-        String json = gson.toJson(sparkline);
-        return json;
+        return gson.toJson(sparkline);
     }
 
     @TypeConverter
     public Sparkline toSparkline(String data) {
-        Sparkline sparkline = gson.fromJson(data,Sparkline.class);
-        return sparkline;
+        return gson.fromJson(data,Sparkline.class);
     }
 }

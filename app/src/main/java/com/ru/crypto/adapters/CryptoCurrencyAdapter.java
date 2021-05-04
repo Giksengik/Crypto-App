@@ -31,11 +31,20 @@ import java.util.List;
 import javax.inject.Inject;
 
 public class CryptoCurrencyAdapter extends RecyclerView.Adapter<CryptoCurrencyAdapter.ViewHolder> {
-    List<CryptoCurrency> currencies = new ArrayList<>();
-    List<CryptoCurrency> unfilteredCurrencies = new ArrayList<>();
-    List<CryptoCurrency> filteredCurrencies = new ArrayList<>();
+
+    private List<CryptoCurrency> currencies = new ArrayList<>();
+    private List<CryptoCurrency> unfilteredCurrencies = new ArrayList<>();
+    private List<CryptoCurrency> filteredCurrencies = new ArrayList<>();
+
+    private OnCurrencyClickListener onCurrencyClickListener;
+    public interface OnCurrencyClickListener{
+        void onCurrencyClick(CryptoCurrency currency, int position);
+    }
+
     @Inject
-    public CryptoCurrencyAdapter(){ }
+    public CryptoCurrencyAdapter(OnCurrencyClickListener currencyClickListener){
+        this.onCurrencyClickListener = currencyClickListener;
+    }
 
     @NonNull
     @Override
@@ -59,6 +68,10 @@ public class CryptoCurrencyAdapter extends RecyclerView.Adapter<CryptoCurrencyAd
         chartTuner.setLinearChartData(holder.chart, currency.getSparkline().getPriceChange());
         if (currency.getIconString() != null)
                 holder.currencyIcon.setImageBitmap(Converters.decodeBase64(currency.getIconString()));
+
+        holder.itemView.setOnClickListener(v -> {
+            onCurrencyClickListener.onCurrencyClick(currency, position);
+        });
     }
 
     public void setCurrencies(List<CryptoCurrency> currencies) {

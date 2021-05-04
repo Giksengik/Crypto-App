@@ -19,7 +19,7 @@ import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
 
 
-
+import com.ru.crypto.ui.fragments.GlobalStatsFragment;
 import com.ru.crypto.ui.fragments.TimeRangeFragment;
 import com.ru.crypto.utils.Converters;
 import com.ru.crypto.R;

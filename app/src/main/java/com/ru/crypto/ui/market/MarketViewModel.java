@@ -7,9 +7,9 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.DiffUtil;
 
-//import com.ru.crypto.di.components.RepositoryComponent;
-//import com.ru.crypto.di.components.DaggerRepositoryComponent;
+
 import com.ru.crypto.di.components.CryptoCurrencyRepoComponent;
+
 import com.ru.crypto.di.components.DaggerCryptoCurrencyRepoComponent;
 import com.ru.crypto.models.CryptoCurrency;
 import com.ru.crypto.repositories.CryptoCurrencyRepository;

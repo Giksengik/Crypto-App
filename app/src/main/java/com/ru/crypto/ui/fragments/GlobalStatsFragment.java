@@ -1,4 +1,4 @@
-package com.ru.crypto.ui.global;
+package com.ru.crypto.ui.fragments;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;

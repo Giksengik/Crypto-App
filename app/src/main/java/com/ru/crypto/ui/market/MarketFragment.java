@@ -21,11 +21,13 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
 import com.ru.crypto.MainActivity;
 import com.ru.crypto.R;
 import com.ru.crypto.adapters.CryptoCurrencyAdapter;
-import com.ru.crypto.di.components.CryptoCurrencyAdapterComponent;
-import com.ru.crypto.di.components.DaggerCryptoCurrencyAdapterComponent;
+import com.ru.crypto.models.CryptoCurrency;
+import com.ru.crypto.ui.currency_profile.CurrencyProfileFragment;
 
 
 import javax.inject.Inject;
@@ -34,8 +36,6 @@ public class MarketFragment extends Fragment implements LifecycleOwner {
 
     private MarketViewModel mMarketViewModel;
     Toolbar toolbar;
-
-    @Inject
     CryptoCurrencyAdapter currencyAdapter;
 
     @Override
@@ -53,15 +53,17 @@ public class MarketFragment extends Fragment implements LifecycleOwner {
 
         }
     }
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        CryptoCurrencyAdapterComponent component = DaggerCryptoCurrencyAdapterComponent.create();
-        component.inject(this);
-        currencyAdapter = new CryptoCurrencyAdapter();
+
+        currencyAdapter = new CryptoCurrencyAdapter(currencyClickListener);
         mMarketViewModel = new ViewModelProvider(this).get(MarketViewModel.class);
 
         View root = inflater.inflate(R.layout.fragment_market, container, false);
         RecyclerView currenciesList = root.findViewById(R.id.currenciesList);
+        currenciesList.setItemAnimator(null);
+
         currenciesList.setLayoutManager(new LinearLayoutManager(getContext()));
         currenciesList.setAdapter(currencyAdapter);
 
@@ -73,18 +75,29 @@ public class MarketFragment extends Fragment implements LifecycleOwner {
         mMarketViewModel.getDiffResult().observe(getViewLifecycleOwner(), diffResult -> {
             diffResult.dispatchUpdatesTo(currencyAdapter);
         });
-
-
-
         return root;
     }
 
+    CryptoCurrencyAdapter.OnCurrencyClickListener currencyClickListener = (currency, position) -> {
+        CurrencyProfileFragment profileFragment = new CurrencyProfileFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("currency", currency);
+        profileFragment.setArguments(bundle);
+        getActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.nav_host_fragment, profileFragment)
+                .addToBackStack("cryptocurrency")
+                .commit();
+        setNavVisibility(false);
+    };
 
     @Override
     public void onStart() {
         super.onStart();
+        setNavVisibility(true);
         mMarketViewModel.updateCurrencies(getActivity().getApplication());
         setSearchActions();
+
     }
 
 
@@ -92,6 +105,14 @@ public class MarketFragment extends Fragment implements LifecycleOwner {
     public void onDestroyView() {
         super.onDestroyView();
         closeSearchView();
+    }
+
+    public void setNavVisibility(boolean isVisible) {
+        BottomNavigationView nav = ((MainActivity)getActivity()).getNav();
+        if(isVisible && nav.getVisibility() == View.GONE){
+            nav.setVisibility(View.VISIBLE);
+        }else if(!isVisible && nav.getVisibility() == View.VISIBLE)
+            nav.setVisibility(View.GONE);
     }
 
 
@@ -116,9 +137,9 @@ public class MarketFragment extends Fragment implements LifecycleOwner {
         }
     }
     public void closeSearchView() {
-        
-        toolbar.collapseActionView();
-        searchView.clearFocus();
+        if(toolbar != null) {
+            toolbar.collapseActionView();
+        }
     }
 
 }

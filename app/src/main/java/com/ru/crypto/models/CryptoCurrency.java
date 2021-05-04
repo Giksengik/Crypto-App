@@ -10,13 +10,13 @@ import androidx.room.TypeConverters;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.ru.crypto.utils.SparklineConverter;
+import com.ru.crypto.db.SparklineConverter;
 
-import java.util.List;
+import java.io.Serializable;
 
 @Entity
 
-public class CryptoCurrency {
+public class CryptoCurrency implements Serializable {
     @NonNull
     @SerializedName("id")
     @Expose
