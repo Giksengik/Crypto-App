@@ -11,4 +11,8 @@
     <string name="global_stats_number_of_markets">Number of markets</string>
     <string name="global_shares">Global Shares</string>
     <string name="bitcoin_price">Bitcoin Price</string>
+    <string name="company_profile_tab1">General</string>
+    <string name="company_profile_tab2">News</string>
+    <string name="company_profile_tab3">Links</string>
+    <string name="company_profile_tab4">Markets</string>
 </resources>
