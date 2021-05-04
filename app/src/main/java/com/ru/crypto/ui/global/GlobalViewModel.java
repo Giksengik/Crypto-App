@@ -50,4 +50,6 @@ public class GlobalViewModel extends ViewModel {
     public void loadBitcoinInformationInTimeRange(String timeRange) {
         mRepository.loadAllBitcoinInTimeRange(timeRange);
     }
+
+
 }

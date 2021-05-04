@@ -1,12 +1,10 @@
 package com.ru.crypto.ui.fragments;
 
-import android.app.Application;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,13 +19,13 @@ import com.ru.crypto.adapters.TimeRangeAdapter;
 
 public class TimeRangeFragment extends Fragment {
 
+        private RecyclerView mRangesList;
+        private TimeRangeAdapter mTimeRangeAdapter;
+        private onTimeRangeClickListener mOnTimeChangedListener = null;
 
-
-        RecyclerView rangesList;
-        TimeRangeAdapter timeRangeAdapter;
-
-
-        private onTimeRangeClickListener onTimeChangedListener = null;
+    public interface onTimeRangeClickListener{
+        void onTimeRangeClick(String timeRange);
+    }
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -36,7 +34,7 @@ public class TimeRangeFragment extends Fragment {
         NavHostFragment navHostFragment = (NavHostFragment) mainActivity.getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
         Fragment fragment = navHostFragment.getChildFragmentManager().getFragments().get(0);
         if(fragment instanceof onTimeRangeClickListener) {
-            onTimeChangedListener = (onTimeRangeClickListener) fragment;
+            mOnTimeChangedListener = (onTimeRangeClickListener) fragment;
         }
     }
 
@@ -49,23 +47,19 @@ public class TimeRangeFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        rangesList = view.findViewById(R.id.timeRangeList);
+        mRangesList = view.findViewById(R.id.timeRangeList);
         setListData();
     }
 
     public void setListData() {
-        timeRangeAdapter = new TimeRangeAdapter(onTimeChangedListener);
-        rangesList.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        rangesList.setAdapter(timeRangeAdapter);
+        mTimeRangeAdapter = new TimeRangeAdapter(mOnTimeChangedListener);
+        mRangesList.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        mRangesList.setAdapter(mTimeRangeAdapter);
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        onTimeChangedListener = null;
-    }
-
-    public interface onTimeRangeClickListener{
-        void onTimeRangeClick(String timeRange);
+        mOnTimeChangedListener = null;
     }
 }

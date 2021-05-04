@@ -19,12 +19,14 @@ import java.util.List;
 import javax.inject.Inject;
 
 public class NewsViewModel extends ViewModel implements LifecycleObserver {
-    @Inject CryptoNewsRepository mRepository;
+    @Inject
+    CryptoNewsRepository mRepository;
 
     public NewsViewModel() {
         CryptoNewsRepoComponent component = DaggerCryptoNewsRepoComponent.create();
         component.inject(this);
     }
+
     public LiveData<List<CryptoArticle>> getArticles () {
         return mRepository.getArticles();
     }

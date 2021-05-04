@@ -16,9 +16,11 @@ import com.ru.crypto.models.GlobalCryptoData;
 
 
 public class GlobalStatsFragment extends Fragment {
+
     private TextView numOfCurrencies;
     private TextView marketCapChange;
     private TextView numOfMarkets;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

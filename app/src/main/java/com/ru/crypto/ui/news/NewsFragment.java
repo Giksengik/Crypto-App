@@ -21,21 +21,24 @@ public class NewsFragment extends Fragment implements LifecycleOwner {
 
     private NewsViewModel mNewsViewModel;
 
+    private final CryptoArticlesAdapter mArticleAdapter = new CryptoArticlesAdapter((cryptoArticle, position) -> {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(cryptoArticle.getArticleURL()));
+        startActivity(browserIntent);
+    });
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         mNewsViewModel =
                 new ViewModelProvider(this).get(NewsViewModel.class);
         View root = inflater.inflate(R.layout.fragment_news, container, false);
-        CryptoArticlesAdapter adapter = new CryptoArticlesAdapter((cryptoArticle, position) -> {
-            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(cryptoArticle.getArticleURL()));
-            startActivity(browserIntent);
-        });
+
         RecyclerView recyclerView = root.findViewById(R.id.articlesRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(adapter);
-        mNewsViewModel.getArticles().observe(getViewLifecycleOwner(), adapter::setArticles);
+        recyclerView.setAdapter(mArticleAdapter);
+        mNewsViewModel.getArticles().observe(getViewLifecycleOwner(), mArticleAdapter::setArticles);
 
         getLifecycle().addObserver(mNewsViewModel);
+
         return root;
     }
 }

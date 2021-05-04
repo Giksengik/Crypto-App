@@ -37,7 +37,6 @@ public class GlobalFragment extends Fragment implements TimeRangeFragment.onTime
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initializeToolbar();
         mGlobalViewModel = new ViewModelProvider(this).get(GlobalViewModel.class);
     }
 
@@ -104,7 +103,7 @@ public class GlobalFragment extends Fragment implements TimeRangeFragment.onTime
     public void onStart() {
         super.onStart();
         mGlobalViewModel.loadGlobalData();
-
+        initializeToolbar();
     }
 
 
