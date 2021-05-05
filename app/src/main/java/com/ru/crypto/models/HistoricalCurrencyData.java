@@ -4,15 +4,16 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.TreeMap;
 
 public class HistoricalCurrencyData {
 
     @SerializedName("prices")
     @Expose
-    ArrayList<ArrayList<Double>> prices;
+    List<List<Double>> prices;
 
-    public ArrayList<ArrayList<Double>> getPrices() {
+    public List<List<Double>> getPrices() {
         return prices;
     }
 }

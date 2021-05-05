@@ -21,8 +21,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 @Module
 public class CryptoCurrencyModule {
+
     @Provides
-    @Singleton
     CryptoCurrencyRepository provideCryptoCurrencyRepository(INetworkService networkService, CryptoCurrencyDatabase database) {
         return new CryptoCurrencyRepository(networkService, database);
     }

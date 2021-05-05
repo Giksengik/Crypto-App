@@ -23,19 +23,43 @@ public class TimeRangeFragment extends Fragment {
         private TimeRangeAdapter mTimeRangeAdapter;
         private onTimeRangeClickListener mOnTimeChangedListener = null;
 
+        private String placeholder;
+
+    public static TimeRangeFragment newInstance(String placeholder) {
+        return new TimeRangeFragment(placeholder);
+    }
+
+    private TimeRangeFragment(String placeholder){
+        this.placeholder = placeholder;
+    }
+
     public interface onTimeRangeClickListener{
         void onTimeRangeClick(String timeRange);
     }
+
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         MainActivity mainActivity =(MainActivity) context;
-        NavHostFragment navHostFragment = (NavHostFragment) mainActivity.getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
-        Fragment fragment = navHostFragment.getChildFragmentManager().getFragments().get(0);
-        if(fragment instanceof onTimeRangeClickListener) {
-            mOnTimeChangedListener = (onTimeRangeClickListener) fragment;
+        Fragment fragment;
+        switch(placeholder) {
+            case "global":
+                NavHostFragment navHostFragment = (NavHostFragment) mainActivity.getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+                fragment = navHostFragment.getChildFragmentManager().getFragments().get(0);
+                if(fragment instanceof onTimeRangeClickListener) {
+                    mOnTimeChangedListener = (onTimeRangeClickListener) fragment;
+                }
+                break;
+            case "currencyGeneral":
+                Fragment parentFragment = mainActivity.getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+                fragment = parentFragment.getChildFragmentManager().getFragments().get(0);
+                if(fragment instanceof onTimeRangeClickListener) {
+                    mOnTimeChangedListener = (onTimeRangeClickListener) fragment;
+                }
+                break;
         }
+
     }
 
     @Nullable

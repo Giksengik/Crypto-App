@@ -34,7 +34,7 @@ public class CryptoNewsRepository {
 
     public void loadNews() {
         mNewsNetworkService.getJSONApi()
-                .getLatestNews()
+                .getAllLatestNews()
                 .enqueue(new Callback<CryptoNews>() {
                     @Override
                     public void onResponse(Call<CryptoNews> call, Response<CryptoNews> response) {

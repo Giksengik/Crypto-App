@@ -16,14 +16,19 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.ru.crypto.R;
+import com.ru.crypto.models.CryptoCurrency;
 
 public class CurrencyProfileFragment extends Fragment {
 
     private static final String ARG_SECTION_NUMBER = "section_number";
     private final String [] tabNames = new String[] {"General", "News", "Markets", "Links"};
+    private CryptoCurrency mCryptoCurrency;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(getArguments() != null) {
+            mCryptoCurrency = (CryptoCurrency) getArguments().get("currency");
+        }
     }
 
     @Nullable
@@ -36,7 +41,7 @@ public class CurrencyProfileFragment extends Fragment {
 
         CurrencyProfileAdapter adapter = new CurrencyProfileAdapter(this);
         viewPager.setAdapter(adapter);
-        new TabLayoutMediator(tabs, viewPager, (tab, position) -> { tab.setText(tabNames[position]);});
+        new TabLayoutMediator(tabs, viewPager, (tab, position) -> { tab.setText(tabNames[position]);}).attach();
 
         initializeToolbar();
 
@@ -49,5 +54,9 @@ public class CurrencyProfileFragment extends Fragment {
             toolbar.getMenu().getItem(0).setVisible(false);
             toolbar.getMenu().getItem(1).setVisible(false);
         }
+    }
+
+    public CryptoCurrency getCurrency () {
+        return mCryptoCurrency;
     }
 }

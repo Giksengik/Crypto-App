@@ -3,9 +3,11 @@ package com.ru.crypto.api;
 import com.ru.crypto.models.CryptoID;
 import com.ru.crypto.models.CryptoCurrency;
 import com.ru.crypto.models.CryptoNews;
+import com.ru.crypto.models.CurrencyMarketChart;
 import com.ru.crypto.models.GlobalCryptoData;
 import com.ru.crypto.models.HistoricalCurrencyData;
 
+import java.util.Currency;
 import java.util.List;
 
 import retrofit2.Call;
@@ -21,7 +23,7 @@ public interface JSONPlaceholderAPI {
 
     //COIN GECKO
     String defaultOrder = "market_cap_desc";
-    int defaultPerPage = 250;
+    int defaultPerPage = 50;
     String defaultPriceChangePercentage = "24H";
 
     //COIN GECKO
@@ -37,10 +39,19 @@ public interface JSONPlaceholderAPI {
 
     @GET("/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=max")
     Call<HistoricalCurrencyData> getAllBitcoinData();
+
     @GET("/api/v3/coins/{currency}/market_chart?vs_currency=usd")
     Call<HistoricalCurrencyData> getCurrencyDataForTimeRange(@Path("currency") String currency, @Query("days") String  days);
+
+    @GET("/api/v3/coins/{currency}/market_chart?vs_currency=usd")
+    Call<CurrencyMarketChart> getCurrencyMarketChart(@Path("currency") String currencyID, @Query("days") String days);
+
+
+
+
+
     // CRYPTO NEWS
 
     @GET("/data/v2/news/?lang=EN&api_key=be192f39a76e19ab11d3cfe72e31952110b643da9fb0cad97df93ea312a4b626")
-    Call<CryptoNews> getLatestNews();
+    Call<CryptoNews> getAllLatestNews();
 }

@@ -29,8 +29,9 @@ import com.ru.crypto.utils.factories.DefaultPieChartTuner;
 
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class GlobalFragment extends Fragment implements TimeRangeFragment.onTimeRangeClickListener{
+public class GlobalFragment extends Fragment implements TimeRangeFragment.onTimeRangeClickListener {
 
      private GlobalViewModel mGlobalViewModel;
 
@@ -59,7 +60,7 @@ public class GlobalFragment extends Fragment implements TimeRangeFragment.onTime
         ProgressBar globalDataProgressBar = root.findViewById(R.id.progressBarGlobalData);
         ProgressBar bitcoinDataProgressBar = root.findViewById(R.id.progressBarBitcoinData);
 
-        TimeRangeFragment bitcoinTimeRangeFragment = new TimeRangeFragment();
+        TimeRangeFragment bitcoinTimeRangeFragment = TimeRangeFragment.newInstance("global");
         getChildFragmentManager().beginTransaction()
                 .add(R.id.bitcoinTimeRanges, bitcoinTimeRangeFragment)
                 .commit();
@@ -86,8 +87,8 @@ public class GlobalFragment extends Fragment implements TimeRangeFragment.onTime
 
         mGlobalViewModel.getBitcoinData().observe(getViewLifecycleOwner(), historicalCurrencyData -> {
             lineTuner.setLinearChartData(bitcoinPriceChart, historicalCurrencyData.getPrices());
-            ArrayList<Double> lastPrice = historicalCurrencyData.getPrices().get(historicalCurrencyData.getPrices().size()-1);
-            bitcoinValue.setText(Converters.getFormattedWithHourDataStringByUnixTimestamp(lastPrice.get(0)) + " : " + lastPrice.get(1) + "$");
+            bitcoinValue.setText(lineTuner.getLastTime(historicalCurrencyData.getPrices()) + " : "
+                    + lineTuner.getLastTimePrice(historicalCurrencyData.getPrices()));
             bitcoinDataProgressBar.setVisibility(View.INVISIBLE);
         });
 

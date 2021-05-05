@@ -9,11 +9,13 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.ru.crypto.R;
+import com.ru.crypto.utils.Converters;
 import com.ru.crypto.utils.DefaultLineChartXAxisValueFormatter;
 import com.ru.crypto.utils.DefaultLineChatYAxisValueFormatter;
 
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class DefaultLineChartTuner implements ILineChartTuner {
 
@@ -42,7 +44,7 @@ public class DefaultLineChartTuner implements ILineChartTuner {
         chart.getXAxis().setLabelCount(5);
     }
 
-    public void setLinearChartData(LineChart chart, ArrayList<ArrayList<Double>> data) {
+    public void setLinearChartData(LineChart chart, List<List<Double>> data) {
         ArrayList<Entry> chartValues = new ArrayList<>();
 
         for (int i = 0; i < data.size(); i++) {
@@ -75,5 +77,16 @@ public class DefaultLineChartTuner implements ILineChartTuner {
             if(isNeedToUpdate) {
                 chart.invalidate();
             }
+    }
+
+    @Override
+    public String getLastTime(List<List<Double>> data) {
+        return Converters.getFormattedWithHourDataStringByUnixTimestamp(data.get(data.size() - 1).get(0));
+
+    }
+
+    @Override
+    public String getLastTimePrice(List<List<Double>> data) {
+        return data.get(data.size() - 1).get(1) + "";
     }
 }

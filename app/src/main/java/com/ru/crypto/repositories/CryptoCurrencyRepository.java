@@ -29,7 +29,7 @@ import retrofit2.Response;
 public class CryptoCurrencyRepository {
 
     private static String CURRENT_CURRENCY = "USD";
-    private static int PAGE_LIMIT = 2;
+    private static int PAGE_LIMIT = 8;
     private CryptoCurrencyDatabase mDatabase;
     INetworkService mCryptoCurrencyNetworkService;
     LiveData<List<CryptoCurrency>> mAllCurrencies;
@@ -84,7 +84,12 @@ public class CryptoCurrencyRepository {
                                             }
                                         }
                                     }
-                                    mDatabase.cryptoCurrencyDao().insertAll(currenciesList);
+                                    if(mDatabase.cryptoCurrencyDao().getRowCount() < 400)
+                                    {
+                                        mDatabase.cryptoCurrencyDao().insertAll(currenciesList);
+                                    }
+                                    else
+                                        mDatabase.cryptoCurrencyDao().updateAll(currenciesList);
                                 }
                             }.start();
                         }
