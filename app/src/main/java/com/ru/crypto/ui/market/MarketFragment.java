@@ -55,7 +55,6 @@ public class MarketFragment extends Fragment implements LifecycleOwner {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
         View root = inflater.inflate(R.layout.fragment_market, container, false);
         cryptoCurrencyListProgressBar  = root.findViewById(R.id.cryptoCurrencyListProgressBar);
         RecyclerView currenciesList = root.findViewById(R.id.currenciesList);
@@ -89,7 +88,7 @@ public class MarketFragment extends Fragment implements LifecycleOwner {
         setNavVisibility(true);
         initializeToolbar();
         mMarketViewModel.refreshData();
-        mMarketViewModel.updateCurrencies(getActivity().getApplication());
+        mMarketViewModel.updateCurrencies();
         setSearchActions();
     }
 

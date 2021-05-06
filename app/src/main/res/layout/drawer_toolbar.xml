@@ -2,4 +2,7 @@
 <com.google.android.material.appbar.MaterialToolbar
     android:background="@color/main_color"
     style="@style/Toolbar"
-    xmlns:android="http://schemas.android.com/apk/res/android" />
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+
+
+</com.google.android.material.appbar.MaterialToolbar>

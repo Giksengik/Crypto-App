@@ -61,7 +61,7 @@ public class CryptoCurrencyRepository {
     }
 
 
-    private void loadCurrenciesInfo(String currencies, Application application) {
+    private void loadCurrenciesInfo(String currencies) {
         mCryptoCurrencyNetworkService.getJSONApi()
                 .getDefaultInfo(CURRENT_CURRENCY,currencies)
                 .enqueue(new Callback<List<CryptoCurrency>>() {
@@ -73,17 +73,6 @@ public class CryptoCurrencyRepository {
                                 @Override
                                 public void run() {
                                     super.run();
-                                    for (int i = 0; i < currenciesList.size(); i++) {
-                                        if (currenciesList.get(i).getIconString() == null) {
-                                            try {
-                                                currenciesList.get(i).setIconString(
-                                                        Converters.encodeToBase64(Picasso.with(application)
-                                                                .load(currenciesList.get(i).getImageUrl()).get()));
-                                            } catch (IOException e) {
-                                                e.printStackTrace();
-                                            }
-                                        }
-                                    }
                                     if(mDatabase.cryptoCurrencyDao().getRowCount() < 400)
                                     {
                                         mDatabase.cryptoCurrencyDao().insertAll(currenciesList);
@@ -100,7 +89,7 @@ public class CryptoCurrencyRepository {
                     }
                 });
     }
-    public void loadCurrenciesInfo(Application application, int page) {
+    public void loadCurrenciesInfo(int page) {
         final int currentPage = page;
         final int nextPage = ++page;
         Single.create((SingleOnSubscribe<List<CryptoID>>) emitter -> mCryptoCurrencyNetworkService.getJSONApi()
@@ -120,9 +109,9 @@ public class CryptoCurrencyRepository {
                 .subscribe(new DisposableSingleObserver<List<CryptoID>>() {
                     @Override
                     public void onSuccess(@NonNull List<CryptoID> cryptoIDS) {
-                        loadCurrenciesInfo(parseCryptoIDsToOneString(cryptoIDS), application);
+                        loadCurrenciesInfo(parseCryptoIDsToOneString(cryptoIDS));
                         if(nextPage <= PAGE_LIMIT)
-                            loadCurrenciesInfo(application, nextPage);
+                            loadCurrenciesInfo(nextPage);
                     }
 
                     @Override

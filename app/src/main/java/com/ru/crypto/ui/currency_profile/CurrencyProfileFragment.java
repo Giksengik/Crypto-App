@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,6 +16,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.ru.crypto.MainActivity;
 import com.ru.crypto.R;
 import com.ru.crypto.models.CryptoCurrency;
 
@@ -54,9 +56,20 @@ public class CurrencyProfileFragment extends Fragment {
             toolbar.getMenu().getItem(0).setVisible(false);
             toolbar.getMenu().getItem(1).setVisible(false);
         }
+        ImageButton buttonBack = getActivity().findViewById(R.id.button_back);
+        buttonBack.setVisibility(View.VISIBLE);
+        buttonBack.setOnClickListener(
+                v -> getFragmentManager().popBackStack());
     }
 
     public CryptoCurrency getCurrency () {
         return mCryptoCurrency;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        ImageButton buttonBack = getActivity().findViewById(R.id.button_back);
+        buttonBack.setVisibility(View.GONE);
     }
 }

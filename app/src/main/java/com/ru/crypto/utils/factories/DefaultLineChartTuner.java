@@ -87,6 +87,6 @@ public class DefaultLineChartTuner implements ILineChartTuner {
 
     @Override
     public String getLastTimePrice(List<List<Double>> data) {
-        return data.get(data.size() - 1).get(1) + "";
+        return "$" + data.get(data.size() - 1).get(1);
     }
 }

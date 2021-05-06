@@ -15,6 +15,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.ru.crypto.R;
 import com.ru.crypto.adapters.CharacteristicsBlockAdapter;
 import com.ru.crypto.models.CryptoCurrency;
@@ -28,6 +30,7 @@ public class CurrencyInfoFragment extends Fragment {
     private ImageView currencyIcon;
     private TextView currencyName;
     private RecyclerView characteristicsBlockList;
+
     private ICurrencyCharacteristicsMaker characteristicsMaker;
 
     public static CurrencyInfoFragment newInstance(CryptoCurrency currency) {
@@ -58,7 +61,8 @@ public class CurrencyInfoFragment extends Fragment {
     }
 
     public void setData() {
-        currencyIcon.setImageBitmap(characteristicsMaker.getCurrencyIcon());
+
+        characteristicsMaker.setIcon(currencyIcon);
         currencyName.setText(characteristicsMaker.getCurrencyName());
         characteristicsBlockList.setLayoutManager(new GridLayoutManager(getContext(), 2));
         CharacteristicsBlockAdapter adapter = new CharacteristicsBlockAdapter();

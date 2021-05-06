@@ -9,6 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.ru.crypto.utils.Converters;
 import com.ru.crypto.R;
 import com.ru.crypto.models.CryptoArticle;
@@ -40,7 +42,9 @@ public class CryptoArticlesAdapter extends RecyclerView.Adapter<CryptoArticlesAd
         CryptoArticle article = articles.get(position);
         holder.articleSource.setText(article.getSource());
         holder.articleTitle.setText(article.getArticleTitle());
-        holder.articleIcon.setImageBitmap(Converters.decodeBase64(article.getIconString()));
+        Glide.with(holder.articleIcon.getContext())
+                .load(article.getArticleImageURL())
+                .into(holder.articleIcon);
         holder.itemView.setOnClickListener(v -> onClickListener.onArticleClick(article,position));
     }
 

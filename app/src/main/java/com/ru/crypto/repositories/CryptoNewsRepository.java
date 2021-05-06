@@ -42,20 +42,8 @@ public class CryptoNewsRepository {
                             @Override
                             public void run() {
                                 super.run();
-                                if(response.body() != null) {
-                                    List<CryptoArticle> articles = response.body().getArticles();
-                                    for (int i = 0; i < articles.size(); i++) {
-                                            try {
-                                                articles.get(i).setIconString(
-                                                        Converters.encodeToBase64(Picasso.with(App.getInstance())
-                                                                .load(articles.get(i).getArticleImageURL()).get()));
-                                            } catch (IOException e) {
-                                                e.printStackTrace();
-                                            }
-                                        }
-                                    }
-                                    mDatabase.cryptoArticleDao()
-                                            .insertAll(response.body().getArticles());
+                                mDatabase.cryptoArticleDao()
+                                        .insertAll(response.body().getArticles());
                                 }
                         }.start();
                     }

@@ -6,19 +6,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
+
 import androidx.lifecycle.ViewModelProvider;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.ru.crypto.R;
 import com.ru.crypto.models.CryptoCurrency;
-import com.ru.crypto.models.CurrencyMarketChart;
 import com.ru.crypto.ui.currency_profile.CurrencyProfileFragment;
 import com.ru.crypto.ui.fragments.CurrencyInfoFragment;
 import com.ru.crypto.ui.fragments.TimeRangeFragment;
+import com.ru.crypto.utils.OnClick;
 import com.ru.crypto.utils.factories.DefaultLineChartTunerFactory;
 import com.ru.crypto.utils.factories.ILineChartTuner;
 
@@ -27,10 +28,10 @@ public class CurrencyGeneralFragment extends Fragment implements TimeRangeFragme
     private CurrencyGeneralViewModel mCurrencyGeneralViewModel;
     private CryptoCurrency mCurrency;
 
-    private TextView currencyPriceAtTime;
-    private TextView time;
     private LineChart priceChart;
 
+    TextView time ;
+    TextView currencyPriceAtTime;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,12 +51,12 @@ public class CurrencyGeneralFragment extends Fragment implements TimeRangeFragme
         View root = inflater.inflate(R.layout.fragment_currency_general, container);
 
         time = root.findViewById(R.id.curencyProfileTimeOfPrice);
-        currencyPriceAtTime = root.findViewById(R.id.currencyPrice);
+        currencyPriceAtTime = root.findViewById(R.id.currencyProfilePrice);
         priceChart = root.findViewById(R.id.currencyPriceChart);
 
         ILineChartTuner priceChartTuner = new DefaultLineChartTunerFactory().getLineChartTuner();
         priceChartTuner.setChartProperties(priceChart);
-
+        priceChart.setOnChartValueSelectedListener(OnClick.onLineChartValue(currencyPriceAtTime, time));
         CurrencyInfoFragment currencyInfoFragment = CurrencyInfoFragment.newInstance(mCurrency);
 
         getChildFragmentManager().beginTransaction()
@@ -68,9 +69,10 @@ public class CurrencyGeneralFragment extends Fragment implements TimeRangeFragme
                 .commit();
 
         mCurrencyGeneralViewModel.getMarketChart().observe(getViewLifecycleOwner(), currencyMarketChart -> {
+
             priceChartTuner.setLinearChartData(priceChart, currencyMarketChart.getPrices());
-//            time.setText(priceChartTuner.getLastTime(currencyMarketChart.getPrices()));
-//            currencyPriceAtTime.setText(priceChartTuner.getLastTimePrice(currencyMarketChart.getPrices()));
+            time.setText(priceChartTuner.getLastTime(currencyMarketChart.getPrices()));
+            currencyPriceAtTime.setText(priceChartTuner.getLastTimePrice(currencyMarketChart.getPrices()));
         });
 
         return root;

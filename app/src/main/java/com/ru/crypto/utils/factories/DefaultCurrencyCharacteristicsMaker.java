@@ -1,9 +1,12 @@
 package com.ru.crypto.utils.factories;
 
 import android.graphics.Bitmap;
+import android.widget.ImageView;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.ru.crypto.adapters.CharacteristicsBlockAdapter;
 import com.ru.crypto.models.CryptoCurrency;
 import com.ru.crypto.models.CurrencyCharacteristic;
@@ -51,7 +54,10 @@ public class DefaultCurrencyCharacteristicsMaker implements ICurrencyCharacteris
     }
 
     @Override
-    public Bitmap getCurrencyIcon() {
-        return Converters.decodeBase64(currency.getIconString());
+    public void setIcon(ImageView imageView) {
+        Glide.with(imageView.getContext())
+                .load(currency.getImageUrl()).apply(new RequestOptions().circleCrop())
+                .into(imageView);
     }
+
 }

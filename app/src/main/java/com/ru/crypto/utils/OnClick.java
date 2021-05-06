@@ -24,4 +24,19 @@ public class OnClick {
             }
         };
      }
+    public static OnChartValueSelectedListener onLineChartValue(TextView priceValue, TextView time) {
+        return new OnChartValueSelectedListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onValueSelected(Entry e, Highlight h) {
+                priceValue.setText(e.getY() + "$");
+                time.setText(Converters.getFormattedWithHourDataStringByUnixTimestamp(e.getX()));
+            }
+
+            @Override
+            public void onNothingSelected() {
+
+            }
+        };
+    }
 }

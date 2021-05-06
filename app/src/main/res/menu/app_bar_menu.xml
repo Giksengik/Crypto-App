@@ -13,4 +13,6 @@
         android:icon="@drawable/light_settings_action_icon"
         android:title="@string/action_settings"
         app:showAsAction="always"/>
+
+
 </menu>

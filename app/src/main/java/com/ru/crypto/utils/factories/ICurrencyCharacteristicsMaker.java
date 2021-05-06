@@ -1,6 +1,7 @@
 package com.ru.crypto.utils.factories;
 
 import android.graphics.Bitmap;
+import android.widget.ImageView;
 
 import com.ru.crypto.models.CryptoCurrency;
 import com.ru.crypto.models.CurrencyCharacteristic;
@@ -16,6 +17,6 @@ public interface ICurrencyCharacteristicsMaker {
 
     String getCurrencyName();
 
-    Bitmap getCurrencyIcon();
+    void setIcon(ImageView imageView);
 
 }

@@ -1,13 +1,17 @@
 package com.ru.crypto.models;
 
 import android.graphics.Bitmap;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.BindingAdapter;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.ru.crypto.db.SparklineConverter;
@@ -231,6 +235,7 @@ public class CryptoCurrency implements Serializable {
     public void setSparkline(Sparkline sparkline) {
         this.sparkline = sparkline;
     }
+
 
     String currency = "USD";
 }
