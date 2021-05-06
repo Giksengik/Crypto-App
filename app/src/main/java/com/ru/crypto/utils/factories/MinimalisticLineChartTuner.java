@@ -8,6 +8,8 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.ru.crypto.models.CryptoCurrency;
+import com.ru.crypto.models.Sparkline;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +44,8 @@ public class MinimalisticLineChartTuner {
 
     }
 
-    public void setLinearChartData(LineChart chart, List<Double> data) {
+    public void setLinearChartData(LineChart chart, CryptoCurrency currency) {
+        List<Double> data = currency.getSparkline().getPriceChange();
         if (data != null) {
             ArrayList<Entry> values = new ArrayList<>();
             for (int i = Math.max(data.size() - 72, 0); i < data.size(); i++) {
@@ -61,7 +64,7 @@ public class MinimalisticLineChartTuner {
             } else {
                 set1 = new LineDataSet(values, "DataSet 1");
                 set1.setDrawIcons(false);
-                if(data.get(data.size() - 1) - data.get(0)  < 0) {
+                if(currency.getPriceChangePercentage24H()  < 0) {
                     set1.setColor(Color.RED);
                 }else
                     set1.setColor(Color.GREEN);

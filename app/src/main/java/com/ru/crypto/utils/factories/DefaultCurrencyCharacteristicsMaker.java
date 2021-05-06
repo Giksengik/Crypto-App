@@ -34,7 +34,7 @@ public class DefaultCurrencyCharacteristicsMaker implements ICurrencyCharacteris
         changeMap.put("24H", dayChange);
 
         marketMap.put("Market cap rank", currency.getMarketCapRank() + "#");
-        marketMap.put("Market cap", "$" + currency.getMarketCap());
+        marketMap.put("Cap", "$" + currency.getMarketCap());
 
         characteristics.add(new CurrencyCharacteristic("PRICE", priceMap));
         characteristics.add(new CurrencyCharacteristic("CHANGE", changeMap));

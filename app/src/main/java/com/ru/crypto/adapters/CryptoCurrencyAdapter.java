@@ -70,7 +70,9 @@ public class CryptoCurrencyAdapter extends RecyclerView.Adapter<CryptoCurrencyAd
         MinimalisticLineChartTuner chartTuner = new MinimalisticLineChartTuner();
         chartTuner.setChartProperties(holder.chart);
         if(currency.getSparkline() != null)
-        chartTuner.setLinearChartData(holder.chart, currency.getSparkline().getPriceChange());
+        chartTuner.setLinearChartData(holder.chart, currency);
+
+
         Glide.with(holder.currencyIcon.getContext())
                 .load(currency.getImageUrl()).apply(new RequestOptions().circleCrop())
                 .into(holder.currencyIcon);
@@ -99,9 +101,11 @@ public class CryptoCurrencyAdapter extends RecyclerView.Adapter<CryptoCurrencyAd
         }
         notifyDataSetChanged();
     }
+
     public List<CryptoCurrency> getData() {
         return currencies;
     }
+
     @Override
     public int getItemCount() {
         return currencies.size();

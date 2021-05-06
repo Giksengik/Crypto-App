@@ -37,7 +37,7 @@ public class GlobalStatsFragment extends Fragment {
     @SuppressLint("SetTextI18n")
     public void setData(GlobalCryptoData data) {
         numOfCurrencies.setText(data.getData().getActiveCryptoCurrenciesNum()+ "");
-        marketCapChange.setText(data.getData().getMarketCapChangePercentage24H().substring(0,6));
+        marketCapChange.setText(data.getData().getMarketCapChangePercentage24H().substring(0,6)+"%");
         numOfMarkets.setText(data.getData().getMarketsNum()+ "");
 
     }

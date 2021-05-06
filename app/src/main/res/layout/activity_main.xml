@@ -52,7 +52,7 @@
         android:id="@+id/button_back"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="10dp"
         android:background="@null"
         android:src="@drawable/button_back"
         android:visibility="gone"

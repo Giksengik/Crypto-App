@@ -1,5 +1,6 @@
 package com.ru.crypto.adapters;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,13 +26,14 @@ public class CharacteristicAdapter extends RecyclerView.Adapter<CharacteristicAd
         return new CharacteristicAdapter.ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.characteristic_in_list, parent, false));
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull CharacteristicAdapter.ViewHolder holder, int position) {
         Iterator<Map.Entry<String,String>> iterator = values.entrySet().iterator();
-        for(int i = 0; i < position - 1; i++)
+        for(int i = 0; i < position; i++)
             iterator.next();
         Map.Entry<String, String> currentCharacteristic = iterator.next();
-        holder.characteristicKey.setText(currentCharacteristic.getKey());
+        holder.characteristicKey.setText(currentCharacteristic.getKey() + ":");
         holder.characteristicValue.setText(currentCharacteristic.getValue());
     }
 

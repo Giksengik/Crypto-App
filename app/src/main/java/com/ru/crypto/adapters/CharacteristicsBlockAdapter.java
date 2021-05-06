@@ -33,9 +33,9 @@ public class CharacteristicsBlockAdapter extends RecyclerView.Adapter<Characteri
         holder.title.setText(currencyCharacteristics.get(position).getTitle());
         LinearLayoutManager manager = new LinearLayoutManager(context);
         holder.characteristicsList.setLayoutManager(manager);
-        holder.characteristicsList.setHasFixedSize(true);
         CharacteristicAdapter adapter = new CharacteristicAdapter();
         holder.characteristicsList.setAdapter(adapter);
+        holder.characteristicsList.setNestedScrollingEnabled(false);
         adapter.setValues(currencyCharacteristics.get(position).getCharacteristics());
     }
 

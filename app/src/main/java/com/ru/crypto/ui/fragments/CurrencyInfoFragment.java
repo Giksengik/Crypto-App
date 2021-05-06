@@ -66,6 +66,7 @@ public class CurrencyInfoFragment extends Fragment {
         currencyName.setText(characteristicsMaker.getCurrencyName());
         characteristicsBlockList.setLayoutManager(new GridLayoutManager(getContext(), 2));
         CharacteristicsBlockAdapter adapter = new CharacteristicsBlockAdapter();
+        characteristicsBlockList.setNestedScrollingEnabled(false);
         characteristicsBlockList.setAdapter(adapter);
         adapter.setCurrencyCharacteristics(characteristicsMaker.getCharacteristics());
 
