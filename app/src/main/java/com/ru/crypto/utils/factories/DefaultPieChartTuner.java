@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class DefaultPieChartTuner implements IPieChartTuner {
+public class  DefaultPieChartTuner implements IPieChartTuner {
     @Override
     public void setChartProperties(PieChart chart) {
         chart.setNoDataText("");

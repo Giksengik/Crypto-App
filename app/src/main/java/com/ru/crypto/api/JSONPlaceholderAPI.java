@@ -3,6 +3,7 @@ package com.ru.crypto.api;
 import com.ru.crypto.models.CryptoID;
 import com.ru.crypto.models.CryptoCurrency;
 import com.ru.crypto.models.CryptoNews;
+import com.ru.crypto.models.CurrencyLinks;
 import com.ru.crypto.models.CurrencyMarketChart;
 import com.ru.crypto.models.GlobalCryptoData;
 import com.ru.crypto.models.HistoricalCurrencyData;
@@ -46,7 +47,8 @@ public interface JSONPlaceholderAPI {
     @GET("/api/v3/coins/{currency}/market_chart?vs_currency=usd")
     Call<CurrencyMarketChart> getCurrencyMarketChart(@Path("currency") String currencyID, @Query("days") String days);
 
-
+    @GET("/api/v3/coins/{currency}?tickers=false&market_data=false&community_data=false&developer_data=false")
+    Call<CurrencyLinks> getCurrencyLinks(@Path("currency") String currency);
 
 
 

@@ -5,10 +5,15 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
 
+import com.ru.crypto.models.Links;
+
 import java.io.ByteArrayOutputStream;
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
+import java.util.TreeMap;
 
 public class Converters {
     public static String encodeToBase64(Bitmap image) {
@@ -43,5 +48,33 @@ public class Converters {
     }
     private static Date convertUnixTimestamp(double timeStamp) {
        return new Date((long)timeStamp);
+    }
+
+    public static TreeMap<String, List<String>> getLinksMap(Links links) {
+        TreeMap<String, List<String>> linksMap = new TreeMap<>();
+
+        if(links != null){
+            if(links.getAnnouncement() != null && links.getAnnouncement().size() != 0)
+                linksMap.put("Announcement", links.getAnnouncement());
+            if(links.getBlockchain() != null && links.getBlockchain().size() != 0)
+                linksMap.put("Blockchain", links.getBlockchain());
+            if(links.getChat() != null && links.getChat().size() != 0)
+                linksMap.put("Chat", links.getChat());
+            if(links.getFacebookName() != null) {
+                List<String> facebookName = new ArrayList<>();
+                facebookName.add(links.getFacebookName());
+                linksMap.put("Facebook", facebookName);
+            }
+            if(links.getTelegramID() != null) {
+                List<String> telegramID = new ArrayList<>();
+                telegramID.add(links.getTelegramID());
+                linksMap.put("Facebook", telegramID);
+            }
+            if(links.getHomepage() != null && links.getHomepage().size() != 0)
+                linksMap.put("Chat", links.getHomepage());
+            if(links.getOfficialForum() != null && links.getOfficialForum().size() != 0)
+                linksMap.put("Chat", links.getOfficialForum());
+        }
+        return linksMap;
     }
 }
