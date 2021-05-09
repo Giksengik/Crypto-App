@@ -10,6 +10,7 @@ import com.ru.crypto.models.Links;
 import java.io.ByteArrayOutputStream;
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -54,26 +55,49 @@ public class Converters {
         TreeMap<String, List<String>> linksMap = new TreeMap<>();
 
         if(links != null){
-            if(links.getAnnouncement() != null && links.getAnnouncement().size() != 0)
-                linksMap.put("Announcement", links.getAnnouncement());
-            if(links.getBlockchain() != null && links.getBlockchain().size() != 0)
-                linksMap.put("Blockchain", links.getBlockchain());
-            if(links.getChat() != null && links.getChat().size() != 0)
-                linksMap.put("Chat", links.getChat());
-            if(links.getFacebookName() != null) {
+            if(links.getAnnouncement() != null && links.getAnnouncement().size() != 0) {
+                List<String> toAdd = links.getAnnouncement();
+                toAdd.removeAll(Arrays.asList("", null));
+                if(toAdd.size() != 0)
+                    linksMap.put("Announcement", toAdd);
+
+            }
+            if(links.getBlockchain() != null && links.getBlockchain().size() != 0) {
+                List<String> toAdd = links.getBlockchain();
+                toAdd.removeAll(Arrays.asList("", null));
+                if(toAdd.size() != 0)
+                    linksMap.put("Blockchain", toAdd);
+            }
+            if(links.getChat() != null && links.getChat().size() != 0) {
+                List<String> toAdd = links.getChat();
+                toAdd.removeAll(Arrays.asList("", null));
+                if(toAdd.size() != 0)
+                    linksMap.put("Chat", toAdd);
+            }
+            if(links.getFacebookName() != null && links.getFacebookName().length() != 0) {
                 List<String> facebookName = new ArrayList<>();
                 facebookName.add(links.getFacebookName());
                 linksMap.put("Facebook", facebookName);
             }
-            if(links.getTelegramID() != null) {
+            if(links.getTelegramID() != null && links.getTelegramID().length() != 0) {
                 List<String> telegramID = new ArrayList<>();
                 telegramID.add(links.getTelegramID());
-                linksMap.put("Facebook", telegramID);
+                linksMap.put("Telegram", telegramID);
             }
-            if(links.getHomepage() != null && links.getHomepage().size() != 0)
-                linksMap.put("Chat", links.getHomepage());
-            if(links.getOfficialForum() != null && links.getOfficialForum().size() != 0)
-                linksMap.put("Chat", links.getOfficialForum());
+            if(links.getHomepage() != null && links.getHomepage().size() != 0) {
+                List<String> toAdd = links.getHomepage();
+                toAdd.removeAll(Arrays.asList("", null));
+                if(toAdd.size() != 0)
+                    linksMap.put("Homepage", toAdd);
+            }
+
+
+            if(links.getOfficialForum() != null && links.getOfficialForum().size() != 0) {
+                List<String> toAdd = links.getOfficialForum();
+                toAdd.removeAll(Arrays.asList("", null));
+                if(toAdd.size() != 0)
+                    linksMap.put("Official forum", toAdd);
+            }
         }
         return linksMap;
     }

@@ -43,10 +43,11 @@ public class GlobalFragment extends Fragment implements TimeRangeFragment.onTime
 
     public void initializeToolbar() {
         Toolbar toolbar  = getActivity().findViewById(R.id.toolbar);
+        String toolbarName = "GlobalData";
+        TextView toolbarTitle  = getActivity().findViewById(R.id.toolbarTitle);
         if(toolbar != null) {
-            toolbar.setTitle("Global");
             toolbar.getMenu().getItem(0).setVisible(false);
-            toolbar.getMenu().getItem(1).setVisible(false);
+            toolbarTitle.setText(toolbarName);
         }
     }
 

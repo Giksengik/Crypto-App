@@ -30,7 +30,7 @@ public class CurrencyLinks {
 
     @SerializedName("description")
     @Expose
-    CurrencyDescription description;
+    TreeMap<String, String> description;
 
     @SerializedName("links")
     @Expose
@@ -56,11 +56,11 @@ public class CurrencyLinks {
         return hashingAlgorithm;
     }
 
-    public CurrencyDescription getDescription() {
-        return description;
-    }
-
     public Links getLinks() {
         return links;
+    }
+
+    public TreeMap<String, String> getDescription() {
+        return description;
     }
 }

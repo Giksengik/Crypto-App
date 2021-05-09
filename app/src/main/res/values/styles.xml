@@ -5,6 +5,7 @@
         <item name="android:background">@color/purple_700</item>
         <item name="android:layout_width">match_parent</item>
         <item name="menu">@menu/app_bar_menu</item>
+        <item name="titleMarginStart">20dp</item>
     </style>
     <style name = "textOfCurrencyInMarketList">
         <item name="android:textColor">@color/textColor</item>

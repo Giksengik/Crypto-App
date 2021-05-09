@@ -1,5 +1,7 @@
 package com.ru.crypto.adapters;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,8 @@ import java.util.List;
 
 public class LinkAdapter extends RecyclerView.Adapter<LinkAdapter.ViewHolder> {
     List<String> linkList  = new ArrayList<>();
+
+
     @NonNull
     @Override
     public LinkAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -23,7 +27,14 @@ public class LinkAdapter extends RecyclerView.Adapter<LinkAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull LinkAdapter.ViewHolder holder, int position) {
-        holder.link.setText(linkList.get(position));
+        String link = linkList.get(position);
+        holder.link.setText(link);
+        holder.link.setOnClickListener(v -> {
+            if(link.startsWith("http")) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
+                holder.link.getContext().startActivity(browserIntent);
+            }
+        });
     }
 
     @Override

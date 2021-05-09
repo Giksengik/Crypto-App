@@ -6,9 +6,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
@@ -22,6 +25,16 @@ public class NewsFragment extends Fragment implements LifecycleOwner {
 
     private NewsViewModel mNewsViewModel;
 
+    public void initializeToolbar() {
+        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+        String toolbarName = "News";
+        TextView toolbarTitle  = getActivity().findViewById(R.id.toolbarTitle);
+        if(toolbar != null) {
+            toolbar.getMenu().getItem(0).setVisible(true);
+            toolbarTitle.setText(toolbarName);
+        }
+    }
+
     private final CryptoArticlesAdapter mArticleAdapter = new CryptoArticlesAdapter((cryptoArticle, position) -> {
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(cryptoArticle.getArticleURL()));
         startActivity(browserIntent);
@@ -32,6 +45,7 @@ public class NewsFragment extends Fragment implements LifecycleOwner {
         super.onCreate(savedInstanceState);
         mNewsViewModel =
                 new ViewModelProvider(this).get(NewsViewModel.class);
+        initializeToolbar();
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,

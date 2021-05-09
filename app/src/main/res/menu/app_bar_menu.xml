@@ -8,11 +8,5 @@
         app:showAsAction="ifRoom|collapseActionView"
         app:actionViewClass="androidx.appcompat.widget.SearchView" />
 
-    <item
-        android:id="@+id/action_settings"
-        android:icon="@drawable/light_settings_action_icon"
-        android:title="@string/action_settings"
-        app:showAsAction="always"/>
-
 
 </menu>

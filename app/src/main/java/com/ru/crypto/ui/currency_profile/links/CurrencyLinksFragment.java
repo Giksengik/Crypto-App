@@ -1,9 +1,11 @@
 package com.ru.crypto.ui.currency_profile.links;
 
 import android.os.Bundle;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -34,14 +36,18 @@ public class CurrencyLinksFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_currency_links, container);
 
+        TextView currencyDescription = root.findViewById(R.id.currencyDescription);
+
         LinksFragment linksFragment = new LinksFragment();
 
         getChildFragmentManager().beginTransaction()
                 .add(R.id.linksFragmentContainer, linksFragment)
                 .commit();
 
-        mCurrencyLinksViewModel.getLinks().observe(getViewLifecycleOwner(),
-                linksFragment::setLinksData);
+        mCurrencyLinksViewModel.getLinks().observe(getViewLifecycleOwner(), currencyLinks -> {
+            linksFragment.setLinksData(currencyLinks);
+            currencyDescription.setText(Html.fromHtml(currencyLinks.getDescription().get("en")));
+        });
 
         return root;
     }

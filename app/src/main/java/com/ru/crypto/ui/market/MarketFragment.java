@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -94,11 +95,11 @@ public class MarketFragment extends Fragment implements LifecycleOwner {
 
     public void initializeToolbar() {
         mToolbar = getActivity().findViewById(R.id.toolbar);
+        String toolbarName = "Market";
+        TextView toolbarTitle  = getActivity().findViewById(R.id.toolbarTitle);
         if(mToolbar != null) {
-            mToolbar.setTitle("");
             mToolbar.getMenu().getItem(0).setVisible(true);
-            mToolbar.getMenu().getItem(1).setVisible(true);
-
+            toolbarTitle.setText(toolbarName);
         }
     }
 

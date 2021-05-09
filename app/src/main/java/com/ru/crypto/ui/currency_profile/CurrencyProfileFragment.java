@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,7 +24,7 @@ import com.ru.crypto.models.CryptoCurrency;
 public class CurrencyProfileFragment extends Fragment {
 
     private static final String ARG_SECTION_NUMBER = "section_number";
-    private final String [] tabNames = new String[] {"General", "News", "Markets", "Links"};
+    private final String [] tabNames = new String[] {"General", "Links"};
     private CryptoCurrency mCryptoCurrency;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,9 +53,10 @@ public class CurrencyProfileFragment extends Fragment {
 
     public void initializeToolbar() {
         Toolbar toolbar  = getActivity().findViewById(R.id.toolbar);
+        TextView toolbarTitle  = getActivity().findViewById(R.id.toolbarTitle);
         if(toolbar != null) {
             toolbar.getMenu().getItem(0).setVisible(false);
-            toolbar.getMenu().getItem(1).setVisible(false);
+            toolbarTitle.setText(mCryptoCurrency.getName());
         }
         ImageButton buttonBack = getActivity().findViewById(R.id.button_back);
         buttonBack.setVisibility(View.VISIBLE);
