@@ -5,6 +5,7 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -37,7 +38,7 @@ public class CurrencyLinksFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_currency_links, container);
 
         TextView currencyDescription = root.findViewById(R.id.currencyDescription);
-
+        ProgressBar linksProgressBar = root.findViewById(R.id.linksProgressBar);
         LinksFragment linksFragment = new LinksFragment();
 
         getChildFragmentManager().beginTransaction()
@@ -47,6 +48,7 @@ public class CurrencyLinksFragment extends Fragment {
         mCurrencyLinksViewModel.getLinks().observe(getViewLifecycleOwner(), currencyLinks -> {
             linksFragment.setLinksData(currencyLinks);
             currencyDescription.setText(Html.fromHtml(currencyLinks.getDescription().get("en")));
+            linksProgressBar.setVisibility(View.GONE);
         });
 
         return root;

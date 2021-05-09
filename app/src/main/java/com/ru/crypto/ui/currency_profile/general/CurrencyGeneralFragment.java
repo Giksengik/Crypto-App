@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 
@@ -50,6 +51,7 @@ public class CurrencyGeneralFragment extends Fragment implements TimeRangeFragme
 
         View root = inflater.inflate(R.layout.fragment_currency_general, container);
 
+        ProgressBar chartProgressBar = root.findViewById(R.id.progressCurrencyMarketChart);
         time = root.findViewById(R.id.curencyProfileTimeOfPrice);
         currencyPriceAtTime = root.findViewById(R.id.currencyProfilePrice);
         priceChart = root.findViewById(R.id.currencyPriceChart);
@@ -69,7 +71,7 @@ public class CurrencyGeneralFragment extends Fragment implements TimeRangeFragme
                 .commit();
 
         mCurrencyGeneralViewModel.getMarketChart().observe(getViewLifecycleOwner(), currencyMarketChart -> {
-
+            chartProgressBar.setVisibility(View.GONE);
             priceChartTuner.setLinearChartData(priceChart, currencyMarketChart.getPrices());
             time.setText(priceChartTuner.getLastTime(currencyMarketChart.getPrices()));
             currencyPriceAtTime.setText(priceChartTuner.getLastTimePrice(currencyMarketChart.getPrices()));

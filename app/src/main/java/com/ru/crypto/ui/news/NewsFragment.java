@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 
@@ -14,12 +15,16 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ru.crypto.R;
 import com.ru.crypto.adapters.CryptoArticlesAdapter;
+import com.ru.crypto.models.CryptoArticle;
+
+import java.util.List;
 
 public class NewsFragment extends Fragment implements LifecycleOwner {
 
@@ -52,10 +57,17 @@ public class NewsFragment extends Fragment implements LifecycleOwner {
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_news, container, false);
 
+        ProgressBar progressBar = root.findViewById(R.id.progressBarNews);
         RecyclerView recyclerView = root.findViewById(R.id.articlesRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(mArticleAdapter);
-        mNewsViewModel.getArticles().observe(getViewLifecycleOwner(), mArticleAdapter::setArticles);
+        mNewsViewModel.getArticles().observe(getViewLifecycleOwner(), new Observer<List<CryptoArticle>>() {
+            @Override
+            public void onChanged(List<CryptoArticle> articles) {
+                mArticleAdapter.setArticles(articles);
+                progressBar.setVisibility(View.GONE);
+            }
+        });
 
         getLifecycle().addObserver(mNewsViewModel);
 
