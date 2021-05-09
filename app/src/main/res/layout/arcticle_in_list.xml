@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="150dp"
     android:layout_marginBottom="5dp"
-    android:background="?android:attr/selectableItemBackground"
+    app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="30dp">
 
     <RelativeLayout
@@ -40,19 +40,39 @@
                 android:layout_weight="5"
                 android:paddingTop="5dp"
                 android:paddingEnd="10dp"
+                android:textColor="@color/black"
                 android:text="TextView"
                 style="@style/articleStyle"/>
-
-            <TextView
-                android:id="@+id/articleSource"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="bottom|left"
-                android:paddingEnd="10dp"
-                android:paddingBottom="5dp"
-                android:text="TextView"
-                style="@style/articleStyle"/>
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/articleTime"
+                    style="@style/articleStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingLeft="5dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="5dp"
+                    android:textSize="12sp"
+                    android:text="TextView"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/articleSource"
+                    style="@style/articleStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="bottom|end"
+                    android:paddingEnd="15dp"
+                    android:paddingBottom="5dp"
+                    android:textSize="12sp"
+                    android:text="TextView"
+                    android:textColor="@color/black" />
+            </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
 

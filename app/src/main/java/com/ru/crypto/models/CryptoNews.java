@@ -11,6 +11,7 @@ public class CryptoNews {
     @Expose
     ArrayList<CryptoArticle> articles;
 
+
     public ArrayList<CryptoArticle> getArticles() {
         return articles;
     }

@@ -42,8 +42,10 @@ public class CryptoArticlesAdapter extends RecyclerView.Adapter<CryptoArticlesAd
         CryptoArticle article = articles.get(position);
         holder.articleSource.setText(article.getSource());
         holder.articleTitle.setText(article.getArticleTitle());
+        holder.articleReleaseTime.setText(Converters.getFormattedWithHourDataStringByUnixTimestamp(article.getPublishedOnTimestamp() * 1000));
         Glide.with(holder.articleIcon.getContext())
                 .load(article.getArticleImageURL())
+                .apply(new RequestOptions().circleCrop())
                 .into(holder.articleIcon);
         holder.itemView.setOnClickListener(v -> onClickListener.onArticleClick(article,position));
     }
@@ -60,10 +62,11 @@ public class CryptoArticlesAdapter extends RecyclerView.Adapter<CryptoArticlesAd
 
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
-        TextView articleTitle, articleSource;
+        TextView articleTitle, articleSource, articleReleaseTime;
         ImageView articleIcon;
         ViewHolder(View v) {
             super(v);
+            articleReleaseTime = v.findViewById(R.id.articleTime);
             articleIcon = v.findViewById(R.id.articleIcon);
             articleTitle = v.findViewById(R.id.articleTitle);
             articleSource = v.findViewById(R.id.articleSource);

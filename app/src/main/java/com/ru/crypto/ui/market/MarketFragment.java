@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.ru.crypto.MainActivity;
 import com.ru.crypto.R;
 import com.ru.crypto.adapters.CryptoCurrencyAdapter;
@@ -63,6 +64,21 @@ public class MarketFragment extends Fragment implements LifecycleOwner {
 
         currenciesList.setLayoutManager(new LinearLayoutManager(getContext()));
         currenciesList.setAdapter(currencyAdapter);
+        FloatingActionButton refreshButton = root.findViewById(R.id.refreshMarketButton);
+
+        currenciesList.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (dy > 0 && refreshButton.getVisibility() == View.VISIBLE) {
+                    refreshButton.hide();
+                } else if (dy < 0 && refreshButton.getVisibility() != View.VISIBLE) {
+                    refreshButton.show();
+                }
+            }
+        });
+
+        refreshButton.setOnClickListener(v -> mMarketViewModel.updateCurrencies());
 
         mMarketViewModel.getAllCurrencies().observe(getViewLifecycleOwner(), cryptocurrencies -> {
             if( currencyAdapter.getData().size() == 0) {
@@ -95,7 +111,7 @@ public class MarketFragment extends Fragment implements LifecycleOwner {
 
     public void initializeToolbar() {
         mToolbar = getActivity().findViewById(R.id.toolbar);
-        String toolbarName = "Market";
+        String toolbarName = "";
         TextView toolbarTitle  = getActivity().findViewById(R.id.toolbarTitle);
         if(mToolbar != null) {
             mToolbar.getMenu().getItem(0).setVisible(true);

@@ -29,7 +29,7 @@ import retrofit2.Response;
 public class CryptoCurrencyRepository {
 
     private static String CURRENT_CURRENCY = "USD";
-    private static int PAGE_LIMIT = 8;
+    private static int PAGE_LIMIT = 4;
     private CryptoCurrencyDatabase mDatabase;
     INetworkService mCryptoCurrencyNetworkService;
     LiveData<List<CryptoCurrency>> mAllCurrencies;

@@ -30,7 +30,7 @@ public class NewsFragment extends Fragment implements LifecycleOwner {
         String toolbarName = "News";
         TextView toolbarTitle  = getActivity().findViewById(R.id.toolbarTitle);
         if(toolbar != null) {
-            toolbar.getMenu().getItem(0).setVisible(true);
+            toolbar.getMenu().getItem(0).setVisible(false);
             toolbarTitle.setText(toolbarName);
         }
     }

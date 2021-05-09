@@ -89,8 +89,6 @@ public class CryptoCurrency implements Serializable {
 
     String iconString;
 
-    @Ignore
-    Bitmap icon;
 
     public String getIconString() {
         return iconString;
@@ -100,13 +98,6 @@ public class CryptoCurrency implements Serializable {
         this.iconString = iconString;
     }
 
-    public Bitmap getIcon() {
-        return icon;
-    }
-
-    public void setIcon(Bitmap icon) {
-        this.icon = icon;
-    }
 
     public String getId() {
         return id;

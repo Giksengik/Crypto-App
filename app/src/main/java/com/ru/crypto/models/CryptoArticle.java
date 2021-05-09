@@ -40,7 +40,9 @@ public class CryptoArticle {
     @Expose
     String categories;
 
-
+    @SerializedName("published_on")
+    @Expose
+    double publishedOnTimestamp;
 
     @SerializedName("source_info")
     @Expose
@@ -49,6 +51,13 @@ public class CryptoArticle {
 
     String iconString;
 
+    public double getPublishedOnTimestamp() {
+        return publishedOnTimestamp;
+    }
+
+    public void setPublishedOnTimestamp(double publishedOnTimestamp) {
+        this.publishedOnTimestamp = publishedOnTimestamp;
+    }
 
     public String getIconString() {
         return iconString;
