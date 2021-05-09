@@ -17,6 +17,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.github.mikephil.charting.charts.LineChart;
 
+import com.ru.crypto.repositories.CryptoCurrencyRepository;
+import com.ru.crypto.ui.market.MarketViewModel;
 import com.ru.crypto.utils.Converters;
 import com.ru.crypto.R;
 import com.ru.crypto.models.CryptoCurrency;
@@ -35,14 +37,17 @@ public class CryptoCurrencyAdapter extends RecyclerView.Adapter<CryptoCurrencyAd
     private List<CryptoCurrency> unfilteredCurrencies = new ArrayList<>();
     private List<CryptoCurrency> filteredCurrencies = new ArrayList<>();
 
+    private MarketViewModel viewModel;
+
     private OnCurrencyClickListener onCurrencyClickListener;
     public interface OnCurrencyClickListener{
         void onCurrencyClick(CryptoCurrency currency, int position);
     }
 
     @Inject
-    public CryptoCurrencyAdapter(OnCurrencyClickListener currencyClickListener){
+    public CryptoCurrencyAdapter(OnCurrencyClickListener currencyClickListener, MarketViewModel viewModel){
         this.onCurrencyClickListener = currencyClickListener;
+        this.viewModel = viewModel;
     }
 
     @NonNull
@@ -57,10 +62,12 @@ public class CryptoCurrencyAdapter extends RecyclerView.Adapter<CryptoCurrencyAd
     public void onBindViewHolder(@NonNull CryptoCurrencyAdapter.ViewHolder holder, int position) {
         CryptoCurrency currency = currencies.get(position);
         DecimalFormat decimalFormat = new DecimalFormat("#.##");
+
         holder.currencyName.setText(currency.getName());
         holder.currencySymbol.setText(currency.getSymbol().toUpperCase());
         holder.price.setText(Converters.getCurrencySymbol(currency.getCurrency()) + decimalFormat.format(currency.getCurrentPrice()));
         holder.priceChange.setText(decimalFormat.format(currency.getPriceChangePercentage24H()) + "%");
+
         MinimalisticLineChartTuner chartTuner = new MinimalisticLineChartTuner();
         chartTuner.setChartProperties(holder.chart);
         if(currency.getSparkline() != null)
@@ -70,9 +77,11 @@ public class CryptoCurrencyAdapter extends RecyclerView.Adapter<CryptoCurrencyAd
         Glide.with(holder.currencyIcon.getContext())
                 .load(currency.getImageUrl()).apply(new RequestOptions().circleCrop())
                 .into(holder.currencyIcon);
+
         holder.itemView.setOnClickListener(v -> {
             onCurrencyClickListener.onCurrencyClick(currency, position);
         });
+
     }
 
     public void setCurrencies(List<CryptoCurrency> currencies) {
@@ -109,7 +118,6 @@ public class CryptoCurrencyAdapter extends RecyclerView.Adapter<CryptoCurrencyAd
 
         TextView currencyName, currencySymbol, priceChange, price;
         ImageView currencyIcon;
-        ImageButton isFavouriteButton;
         LineChart chart ;
         ViewHolder(View v) {
             super(v);
@@ -118,7 +126,6 @@ public class CryptoCurrencyAdapter extends RecyclerView.Adapter<CryptoCurrencyAd
             priceChange = v.findViewById(R.id.currencyPriceChange);
             price = v.findViewById(R.id.currencyPrice);
             currencyIcon = v.findViewById(R.id.currencyIcon);
-            isFavouriteButton = v.findViewById(R.id.iconIsFavouriteCurrency);
             chart = v.findViewById(R.id.currencyChart);
         }
     }

@@ -51,7 +51,7 @@ public class MarketFragment extends Fragment implements LifecycleOwner {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mMarketViewModel = new ViewModelProvider(this).get(MarketViewModel.class);
-        currencyAdapter = new CryptoCurrencyAdapter(mCurrencyClickListener);
+        currencyAdapter = new CryptoCurrencyAdapter(mCurrencyClickListener, mMarketViewModel);
 
     }
 
@@ -104,7 +104,6 @@ public class MarketFragment extends Fragment implements LifecycleOwner {
         super.onStart();
         setNavVisibility(true);
         initializeToolbar();
-        mMarketViewModel.refreshData();
         mMarketViewModel.updateCurrencies();
         setSearchActions();
     }

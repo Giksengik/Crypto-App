@@ -30,20 +30,6 @@
         app:layout_constraintStart_toEndOf="@+id/scrollView2"
         app:layout_constraintTop_toTopOf="@+id/currencyPrice" />
 
-    <ImageButton
-        android:id="@+id/iconIsFavouriteCurrency"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="5dp"
-        android:background="@drawable/icon_not_favourite"
-
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
-
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
@@ -85,12 +71,14 @@
                 android:textSize="@dimen/currency_symbol_text_size" />
         </RelativeLayout>
     </androidx.core.widget.NestedScrollView>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout2"
         android:layout_width="80dp"
         android:layout_height="match_parent"
-        app:layout_constraintEnd_toStartOf="@+id/iconIsFavouriteCurrency"
-        tools:layout_editor_absoluteY="22dp">
+        android:layout_marginEnd="6dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/currencyPriceChange"

@@ -15,4 +15,5 @@
     <string name="company_profile_tab2">News</string>
     <string name="company_profile_tab3">Links</string>
     <string name="company_profile_tab4">Markets</string>
+    <string name="show_favourites">Show favourites</string>
 </resources>

@@ -28,4 +28,7 @@ public interface CryptoCurrencyDao {
 
     @Query("SELECT COUNT(id) FROM cryptocurrency")
     Integer getRowCount();
+
+    @Update
+    void updateCurrency(CryptoCurrency currency);
 }

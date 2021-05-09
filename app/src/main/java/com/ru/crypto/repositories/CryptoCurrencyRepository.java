@@ -133,7 +133,8 @@ public class CryptoCurrencyRepository {
         }
         return result.toString();
     }
-    public void refreshData() {
 
+    public void updateCurrency(CryptoCurrency currency) {
+        mDatabase.cryptoCurrencyDao().updateCurrency(currency);
     }
 }

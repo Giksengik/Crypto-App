@@ -21,6 +21,7 @@ import java.io.Serializable;
 @Entity
 
 public class CryptoCurrency implements Serializable {
+
     @NonNull
     @SerializedName("id")
     @Expose

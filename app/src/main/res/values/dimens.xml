@@ -4,6 +4,6 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="currency_name_text_size">12sp</dimen>
     <dimen name="currency_symbol_text_size">12sp</dimen>
-    <dimen name="currency_price_change_text_size">12sp</dimen>
+    <dimen name="currency_price_change_text_size">14sp</dimen>
     <dimen name="currency_price_text_size">10sp</dimen>
 </resources>

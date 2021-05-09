@@ -43,8 +43,8 @@ public class MarketViewModel extends ViewModel {
         mRepository.countCryptoCurrencyDiffResult(oldCurrencies);
     }
 
-    public void refreshData() {
-        mRepository.refreshData();
+    public void updateCurrency(CryptoCurrency currency) {
+        mRepository.updateCurrency(currency);
     }
 
 }

@@ -32,6 +32,7 @@ public class CryptoCurrencyModule {
     CryptoCurrencyDatabase provideDB() {
         return Room.databaseBuilder(App.getInstance(),
                 CryptoCurrencyDatabase.class, "crypto currency db")
+                .allowMainThreadQueries()
                 .fallbackToDestructiveMigration()
                 .build();
     }
