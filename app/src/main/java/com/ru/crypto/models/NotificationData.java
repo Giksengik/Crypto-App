@@ -11,9 +11,7 @@ import java.io.Serializable;
 public class NotificationData {
 
     @Ignore public static final String TYPE_SINGLE = "single";
-    @Ignore public static final String TYPE_INTERVAL_PRICE = "interval_price";
-    @Ignore public static final String TYPE_INTERVAL_PRICE_CHANGE = "interval_price_change";
-    @Ignore public static final String TYPE_INTERVAL_PERCENTAGE_CHANGE = "interval_percentage_change";
+    @Ignore public static final String TYPE_CYCLICAL_PRICE = "cyclical_price";
     @Ignore public static final String TYPE_BORDER_EVENT = "border_event";
 
     @Ignore public static final String KEY_TO_SERIALIZE = "notification_data";
@@ -25,7 +23,7 @@ public class NotificationData {
 
     double oldPrice;
 
-    long intervalValueInMinutes;
+    long intervalValueInMillis;
 
     double topBorder;
 
@@ -60,13 +58,7 @@ public class NotificationData {
         this.oldPrice = oldPrice;
     }
 
-    public long getIntervalValueInMinutes() {
-        return intervalValueInMinutes;
-    }
 
-    public void setIntervalValueInMinutes(long intervalValueInMinutes) {
-        this.intervalValueInMinutes = intervalValueInMinutes;
-    }
 
     public double getTopBorder() {
         return topBorder;
@@ -100,17 +92,11 @@ public class NotificationData {
         this.nextNotificationTime = nextNotificationTime;
     }
 
-    public NotificationData(int notificationID, String currencyID, double oldPrice, long intervalValueInMinutes, double topBorder, double bottomBorder, String notificationType, long nextNotificationTime) {
-        this.notificationID = notificationID;
-        this.currencyID = currencyID;
-        this.oldPrice = oldPrice;
-        this.intervalValueInMinutes = intervalValueInMinutes;
-        this.topBorder = topBorder;
-        this.bottomBorder = bottomBorder;
-        this.notificationType = notificationType;
-        this.nextNotificationTime = nextNotificationTime;
+    public long getIntervalValueInMillis() {
+        return intervalValueInMillis;
     }
 
-    public NotificationData() {
+    public void setIntervalValueInMillis(long intervalValueInMillis) {
+        this.intervalValueInMillis = intervalValueInMillis;
     }
 }

@@ -20,6 +20,9 @@
     <string name="choose_the_type_notification">Type of notification:</string>
     <string name="choose_the_time_intervalofnotification">Time interval of notification:</string>
     <string name="id_of_cryptocurrency">ID of cryptocurrency:</string>
+    <string name="print_border_here">Print border in USD here</string>
+    <string name="bottom_border">Bottom border:</string>
+    <string name="top_border">Top border:</string>
 
     <string-array name="notificationTypes">
         <item>Single</item>

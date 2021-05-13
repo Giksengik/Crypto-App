@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.google.gson.Gson;
 import com.ru.crypto.R;
@@ -31,7 +32,7 @@ public class NotificationBroadcast extends BroadcastReceiver {
 
     @Inject
     INetworkService networkService;
-
+    public static int count = 1;
     @Override
     public synchronized void onReceive(Context context, Intent intent) {
 
@@ -42,7 +43,13 @@ public class NotificationBroadcast extends BroadcastReceiver {
                 , NotificationData.class);
         if( notificationData != null){
             switch (notificationData.getNotificationType()) {
+                case NotificationData.TYPE_BORDER_EVENT:
+                    comparePriceAndBorders(notificationData, context);
+                    break;
                 case NotificationData.TYPE_SINGLE:
+                    getCurrencyData(notificationData, context);
+                    break;
+                case NotificationData.TYPE_CYCLICAL_PRICE:
                     getCurrencyData(notificationData, context);
                     break;
             }
@@ -68,21 +75,67 @@ public class NotificationBroadcast extends BroadcastReceiver {
                 });
     }
 
+    public void comparePriceAndBorders(NotificationData notificationData, Context context) {
+        networkService.getJSONApi()
+                .getDefaultInfo("usd", notificationData.getCurrencyID())
+                .enqueue(new Callback<List<CryptoCurrency>>() {
+                    @Override
+                    public void onResponse(Call<List<CryptoCurrency>> call, Response<List<CryptoCurrency>> response) {
+                        if(response.body() != null && response.body().size() > 0) {
+                            CryptoCurrency cryptoCurrency = response.body().get(0);
+                            if(cryptoCurrency.getCurrentPrice() > notificationData.getTopBorder()){
+                                showTopBorderNotification(context, cryptoCurrency);
+
+                                Intent broadcastIntent = new Intent(NotificationService.ACTION_DELETE);
+                                Gson gson = new Gson();
+                                broadcastIntent.putExtra(NotificationData.KEY_TO_SERIALIZE, gson.toJson(notificationData));
+                                LocalBroadcastManager bm = LocalBroadcastManager.getInstance(context);
+                                bm.sendBroadcast(broadcastIntent);
+                            }
+
+                            else if (cryptoCurrency.getCurrentPrice() < notificationData.getBottomBorder()) {
+                                showBottomBorderNotification(context, cryptoCurrency);
+
+                                Intent broadcastIntent = new Intent(NotificationService.ACTION_DELETE);
+                                Gson gson = new Gson();
+                                broadcastIntent.putExtra(NotificationData.KEY_TO_SERIALIZE, gson.toJson(notificationData));
+                                LocalBroadcastManager bm = LocalBroadcastManager.getInstance(context);
+                                bm.sendBroadcast(broadcastIntent);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<CryptoCurrency>> call, Throwable t) {
+
+                    }
+                });
+    }
 
 
-
-
-
-    public void showTestNotification(Context context, CryptoCurrency currency) {
+    public void showBottomBorderNotification(Context context, CryptoCurrency currency) {
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
         Notification notification = new NotificationCompat.Builder(context, App.CHANNEL_1_ID)
                 .setSmallIcon(R.drawable.icon_info_notification)
-                .setContentTitle("test")
-                .setContentText("test price is " + currency.getCurrentPrice())
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setContentTitle(currency.getName() + " price fell below the border")
+                .setContentText("Cryptocurrency price is now "
+                        + currency.getCurrentPrice() + "$")
+                .setPriority(NotificationCompat.PRIORITY_LOW)
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                 .build();
-        notificationManager.notify(1, notification);
+        notificationManager.notify(++count, notification);
+    }
+
+    public void showTopBorderNotification(Context context, CryptoCurrency currency) {
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+        Notification notification = new NotificationCompat.Builder(context, App.CHANNEL_1_ID)
+                .setSmallIcon(R.drawable.icon_info_notification)
+                .setContentTitle(currency.getName() + " price has risen above the border")
+                .setContentText("Cryptocurrency price is now " + currency.getCurrentPrice() + "$")
+                .setPriority(NotificationCompat.PRIORITY_LOW)
+                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                .build();
+        notificationManager.notify(++count, notification);
     }
 
     public void showCurrencyPriceNotification(Context context, CryptoCurrency currency) {
@@ -94,6 +147,6 @@ public class NotificationBroadcast extends BroadcastReceiver {
                 .setPriority(NotificationCompat.PRIORITY_LOW)
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                 .build();
-        notificationManager.notify(1, notification);
+        notificationManager.notify(++count, notification);
     }
 }

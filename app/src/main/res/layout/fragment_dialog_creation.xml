@@ -60,7 +60,9 @@
                     android:id="@+id/notificationTypeSpinner"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:entries="@array/notificationTypes" />
+                    android:layout_gravity="center"
+                    android:entries="@array/notificationTypes"
+                    android:paddingStart="10dp" />
             </LinearLayout>
 
         </LinearLayout>
@@ -97,6 +99,7 @@
                     android:id="@+id/autoCompleteIDOfCryptoCurrency"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_gravity="center"
                     android:gravity="start"
                     android:hint="Print cryptocurrency ID"
                     android:paddingTop="0dp"
@@ -124,7 +127,6 @@
                     style="@style/creationNotificationStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:text="@string/choose_the_time_intervalofnotification" />
             </LinearLayout>
 
@@ -140,12 +142,12 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
                     android:entries="@array/notificationIntervals"
-                    android:gravity="start"
+                    android:gravity="center"
+                    android:paddingStart="10dp"
                     android:textColor="@color/black" />
             </LinearLayout>
 
         </LinearLayout>
-
 
         <LinearLayout
             android:id="@+id/container4"
@@ -155,6 +157,92 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/container3">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textTopBorder"
+                    style="@style/creationNotificationStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:text="@string/top_border" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/editTextTextTopBorder"
+                    style="@style/creationNotificationStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:gravity="center"
+                    android:hint="@string/print_border_here"
+                    android:inputType="textPersonName"
+                    android:paddingStart="10dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/container5"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/container4">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textBottomBorder"
+                    style="@style/creationNotificationStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/bottom_border" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/editTextBottomBorder"
+                    style="@style/creationNotificationStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:ems="10"
+                    android:hint="@string/print_border_here"
+                    android:inputType="textPersonName"
+                    android:paddingStart="10dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/container6"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/container5">
 
             <LinearLayout
                 android:layout_width="match_parent"

@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.databinding.DataBindingUtil;
+
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -36,6 +36,7 @@ public class CryptoCurrencyAdapter extends RecyclerView.Adapter<CryptoCurrencyAd
     private List<CryptoCurrency> currencies = new ArrayList<>();
     private List<CryptoCurrency> unfilteredCurrencies = new ArrayList<>();
     private List<CryptoCurrency> filteredCurrencies = new ArrayList<>();
+
 
     private MarketViewModel viewModel;
 

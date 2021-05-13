@@ -40,7 +40,7 @@ public class NotificationService extends LifecycleService {
     private static final String TAG = "NotificationService";
 
     public static final String ACTION_NOTIFICATION = "com.ru.crypto.NOTIFICATION";
-
+    public static final String ACTION_DELETE = "com.ru.crypto.DELETE";
     @Inject
     NotificationRepository notificationRepository;
 
@@ -84,20 +84,29 @@ public class NotificationService extends LifecycleService {
                         sendSingleNotification(item);
                         notificationRepository.deleteNotification(item);
                     }
+                    else if (item.getNotificationType().equals(NotificationData.TYPE_CYCLICAL_PRICE)) {
+                        sendCyclicalNotification(item);
+                        item.setNextNotificationTime(System.currentTimeMillis() + item.getIntervalValueInMillis());
+                        notificationRepository.updateNotification(item);
+                    }
                 }
             }
         });
 
 
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
+        new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
                     notificationRepository.updateCurrentNotifications(System.currentTimeMillis());
                 }
             }
-            ,0,30000);
-
+            ,0,10000);
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                notificationRepository.sendToCheckBorderNotifications(getApplicationContext());
+            }
+        }, 0, 10000);
         return START_STICKY;
     }
 
@@ -105,14 +114,15 @@ public class NotificationService extends LifecycleService {
         Intent broadcastIntent = new Intent(this, NotificationBroadcast.class);
         Gson gson = new Gson();
         broadcastIntent.putExtra(NotificationData.KEY_TO_SERIALIZE, gson.toJson(notificationData));
-
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, broadcastIntent, 0);
-        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), pendingIntent);
-
+        sendBroadcast(broadcastIntent);
     }
 
-
+    public void sendCyclicalNotification(NotificationData notificationData) {
+        Intent broadcastIntent = new Intent(this, NotificationBroadcast.class);
+        Gson gson = new Gson();
+        broadcastIntent.putExtra(NotificationData.KEY_TO_SERIALIZE, gson.toJson(notificationData));
+        sendBroadcast(broadcastIntent);
+    }
 
     @Override
     public void onDestroy() {
