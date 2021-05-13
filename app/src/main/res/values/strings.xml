@@ -16,4 +16,26 @@
     <string name="company_profile_tab3">Links</string>
     <string name="company_profile_tab4">Markets</string>
     <string name="show_favourites">Show favourites</string>
+    <string name="creating_notification">Creating of notification</string>
+    <string name="choose_the_type_notification">Type of notification:</string>
+    <string name="choose_the_time_intervalofnotification">Time interval of notification:</string>
+    <string name="id_of_cryptocurrency">ID of cryptocurrency:</string>
+
+    <string-array name="notificationTypes">
+        <item>Single</item>
+        <item>Border</item>
+        <item>Cyclical</item>
+    </string-array>
+
+    <string-array name="notificationIntervals">
+        <item> 30 sec</item>
+        <item>1 min</item>
+        <item>30 min</item>
+        <item>1 hour</item>
+        <item>2 hours</item>
+        <item>3 hours</item>
+        <item>6 hours</item>
+        <item>12 hours</item>
+        <item>1 day</item>
+    </string-array>
 </resources>

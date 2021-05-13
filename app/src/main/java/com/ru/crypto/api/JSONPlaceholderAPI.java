@@ -1,5 +1,6 @@
 package com.ru.crypto.api;
 
+import com.ru.crypto.models.CryptoCurrencyName;
 import com.ru.crypto.models.CryptoID;
 import com.ru.crypto.models.CryptoCurrency;
 import com.ru.crypto.models.CryptoNews;
@@ -28,6 +29,8 @@ public interface JSONPlaceholderAPI {
     String defaultPriceChangePercentage = "24H";
 
     //COIN GECKO
+
+
     @GET("/api/v3/coins/markets?order=" + defaultOrder + "&per_page=" +
             defaultPerPage + "&price_change_percentage=" + defaultPriceChangePercentage + "&sparkline=true")
     Call<List<CryptoCurrency>> getDefaultInfo(@Query("vs_currency") String currency, @Query("ids") String ids);
@@ -50,7 +53,8 @@ public interface JSONPlaceholderAPI {
     @GET("/api/v3/coins/{currency}?tickers=false&market_data=false&community_data=false&developer_data=false")
     Call<CurrencyLinks> getCurrencyLinks(@Path("currency") String currency);
 
-
+    @GET("/api/v3/coins/list")
+    Call<List<CryptoCurrencyName>> getAllCurrencies();
 
     // CRYPTO NEWS
 

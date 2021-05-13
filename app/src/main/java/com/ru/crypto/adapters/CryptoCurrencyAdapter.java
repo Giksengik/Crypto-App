@@ -71,7 +71,7 @@ public class CryptoCurrencyAdapter extends RecyclerView.Adapter<CryptoCurrencyAd
         MinimalisticLineChartTuner chartTuner = new MinimalisticLineChartTuner();
         chartTuner.setChartProperties(holder.chart);
         if(currency.getSparkline() != null)
-        chartTuner.setLinearChartData(holder.chart, currency);
+            chartTuner.setLinearChartData(holder.chart, currency);
 
 
         Glide.with(holder.currencyIcon.getContext())
