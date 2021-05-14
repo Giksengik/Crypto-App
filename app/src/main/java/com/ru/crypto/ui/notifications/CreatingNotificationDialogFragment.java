@@ -3,6 +3,8 @@ package com.ru.crypto.ui.notifications;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,12 +41,18 @@ public class CreatingNotificationDialogFragment extends DialogFragment {
 
     public static String TAG = "CreatingNotificationDialog";
     private onCreationNotificationClickListener mOnCreationNotificationClickListener = null;
-    FragmentDialogCreationBinding binding;
+    private FragmentDialogCreationBinding binding;
+    private ArrayAdapter<String> idsAdapter;
+    private onCryptoCurrencyChooseListener mCryptoCurrencyChooseListener;
 
     String [] currenciesID;
 
     public interface onCreationNotificationClickListener{
         void onCreationNotificationClick(NotificationData notificationData);
+    }
+
+    public interface onCryptoCurrencyChooseListener{
+        void onCryptoCurrencyChoose(String id);
     }
 
     @Override
@@ -57,6 +65,9 @@ public class CreatingNotificationDialogFragment extends DialogFragment {
         if(fragment instanceof onCreationNotificationClickListener) {
             mOnCreationNotificationClickListener = (onCreationNotificationClickListener) fragment;
         }
+        if(fragment instanceof onCryptoCurrencyChooseListener) {
+            mCryptoCurrencyChooseListener = (onCryptoCurrencyChooseListener) fragment;
+        }
 
     }
 
@@ -65,10 +76,8 @@ public class CreatingNotificationDialogFragment extends DialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentDialogCreationBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-        if(currenciesID != null) {
-            binding.autoCompleteIDOfCryptoCurrency.setAdapter(new
-                    ArrayAdapter<>(getContext(), R.layout.support_simple_spinner_dropdown_item, currenciesID));
-        }
+        setupSpinners();
+        setupIDsList();
 
         binding.buttcnCancelCreating.setOnClickListener(v -> dismiss());
 
@@ -97,37 +106,79 @@ public class CreatingNotificationDialogFragment extends DialogFragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         if(position != 1) {
-                            binding.textNotificationInterval.setVisibility(View.VISIBLE);
-                            binding.notificationIntervalSpinner.setVisibility(View.VISIBLE);
-                            binding.textBottomBorder.setVisibility(View.GONE);
-                            binding.editTextBottomBorder.setVisibility(View.GONE);
-                            binding.textTopBorder.setVisibility(View.GONE);
-                            binding.editTextTextTopBorder.setVisibility(View.GONE);
+                            setFirstVisibility();
                         }
                         else {
-                            binding.textNotificationInterval.setVisibility(View.GONE);
-                            binding.notificationIntervalSpinner.setVisibility(View.GONE);
-                            binding.textBottomBorder.setVisibility(View.VISIBLE);
-                            binding.editTextBottomBorder.setVisibility(View.VISIBLE);
-                            binding.textTopBorder.setVisibility(View.VISIBLE);
-                            binding.editTextTextTopBorder.setVisibility(View.VISIBLE);
+                            setSecondVisibility();
                         }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                binding.textNotificationInterval.setVisibility(View.GONE);
-                binding.notificationIntervalSpinner.setVisibility(View.GONE);
-                binding.textBottomBorder.setVisibility(View.GONE);
-                binding.editTextBottomBorder.setVisibility(View.GONE);
-                binding.textTopBorder.setVisibility(View.GONE);
-                binding.editTextTextTopBorder.setVisibility(View.GONE);
+                setSecondVisibility();
             }
         });
+
+        binding.autoCompleteIDOfCryptoCurrency.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String id = s.toString();
+                if (Arrays.asList(currenciesID).contains(id)) {
+                    if (binding.notificationTypeSpinner.getSelectedItem()
+                            .equals("Border"))
+                        mCryptoCurrencyChooseListener.onCryptoCurrencyChoose(id);
+                } else {
+                    binding.textTopBorder.setHint("");
+                    binding.textBottomBorder.setHint("");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
 
         return root;
     }
 
+    public void setupSpinners() {
+        binding.notificationTypeSpinner.setAdapter(new ArrayAdapter<>(getContext(), R.layout.spinner_item,
+                getResources().getStringArray(R.array.notificationTypes)));
+        binding.notificationIntervalSpinner.setAdapter(new ArrayAdapter<>(getContext(), R.layout.spinner_item,
+                getResources().getStringArray(R.array.notificationIntervals)));
+    }
+
+    public void setupIDsList() {
+        if(currenciesID != null) {
+            binding.autoCompleteIDOfCryptoCurrency.setAdapter(new
+                    ArrayAdapter<>(getContext(), R.layout.spinner_item, currenciesID));
+        }
+    }
+
+    public void setFirstVisibility() {
+        binding.textNotificationInterval.setVisibility(View.VISIBLE);
+        binding.notificationIntervalSpinner.setVisibility(View.VISIBLE);
+        binding.textBottomBorder.setVisibility(View.GONE);
+        binding.editTextBottomBorder.setVisibility(View.GONE);
+        binding.textTopBorder.setVisibility(View.GONE);
+        binding.editTextTextTopBorder.setVisibility(View.GONE);
+    }
+
+    public void setSecondVisibility() {
+        binding.textNotificationInterval.setVisibility(View.GONE);
+        binding.notificationIntervalSpinner.setVisibility(View.GONE);
+        binding.textBottomBorder.setVisibility(View.VISIBLE);
+        binding.editTextBottomBorder.setVisibility(View.VISIBLE);
+        binding.textTopBorder.setVisibility(View.VISIBLE);
+        binding.editTextTextTopBorder.setVisibility(View.VISIBLE);
+    }
     public void setCurrenciesList(List<CryptoCurrencyName> currenciesList) {
         String [] ids = new String[currenciesList.size()];
         int i = 0;
@@ -136,11 +187,18 @@ public class CreatingNotificationDialogFragment extends DialogFragment {
             i++;
         }
         if(currenciesID != null) {
-            binding.autoCompleteIDOfCryptoCurrency.setAdapter(new
-                    ArrayAdapter<>(getContext(), R.layout.support_simple_spinner_dropdown_item, ids));
+            idsAdapter = new
+                    ArrayAdapter<>(getContext(), R.layout.support_simple_spinner_dropdown_item, ids);
+            binding.autoCompleteIDOfCryptoCurrency.setAdapter(idsAdapter);
 
         }
         currenciesID = ids;
+    }
+
+    public void  setBorderHints(CryptoCurrency currency) {
+        binding.editTextTextTopBorder.setHint(currency.getCurrentPrice() * 1.1 + "");
+        binding.editTextBottomBorder.setHint(currency.getCurrentPrice() * 0.9 + "");
+
     }
 
     public void addSingleNotification(String currencyID, long timeInterval) {

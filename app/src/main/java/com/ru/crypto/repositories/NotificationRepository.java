@@ -15,6 +15,7 @@ import com.ru.crypto.api.NotificationBroadcast;
 import com.ru.crypto.api.NotificationService;
 import com.ru.crypto.db.NotificationDatabase;
 import com.ru.crypto.di.App;
+import com.ru.crypto.models.CryptoCurrency;
 import com.ru.crypto.models.CryptoCurrencyName;
 import com.ru.crypto.models.NotificationData;
 
@@ -32,6 +33,7 @@ public class NotificationRepository {
     private MutableLiveData<List<CryptoCurrencyName>> currencyNames;
     private LiveData<List<NotificationData>> mAllNotificationData;
     private MutableLiveData<List<NotificationData>> mCurrentNotifications;
+    private MutableLiveData<CryptoCurrency> mCurrentCryptoCurrency;
 
     private INetworkService mNetworkService;
     private NotificationDatabase database;
@@ -44,11 +46,30 @@ public class NotificationRepository {
         mAllNotificationData = database.notificationDao().getAllNotifications();
         currencyNames = new MutableLiveData<>();
         mCurrentNotifications = new MutableLiveData<>();
+        mCurrentCryptoCurrency = new MutableLiveData<>();
+
         loadAllCurrencies();
 
         IntentFilter filter = new IntentFilter();
         filter.addAction(NotificationService.ACTION_DELETE);
         LocalBroadcastManager bm = LocalBroadcastManager.getInstance(App.getInstance());
+        BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (intent.getAction().equals(NotificationService.ACTION_DELETE)) {
+                    Gson gson = new Gson();
+                    String jsonStr = intent.getStringExtra(NotificationData.KEY_TO_SERIALIZE);
+                    new Thread() {
+                        @Override
+                        public void run() {
+                            super.run();
+                            database.notificationDao()
+                                    .deleteNotification(gson.fromJson(jsonStr, NotificationData.class));
+                        }
+                    }.start();
+                }
+            }
+        };
         bm.registerReceiver(mBroadcastReceiver, filter);
     }
 
@@ -146,21 +167,25 @@ public class NotificationRepository {
         }.start();
     }
 
-    private final BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals(NotificationService.ACTION_DELETE)) {
-                Gson gson = new Gson();
-                String jsonStr  = intent.getStringExtra(NotificationData.KEY_TO_SERIALIZE);
-                new Thread(){
+    public void loadCurrentCryptoCurrency(String id) {
+        mNetworkService.getJSONApi()
+                .getDefaultInfo("usd", id)
+                .enqueue(new Callback<List<CryptoCurrency>>() {
                     @Override
-                    public void run() {
-                        super.run();
-                        database.notificationDao()
-                                .deleteNotification(gson.fromJson(jsonStr, NotificationData.class));
+                    public void onResponse(Call<List<CryptoCurrency>> call, Response<List<CryptoCurrency>> response) {
+                        if(response.body() != null && response.body().size() > 0) {
+                          mCurrentCryptoCurrency.setValue(response.body().get(0));
+                        }
                     }
-                }.start();
-            }
-        }
-    };
+
+                    @Override
+                    public void onFailure(Call<List<CryptoCurrency>> call, Throwable t) {
+
+                    }
+                });
+    }
+
+    public LiveData<CryptoCurrency> getCurrentCryptoCurrency() {
+        return mCurrentCryptoCurrency;
+    }
 }

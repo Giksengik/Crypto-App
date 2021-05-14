@@ -64,7 +64,7 @@ public class NotificationBroadcast extends BroadcastReceiver {
                     @Override
                     public void onResponse(Call<List<CryptoCurrency>> call, Response<List<CryptoCurrency>> response) {
                         if(response.body() != null) {
-                            showCurrencyPriceNotification(context, response.body().get(0));
+                            showCurrencyPriceNotification(context, response.body().get(0), notificationData);
                         }
                     }
 
@@ -84,7 +84,7 @@ public class NotificationBroadcast extends BroadcastReceiver {
                         if(response.body() != null && response.body().size() > 0) {
                             CryptoCurrency cryptoCurrency = response.body().get(0);
                             if(cryptoCurrency.getCurrentPrice() > notificationData.getTopBorder()){
-                                showTopBorderNotification(context, cryptoCurrency);
+                                showTopBorderNotification(context, cryptoCurrency,notificationData);
 
                                 Intent broadcastIntent = new Intent(NotificationService.ACTION_DELETE);
                                 Gson gson = new Gson();
@@ -94,7 +94,7 @@ public class NotificationBroadcast extends BroadcastReceiver {
                             }
 
                             else if (cryptoCurrency.getCurrentPrice() < notificationData.getBottomBorder()) {
-                                showBottomBorderNotification(context, cryptoCurrency);
+                                showBottomBorderNotification(context, cryptoCurrency,notificationData);
 
                                 Intent broadcastIntent = new Intent(NotificationService.ACTION_DELETE);
                                 Gson gson = new Gson();
@@ -113,32 +113,32 @@ public class NotificationBroadcast extends BroadcastReceiver {
     }
 
 
-    public void showBottomBorderNotification(Context context, CryptoCurrency currency) {
+    public void showBottomBorderNotification(Context context, CryptoCurrency currency, NotificationData notificationData) {
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
         Notification notification = new NotificationCompat.Builder(context, App.CHANNEL_1_ID)
-                .setSmallIcon(R.drawable.icon_info_notification)
+                .setSmallIcon(R.drawable.icon_bottom_border_notification)
                 .setContentTitle(currency.getName() + " price fell below the border")
                 .setContentText("Cryptocurrency price is now "
                         + currency.getCurrentPrice() + "$")
                 .setPriority(NotificationCompat.PRIORITY_LOW)
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                 .build();
-        notificationManager.notify(++count, notification);
+        notificationManager.notify(notificationData.getNotificationID(), notification);
     }
 
-    public void showTopBorderNotification(Context context, CryptoCurrency currency) {
+    public void showTopBorderNotification(Context context, CryptoCurrency currency, NotificationData notificationData) {
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
         Notification notification = new NotificationCompat.Builder(context, App.CHANNEL_1_ID)
-                .setSmallIcon(R.drawable.icon_info_notification)
+                .setSmallIcon(R.drawable.icon_top_border_notification)
                 .setContentTitle(currency.getName() + " price has risen above the border")
                 .setContentText("Cryptocurrency price is now " + currency.getCurrentPrice() + "$")
                 .setPriority(NotificationCompat.PRIORITY_LOW)
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                 .build();
-        notificationManager.notify(++count, notification);
+        notificationManager.notify(notificationData.getNotificationID(), notification);
     }
 
-    public void showCurrencyPriceNotification(Context context, CryptoCurrency currency) {
+    public void showCurrencyPriceNotification(Context context, CryptoCurrency currency, NotificationData notificationData) {
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
         Notification notification = new NotificationCompat.Builder(context, App.CHANNEL_1_ID)
                 .setSmallIcon(R.drawable.icon_info_notification)
@@ -147,6 +147,6 @@ public class NotificationBroadcast extends BroadcastReceiver {
                 .setPriority(NotificationCompat.PRIORITY_LOW)
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                 .build();
-        notificationManager.notify(++count, notification);
+        notificationManager.notify(notificationData.getNotificationID(), notification);
     }
 }

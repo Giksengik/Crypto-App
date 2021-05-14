@@ -85,7 +85,7 @@
                     style="@style/creationNotificationStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:gravity="clip_vertical|center_vertical"
                     android:text="@string/id_of_cryptocurrency" />
             </LinearLayout>
 
@@ -127,6 +127,7 @@
                     style="@style/creationNotificationStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
                     android:text="@string/choose_the_time_intervalofnotification" />
             </LinearLayout>
 
@@ -170,7 +171,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
-                    android:text="@string/top_border" />
+                    android:text="@string/top_border"
+                    android:layout_gravity="center_vertical"
+                    android:visibility="gone" />
             </LinearLayout>
 
             <LinearLayout
@@ -188,7 +191,8 @@
                     android:gravity="center"
                     android:hint="@string/print_border_here"
                     android:inputType="textPersonName"
-                    android:paddingStart="10dp" />
+                    android:paddingStart="10dp"
+                    android:visibility="gone" />
             </LinearLayout>
         </LinearLayout>
 
@@ -213,7 +217,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
-                    android:text="@string/bottom_border" />
+                    android:text="@string/bottom_border"
+                    android:visibility="gone" />
             </LinearLayout>
 
             <LinearLayout
@@ -231,7 +236,8 @@
                     android:ems="10"
                     android:hint="@string/print_border_here"
                     android:inputType="textPersonName"
-                    android:paddingStart="10dp" />
+                    android:paddingStart="10dp"
+                    android:visibility="gone" />
             </LinearLayout>
         </LinearLayout>
 

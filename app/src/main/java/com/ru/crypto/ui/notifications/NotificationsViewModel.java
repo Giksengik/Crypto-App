@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.ru.crypto.di.components.DaggerNotificationRepoComponent;
 import com.ru.crypto.di.components.NotificationRepoComponent;
+import com.ru.crypto.models.CryptoCurrency;
 import com.ru.crypto.models.CryptoCurrencyName;
 import com.ru.crypto.models.NotificationData;
 import com.ru.crypto.repositories.NotificationRepository;
@@ -39,5 +40,16 @@ public class NotificationsViewModel extends ViewModel {
 
     public LiveData<List<NotificationData>> getAllNotifications() {
         return notificationRepository.getAllNotifications();
+    }
+
+    public void loadCurrentCryptoCurrencyData(String id) {
+        notificationRepository.loadCurrentCryptoCurrency(id);
+    }
+
+    public LiveData<CryptoCurrency> getCurrentCurrency() {
+        return notificationRepository.getCurrentCryptoCurrency();
+    }
+    public void deleteNotification(NotificationData notificationData) {
+        notificationRepository.deleteNotification(notificationData);
     }
 }

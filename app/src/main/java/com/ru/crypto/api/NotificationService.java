@@ -50,20 +50,19 @@ public class NotificationService extends LifecycleService {
         NotificationRepoComponent component = DaggerNotificationRepoComponent.create();
         component.inject(this);
         if (Build.VERSION.SDK_INT >= 26) {
-            final Context ctx = getApplicationContext();
-            NotificationChannel channel = new NotificationChannel(App.CHANNEL_4_ID,
-                    "Channel human readable title",
-                    NotificationManager.IMPORTANCE_DEFAULT);
+            String CHANNEL_ID = "my_channel_01";
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID,
+                    "Crypto currency notification channel",
+                    NotificationManager.IMPORTANCE_LOW);
 
             ((NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE)).createNotificationChannel(channel);
-            Notification notification = new NotificationCompat.Builder(this, App.CHANNEL_4_ID)
-                    .setLocalOnly(true)
-                    .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
-                    .setCategory(Notification.CATEGORY_SERVICE)
-                    .setPriority(NotificationCompat.PRIORITY_MIN)
-                    .build();
 
-            startForeground(3, notification);
+            Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+                    .setContentTitle("")
+                    .setVisibility(NotificationCompat.VISIBILITY_SECRET)
+                    .setContentText("").build();
+
+            startForeground(1, notification);
         }
     }
     @Nullable
@@ -106,7 +105,7 @@ public class NotificationService extends LifecycleService {
             public void run() {
                 notificationRepository.sendToCheckBorderNotifications(getApplicationContext());
             }
-        }, 0, 10000);
+        }, 0, 90000);
         return START_STICKY;
     }
 
