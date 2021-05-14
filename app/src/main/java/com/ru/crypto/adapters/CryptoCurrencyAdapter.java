@@ -68,11 +68,11 @@ public class CryptoCurrencyAdapter extends RecyclerView.Adapter<CryptoCurrencyAd
         holder.currencySymbol.setText(currency.getSymbol().toUpperCase());
         holder.price.setText(Converters.getCurrencySymbol(currency.getCurrency()) + decimalFormat.format(currency.getCurrentPrice()));
         holder.priceChange.setText(decimalFormat.format(currency.getPriceChangePercentage24H()) + "%");
-
+        if(currency.getPriceChangePercentage24H() < 0) holder.priceChange.setTextColor(Color.RED);
+        else holder.priceChange.setTextColor(Color.GREEN);
         MinimalisticLineChartTuner chartTuner = new MinimalisticLineChartTuner();
         chartTuner.setChartProperties(holder.chart);
-        if(currency.getSparkline() != null)
-            chartTuner.setLinearChartData(holder.chart, currency);
+        chartTuner.setLinearChartData(holder.chart, currency);
 
 
         Glide.with(holder.currencyIcon.getContext())

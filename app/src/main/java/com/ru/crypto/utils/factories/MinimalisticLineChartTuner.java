@@ -1,6 +1,9 @@
 package com.ru.crypto.utils.factories;
 
 import android.graphics.Color;
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
@@ -8,6 +11,7 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.ru.crypto.R;
 import com.ru.crypto.models.CryptoCurrency;
 import com.ru.crypto.models.Sparkline;
 
@@ -64,11 +68,11 @@ public class MinimalisticLineChartTuner {
             } else {
                 set1 = new LineDataSet(values, "DataSet 1");
                 set1.setDrawIcons(false);
-                if(currency.getPriceChangePercentage24H()  < 0) {
-                    set1.setColor(Color.RED);
-                }else
-                    set1.setColor(Color.GREEN);
-                set1.setLineWidth(1f);
+                int color;
+                if(Build.VERSION.SDK_INT >= 23) {
+                    color = chart.getContext().getColor(R.color.arctic);
+                } else color = Color.BLACK;
+                set1.setColor(color);
             }
             set1.setDrawValues(false);
             ArrayList<ILineDataSet> dataSets = new ArrayList<>();

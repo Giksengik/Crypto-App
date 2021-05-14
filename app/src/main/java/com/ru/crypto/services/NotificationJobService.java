@@ -1,12 +1,6 @@
-package com.ru.crypto.api;
+package com.ru.crypto.services;
 
 
-import android.app.AlarmManager;
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.app.Service;
 import android.app.job.JobParameters;
 
 import android.content.Context;
@@ -14,10 +8,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Handler;
-import android.os.IBinder;
-import android.util.Log;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
 import com.ru.crypto.di.App;

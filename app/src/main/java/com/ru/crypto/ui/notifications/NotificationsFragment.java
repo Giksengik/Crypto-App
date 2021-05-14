@@ -6,30 +6,26 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.ru.crypto.R;
 import com.ru.crypto.adapters.NotificationAdapter;
 import com.ru.crypto.adapters.NotificationSwipeCallback;
-import com.ru.crypto.api.RestartBroadcastReceiver;
-import com.ru.crypto.api.ServiceAdmin;
+import com.ru.crypto.services.RestartBroadcastReceiver;
+import com.ru.crypto.services.ServiceAdmin;
 import com.ru.crypto.databinding.FragmentDialogCreationBinding;
 import com.ru.crypto.databinding.FragmentNotificationsBinding;
-import com.ru.crypto.models.CryptoCurrency;
-import com.ru.crypto.models.CryptoCurrencyName;
 import com.ru.crypto.models.NotificationData;
-
-import java.util.List;
 
 public class NotificationsFragment extends Fragment implements CreatingNotificationDialogFragment.onCreationNotificationClickListener
         , CreatingNotificationDialogFragment.onCryptoCurrencyChooseListener{
@@ -38,6 +34,8 @@ public class NotificationsFragment extends Fragment implements CreatingNotificat
 
     private NotificationAdapter notificationAdapter;
     private FragmentNotificationsBinding binding;
+
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,6 +50,7 @@ public class NotificationsFragment extends Fragment implements CreatingNotificat
         View root = binding.getRoot();
         CreatingNotificationDialogFragment creatingFragment = new CreatingNotificationDialogFragment();
 
+        initializeToolbar();
 
         binding.notificationList.setLayoutManager(new LinearLayoutManager(getContext()));
         notificationAdapter = new NotificationAdapter();
@@ -74,14 +73,13 @@ public class NotificationsFragment extends Fragment implements CreatingNotificat
         return root;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
-            RestartBroadcastReceiver.scheduleJob(getContext());
-        } else {
-            ServiceAdmin bck = new ServiceAdmin();
-            bck.launchService(getContext());
+    public void initializeToolbar() {
+        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+        String toolbarName = "Notifications";
+        TextView toolbarTitle  = getActivity().findViewById(R.id.toolbarTitle);
+        if(toolbar != null) {
+            toolbar.getMenu().getItem(0).setVisible(false);
+            toolbarTitle.setText(toolbarName);
         }
     }
 

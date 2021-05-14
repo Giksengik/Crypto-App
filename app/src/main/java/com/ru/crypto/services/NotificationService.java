@@ -1,35 +1,23 @@
-package com.ru.crypto.api;
+package com.ru.crypto.services;
 
-import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.IBinder;
-import android.os.ResultReceiver;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
-import androidx.lifecycle.Lifecycle;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LifecycleService;
-import androidx.lifecycle.Observer;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.google.gson.Gson;
-import com.ru.crypto.di.App;
 import com.ru.crypto.di.components.DaggerNotificationRepoComponent;
 import com.ru.crypto.di.components.NotificationRepoComponent;
 import com.ru.crypto.models.NotificationData;
 import com.ru.crypto.repositories.NotificationRepository;
 
-import java.util.List;
-import java.util.Observable;
 import java.util.Timer;
 import java.util.TimerTask;
 

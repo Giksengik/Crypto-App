@@ -39,16 +39,6 @@
             android:paddingEnd="10dp"
             android:text="TextView" />
 
-        <ImageButton
-            android:id="@+id/currencyInfoIsFavButton"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="start"
-            android:layout_marginRight="20dp"
-            android:layout_weight="1"
-            android:background="@null"
-            app:srcCompat="@drawable/icon_white_star" />
-
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

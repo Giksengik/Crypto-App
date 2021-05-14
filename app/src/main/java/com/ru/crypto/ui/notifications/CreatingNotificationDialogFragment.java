@@ -125,16 +125,18 @@ public class CreatingNotificationDialogFragment extends DialogFragment {
 
             }
 
-            @Override
+            @Overrideч
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String id = s.toString();
-                if (Arrays.asList(currenciesID).contains(id)) {
-                    if (binding.notificationTypeSpinner.getSelectedItem()
-                            .equals("Border"))
-                        mCryptoCurrencyChooseListener.onCryptoCurrencyChoose(id);
-                } else {
-                    binding.textTopBorder.setHint("");
-                    binding.textBottomBorder.setHint("");
+                if(currenciesID != null) {
+                    if (Arrays.asList(currenciesID).contains(id)) {
+                        if (binding.notificationTypeSpinner.getSelectedItem()
+                                .equals("Border"))
+                            mCryptoCurrencyChooseListener.onCryptoCurrencyChoose(id);
+                    } else {
+                        binding.textTopBorder.setHint("");
+                        binding.textBottomBorder.setHint("");
+                    }
                 }
             }
 

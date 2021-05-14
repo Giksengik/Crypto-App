@@ -1,9 +1,12 @@
 package com.ru.crypto;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.ru.crypto.services.RestartBroadcastReceiver;
+import com.ru.crypto.services.ServiceAdmin;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -41,6 +44,17 @@ public class MainActivity extends AppCompatActivity {
         MenuItem menuItem = toolbar.getMenu().findItem(R.id.action_search);
         androidx.appcompat.widget.SearchView searchView = (androidx.appcompat.widget.SearchView) menuItem.getActionView();
         searchView.setQueryHint("Search");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+            RestartBroadcastReceiver.scheduleJob(this);
+        } else {
+            ServiceAdmin bck = new ServiceAdmin();
+            bck.launchService(this);
+        }
     }
 
     public BottomNavigationView getNav() {

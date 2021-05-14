@@ -11,8 +11,8 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.google.gson.Gson;
 import com.ru.crypto.api.INetworkService;
-import com.ru.crypto.api.NotificationBroadcast;
-import com.ru.crypto.api.NotificationService;
+import com.ru.crypto.services.NotificationBroadcast;
+import com.ru.crypto.services.NotificationService;
 import com.ru.crypto.db.NotificationDatabase;
 import com.ru.crypto.di.App;
 import com.ru.crypto.models.CryptoCurrency;

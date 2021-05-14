@@ -1,8 +1,7 @@
 package com.ru.crypto.di.components;
 
-import com.ru.crypto.api.NotificationService;
+import com.ru.crypto.services.NotificationService;
 import com.ru.crypto.di.modules.CryptoCurrencyNetworkServiceModule;
-import com.ru.crypto.di.modules.GlobalDataModule;
 import com.ru.crypto.di.modules.GsonModule;
 import com.ru.crypto.di.modules.NotificationModule;
 import com.ru.crypto.repositories.NotificationRepository;

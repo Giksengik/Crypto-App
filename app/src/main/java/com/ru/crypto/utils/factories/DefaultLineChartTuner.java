@@ -65,7 +65,7 @@ public class DefaultLineChartTuner implements ILineChartTuner {
             lineChartSet = new LineDataSet(chartValues, "Default Line Chart");
             lineChartSet.setLineWidth(3f);
 
-            lineChartSet.setColor(R.color.arctic);
+            lineChartSet.setColor(Color.BLACK);
             lineChartSet.setDrawCircleHole(false);
             lineChartSet.setDrawCircles(false);
 

@@ -50,7 +50,6 @@ public class CurrencyInfoFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_currency_info, container, false);
 
-        buttonIsFav = root.findViewById(R.id.currencyInfoIsFavButton);
         currencyIcon = root.findViewById(R.id.currencyInfoIcon);
         currencyName = root.findViewById(R.id.currencyInfoName);
         characteristicsBlockList = root.findViewById(R.id.characteristicsBlockList);

@@ -1,10 +1,9 @@
-package com.ru.crypto.api;
+package com.ru.crypto.services;
 
 import android.app.Notification;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -12,6 +11,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.google.gson.Gson;
 import com.ru.crypto.R;
+import com.ru.crypto.api.INetworkService;
 import com.ru.crypto.di.App;
 
 

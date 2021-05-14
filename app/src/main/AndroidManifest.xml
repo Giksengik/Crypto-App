@@ -14,12 +14,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Crypto">
         <service
-            android:name=".api.NotificationJobService"
+            android:name=".services.NotificationJobService"
             android:permission="android.permission.BIND_JOB_SERVICE"
 
             />
 
-        <service android:name=".api.NotificationService"
+        <service android:name=".services.NotificationService"
             android:enabled="true"/>
 
         <activity
@@ -34,12 +34,12 @@
         </activity>
 
         <receiver
-            android:name=".api.RestartBroadcastReceiver"
+            android:name=".services.RestartBroadcastReceiver"
             android:enabled="true"
             android:exported="true"
             android:label="RestartServiceWhenStopped"/>
 
-        <receiver android:name=".api.NotificationBroadcast"/>
+        <receiver android:name=".services.NotificationBroadcast"/>
     </application>
 
 </manifest>
