@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ru.crypto.R;
 import com.ru.crypto.adapters.CryptoArticlesAdapter;
+import com.ru.crypto.databinding.FragmentNewsBinding;
 import com.ru.crypto.models.CryptoArticle;
 
 import java.util.List;
@@ -29,6 +30,7 @@ import java.util.List;
 public class NewsFragment extends Fragment implements LifecycleOwner {
 
     private NewsViewModel mNewsViewModel;
+    private FragmentNewsBinding binding;
 
     public void initializeToolbar() {
         Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
@@ -55,17 +57,16 @@ public class NewsFragment extends Fragment implements LifecycleOwner {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_news, container, false);
+        binding = FragmentNewsBinding.inflate(inflater);
+        View root = binding.getRoot();
 
-        ProgressBar progressBar = root.findViewById(R.id.progressBarNews);
-        RecyclerView recyclerView = root.findViewById(R.id.articlesRecyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(mArticleAdapter);
+        binding.articlesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.articlesRecyclerView.setAdapter(mArticleAdapter);
         mNewsViewModel.getArticles().observe(getViewLifecycleOwner(), new Observer<List<CryptoArticle>>() {
             @Override
             public void onChanged(List<CryptoArticle> articles) {
                 mArticleAdapter.setArticles(articles);
-                progressBar.setVisibility(View.GONE);
+                binding.progressBarNews.setVisibility(View.GONE);
             }
         });
 

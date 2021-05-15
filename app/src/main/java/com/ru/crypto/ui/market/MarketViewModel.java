@@ -1,6 +1,5 @@
 package com.ru.crypto.ui.market;
 
-import android.app.Application;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;

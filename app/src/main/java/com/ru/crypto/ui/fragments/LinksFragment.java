@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ru.crypto.R;
 import com.ru.crypto.adapters.LinkBlockAdapter;
+import com.ru.crypto.databinding.FragmentLinksBinding;
 import com.ru.crypto.models.CurrencyLinks;
 import com.ru.crypto.models.Links;
 
@@ -20,7 +21,7 @@ import java.util.zip.Inflater;
 
 public class LinksFragment extends Fragment {
 
-    private RecyclerView linksList;
+    private FragmentLinksBinding binding;
     private LinkBlockAdapter linkBlockAdapter;
 
     @Override
@@ -31,13 +32,14 @@ public class LinksFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = LayoutInflater.from(container.getContext()).inflate(R.layout.fragment_links, container, false);
 
-        linksList = root.findViewById(R.id.linksList);
-        linksList.setLayoutManager(new LinearLayoutManager(getContext()));
-        linksList.setNestedScrollingEnabled(false);
+        binding = FragmentLinksBinding.inflate(inflater);
+        View root = binding.getRoot();
+
+        binding.linksList.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.linksList.setNestedScrollingEnabled(false);
         linkBlockAdapter = new LinkBlockAdapter();
-        linksList.setAdapter(linkBlockAdapter);
+        binding.linksList.setAdapter(linkBlockAdapter);
 
         return root;
     }

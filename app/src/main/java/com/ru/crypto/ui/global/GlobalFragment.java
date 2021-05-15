@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,25 +14,22 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.charts.PieChart;
 
 
+import com.ru.crypto.databinding.FragmentGlobalBinding;
 import com.ru.crypto.ui.fragments.GlobalStatsFragment;
 import com.ru.crypto.ui.fragments.TimeRangeFragment;
-import com.ru.crypto.utils.Converters;
 import com.ru.crypto.R;
 import com.ru.crypto.utils.OnClick;
 import com.ru.crypto.utils.factories.DefaultLineChartTuner;
 import com.ru.crypto.utils.factories.DefaultPieChartTuner;
 
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class GlobalFragment extends Fragment implements TimeRangeFragment.onTimeRangeClickListener {
 
      private GlobalViewModel mGlobalViewModel;
+     private FragmentGlobalBinding binding;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,12 +50,8 @@ public class GlobalFragment extends Fragment implements TimeRangeFragment.onTime
     @SuppressLint("SetTextI18n")
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_global, container, false);
-        PieChart globalPercentageChart = root.findViewById(R.id.globalPercentageChart);
-        LineChart bitcoinPriceChart = root.findViewById(R.id.bitcoinPriceLineChart);
-        TextView bitcoinValue = root.findViewById(R.id.bitcoinValue);
-        ProgressBar globalDataProgressBar = root.findViewById(R.id.progressBarGlobalData);
-        ProgressBar bitcoinDataProgressBar = root.findViewById(R.id.progressBarBitcoinData);
+        binding = FragmentGlobalBinding.inflate(inflater);
+        View root = binding.getRoot();
 
         TimeRangeFragment bitcoinTimeRangeFragment = TimeRangeFragment.newInstance("global");
         getChildFragmentManager().beginTransaction()
@@ -73,24 +65,24 @@ public class GlobalFragment extends Fragment implements TimeRangeFragment.onTime
         DefaultPieChartTuner pieTuner = (DefaultPieChartTuner) mGlobalViewModel.getDefaultPieChartTuner();
         DefaultLineChartTuner lineTuner = (DefaultLineChartTuner) mGlobalViewModel.getDefaultLineChartTuner();
 
-        lineTuner.setChartProperties(bitcoinPriceChart);
-        pieTuner.setChartProperties(globalPercentageChart);
+        lineTuner.setChartProperties(binding.bitcoinPriceLineChart);
+        pieTuner.setChartProperties(binding.globalPercentageChart);
 
-        bitcoinPriceChart.setOnChartValueSelectedListener(OnClick.onLineChartValue(bitcoinValue));
+        binding.bitcoinPriceLineChart.setOnChartValueSelectedListener(OnClick.onLineChartValue(binding.bitcoinValue));
 
         mGlobalViewModel.getGlobalData().observe(getViewLifecycleOwner(), globalCryptoData -> {
-            pieTuner.setData(globalPercentageChart, globalCryptoData.getData().getMarketCapPercentage());
+            pieTuner.setData(binding.globalPercentageChart, globalCryptoData.getData().getMarketCapPercentage());
             globalStatsFragment.setData(globalCryptoData);
-            globalDataProgressBar.setVisibility(View.INVISIBLE);
+            binding.progressBarGlobalData.setVisibility(View.INVISIBLE);
         });
 
 
 
         mGlobalViewModel.getBitcoinData().observe(getViewLifecycleOwner(), historicalCurrencyData -> {
-            lineTuner.setLinearChartData(bitcoinPriceChart, historicalCurrencyData.getPrices());
-            bitcoinValue.setText(lineTuner.getLastTime(historicalCurrencyData.getPrices()) + " : "
+            lineTuner.setLinearChartData(binding.bitcoinPriceLineChart, historicalCurrencyData.getPrices());
+            binding.bitcoinValue.setText(lineTuner.getLastTime(historicalCurrencyData.getPrices()) + " : "
                     + lineTuner.getLastTimePrice(historicalCurrencyData.getPrices()));
-            bitcoinDataProgressBar.setVisibility(View.INVISIBLE);
+            binding.progressBarBitcoinData.setVisibility(View.INVISIBLE);
         });
 
         return root;

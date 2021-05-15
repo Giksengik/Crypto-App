@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.ru.crypto.R;
+import com.ru.crypto.databinding.FragmentCurrencyGeneralBinding;
 import com.ru.crypto.models.CryptoCurrency;
 import com.ru.crypto.ui.currency_profile.CurrencyProfileFragment;
 import com.ru.crypto.ui.fragments.CurrencyInfoFragment;
@@ -28,11 +29,8 @@ public class CurrencyGeneralFragment extends Fragment implements TimeRangeFragme
 
     private CurrencyGeneralViewModel mCurrencyGeneralViewModel;
     private CryptoCurrency mCurrency;
+    private FragmentCurrencyGeneralBinding binding;
 
-    private LineChart priceChart;
-
-    TextView time ;
-    TextView currencyPriceAtTime;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,18 +47,15 @@ public class CurrencyGeneralFragment extends Fragment implements TimeRangeFragme
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View root = inflater.inflate(R.layout.fragment_currency_general, container);
-
-        ProgressBar chartProgressBar = root.findViewById(R.id.progressCurrencyMarketChart);
-        time = root.findViewById(R.id.curencyProfileTimeOfPrice);
-        currencyPriceAtTime = root.findViewById(R.id.currencyProfilePrice);
-        priceChart = root.findViewById(R.id.currencyPriceChart);
+        binding = FragmentCurrencyGeneralBinding.inflate(inflater);
+        View root = binding.getRoot();
 
         ILineChartTuner priceChartTuner = new DefaultLineChartTunerFactory().getLineChartTuner();
-        priceChartTuner.setChartProperties(priceChart);
-        priceChart.setOnChartValueSelectedListener(OnClick.onLineChartValue(currencyPriceAtTime, time));
-        CurrencyInfoFragment currencyInfoFragment = CurrencyInfoFragment.newInstance(mCurrency);
+        priceChartTuner.setChartProperties(binding.currencyPriceChart);
+        binding.currencyPriceChart
+                .setOnChartValueSelectedListener(OnClick.onLineChartValue(binding.currencyProfilePrice, binding.curencyProfileTimeOfPrice));
 
+        CurrencyInfoFragment currencyInfoFragment = CurrencyInfoFragment.newInstance(mCurrency);
         getChildFragmentManager().beginTransaction()
                 .add(R.id.companyInfoContainer, currencyInfoFragment)
                 .commit();
@@ -71,10 +66,10 @@ public class CurrencyGeneralFragment extends Fragment implements TimeRangeFragme
                 .commit();
 
         mCurrencyGeneralViewModel.getMarketChart().observe(getViewLifecycleOwner(), currencyMarketChart -> {
-            chartProgressBar.setVisibility(View.GONE);
-            priceChartTuner.setLinearChartData(priceChart, currencyMarketChart.getPrices());
-            time.setText(priceChartTuner.getLastTime(currencyMarketChart.getPrices()));
-            currencyPriceAtTime.setText(priceChartTuner.getLastTimePrice(currencyMarketChart.getPrices()));
+            binding.progressCurrencyMarketChart.setVisibility(View.GONE);
+            priceChartTuner.setLinearChartData(binding.currencyPriceChart, currencyMarketChart.getPrices());
+            binding.curencyProfileTimeOfPrice.setText(priceChartTuner.getLastTime(currencyMarketChart.getPrices()));
+            binding.currencyProfilePrice.setText(priceChartTuner.getLastTimePrice(currencyMarketChart.getPrices()));
         });
 
         return root;

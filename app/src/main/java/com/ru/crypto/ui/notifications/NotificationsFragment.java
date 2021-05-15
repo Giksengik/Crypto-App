@@ -28,7 +28,6 @@ public class NotificationsFragment extends Fragment implements CreatingNotificat
         , CreatingNotificationDialogFragment.onCryptoCurrencyChooseListener{
 
     private NotificationsViewModel notificationsViewModel;
-
     private NotificationAdapter notificationAdapter;
     private FragmentNotificationsBinding binding;
 

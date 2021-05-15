@@ -19,12 +19,14 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.ru.crypto.MainActivity;
 import com.ru.crypto.R;
+import com.ru.crypto.databinding.FragmentCurrencyProfileBinding;
 import com.ru.crypto.models.CryptoCurrency;
 
 public class CurrencyProfileFragment extends Fragment {
 
     private static final String ARG_SECTION_NUMBER = "section_number";
     private final String [] tabNames = new String[] {"General", "Links"};
+    private FragmentCurrencyProfileBinding binding;
     private CryptoCurrency mCryptoCurrency;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,14 +39,13 @@ public class CurrencyProfileFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_currency_profile,container,false);
 
-        ViewPager2 viewPager = root.findViewById(R.id.viewPager);
-        TabLayout tabs = root.findViewById(R.id.currencyProfileTabs);
+        binding = FragmentCurrencyProfileBinding.inflate(inflater);
+        View root = binding.getRoot();
 
         CurrencyProfileAdapter adapter = new CurrencyProfileAdapter(this);
-        viewPager.setAdapter(adapter);
-        new TabLayoutMediator(tabs, viewPager, (tab, position) -> { tab.setText(tabNames[position]);}).attach();
+        binding.viewPager.setAdapter(adapter);
+        new TabLayoutMediator(binding.currencyProfileTabs, binding.viewPager, (tab, position) -> { tab.setText(tabNames[position]);}).attach();
 
         initializeToolbar();
 

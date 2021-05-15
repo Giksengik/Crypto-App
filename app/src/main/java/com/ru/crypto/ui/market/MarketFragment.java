@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,10 +18,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.ru.crypto.MainActivity;
 import com.ru.crypto.R;
 import com.ru.crypto.adapters.CryptoCurrencyAdapter;
+import com.ru.crypto.databinding.FragmentMarketBinding;
 import com.ru.crypto.ui.currency_profile.CurrencyProfileFragment;
 
 
@@ -30,9 +29,9 @@ import com.ru.crypto.ui.currency_profile.CurrencyProfileFragment;
 public class MarketFragment extends Fragment implements LifecycleOwner {
 
     private MarketViewModel mMarketViewModel;
+    private CryptoCurrencyAdapter currencyAdapter;
+    private FragmentMarketBinding binding;
     private Toolbar mToolbar;
-    CryptoCurrencyAdapter currencyAdapter;
-    private ProgressBar cryptoCurrencyListProgressBar;
 
     private final CryptoCurrencyAdapter.OnCurrencyClickListener mCurrencyClickListener = (currency, position) -> {
         CurrencyProfileFragment profileFragment = new CurrencyProfileFragment();
@@ -57,28 +56,27 @@ public class MarketFragment extends Fragment implements LifecycleOwner {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_market, container, false);
-        cryptoCurrencyListProgressBar  = root.findViewById(R.id.cryptoCurrencyListProgressBar);
-        RecyclerView currenciesList = root.findViewById(R.id.currenciesList);
-        currenciesList.setItemAnimator(null);
+        binding = FragmentMarketBinding.inflate(inflater);
+        View root = binding.getRoot();
 
-        currenciesList.setLayoutManager(new LinearLayoutManager(getContext()));
-        currenciesList.setAdapter(currencyAdapter);
-        FloatingActionButton refreshButton = root.findViewById(R.id.refreshMarketButton);
+        binding.currenciesList.setItemAnimator(null);
+        binding.currenciesList.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.currenciesList.setAdapter(currencyAdapter);
 
-        currenciesList.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+        binding.currenciesList.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                if (dy > 0 && refreshButton.getVisibility() == View.VISIBLE) {
-                    refreshButton.hide();
-                } else if (dy < 0 && refreshButton.getVisibility() != View.VISIBLE) {
-                    refreshButton.show();
+                if (dy > 0 && binding.refreshMarketButton.getVisibility() == View.VISIBLE) {
+                    binding.refreshMarketButton.hide();
+                } else if (dy < 0 && binding.refreshMarketButton.getVisibility() != View.VISIBLE) {
+                    binding.refreshMarketButton.show();
                 }
             }
         });
 
-        refreshButton.setOnClickListener(v -> mMarketViewModel.updateCurrencies());
+        binding.refreshMarketButton.setOnClickListener(v -> mMarketViewModel.updateCurrencies());
 
         mMarketViewModel.getAllCurrencies().observe(getViewLifecycleOwner(), cryptocurrencies -> {
             if( currencyAdapter.getData().size() == 0) {
@@ -88,12 +86,12 @@ public class MarketFragment extends Fragment implements LifecycleOwner {
                 currencyAdapter.setCurrencies(cryptocurrencies);
                 mMarketViewModel.countDiffResult(currencyAdapter.getData());
             }
-            cryptoCurrencyListProgressBar.setVisibility(View.INVISIBLE);
+            binding.cryptoCurrencyListProgressBar.setVisibility(View.INVISIBLE);
         });
 
         mMarketViewModel.getDiffResult().observe(getViewLifecycleOwner(), diffResult -> {
             diffResult.dispatchUpdatesTo(currencyAdapter);
-            cryptoCurrencyListProgressBar.setVisibility(View.INVISIBLE);
+            binding.cryptoCurrencyListProgressBar.setVisibility(View.INVISIBLE);
         });
 
         return root;

@@ -15,6 +15,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.ru.crypto.R;
+import com.ru.crypto.databinding.FragmentCurrencyLinksBinding;
 import com.ru.crypto.models.CryptoCurrency;
 import com.ru.crypto.models.CurrencyLinks;
 import com.ru.crypto.ui.currency_profile.CurrencyProfileFragment;
@@ -25,6 +26,7 @@ import java.util.LinkedHashSet;
 public class CurrencyLinksFragment extends Fragment {
 
     private CurrencyLinksViewModel mCurrencyLinksViewModel;
+    private FragmentCurrencyLinksBinding binding;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,20 +37,19 @@ public class CurrencyLinksFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_currency_links, container);
+        binding = FragmentCurrencyLinksBinding.inflate(inflater);
+        View root = binding.getRoot();
 
-        TextView currencyDescription = root.findViewById(R.id.currencyDescription);
-        ProgressBar linksProgressBar = root.findViewById(R.id.linksProgressBar);
+
         LinksFragment linksFragment = new LinksFragment();
-
         getChildFragmentManager().beginTransaction()
                 .add(R.id.linksFragmentContainer, linksFragment)
                 .commit();
 
         mCurrencyLinksViewModel.getLinks().observe(getViewLifecycleOwner(), currencyLinks -> {
             linksFragment.setLinksData(currencyLinks);
-            currencyDescription.setText(Html.fromHtml(currencyLinks.getDescription().get("en")));
-            linksProgressBar.setVisibility(View.GONE);
+            binding.currencyDescription.setText(Html.fromHtml(currencyLinks.getDescription().get("en")));
+            binding.linksProgressBar.setVisibility(View.GONE);
         });
 
         return root;

@@ -16,13 +16,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.ru.crypto.MainActivity;
 import com.ru.crypto.R;
 import com.ru.crypto.adapters.TimeRangeAdapter;
+import com.ru.crypto.databinding.FragmentTimestampRangeBinding;
 
 public class TimeRangeFragment extends Fragment {
 
-        private RecyclerView mRangesList;
         private TimeRangeAdapter mTimeRangeAdapter;
         private onTimeRangeClickListener mOnTimeChangedListener = null;
-
+        private FragmentTimestampRangeBinding binding;
         private String placeholder;
 
     public static TimeRangeFragment newInstance(String placeholder) {
@@ -65,20 +65,19 @@ public class TimeRangeFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_timestamp_range,container,false);
-        return root;
+        binding = FragmentTimestampRangeBinding.inflate(inflater);
+        return  binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        mRangesList = view.findViewById(R.id.timeRangeList);
         setListData();
     }
 
     public void setListData() {
         mTimeRangeAdapter = new TimeRangeAdapter(mOnTimeChangedListener);
-        mRangesList.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        mRangesList.setAdapter(mTimeRangeAdapter);
+        binding.timeRangeList.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        binding.timeRangeList.setAdapter(mTimeRangeAdapter);
     }
 
     @Override

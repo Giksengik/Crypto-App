@@ -54,12 +54,10 @@ public class DefaultLineChartTuner implements ILineChartTuner {
             float nextVal2 = (float)tempVal2;
             chartValues.add(new Entry(nextVal2, nextVal1));
         }
-
         LineDataSet lineChartSet;
-        boolean isNeedToUpdate = false;
         if (chart.getData() != null &&
                 chart.getData().getDataSetCount() > 0) {
-            isNeedToUpdate = true;
+
         }
 
             lineChartSet = new LineDataSet(chartValues, "Default Line Chart");
@@ -73,10 +71,10 @@ public class DefaultLineChartTuner implements ILineChartTuner {
             dataSets.add(lineChartSet);
             LineData chartData = new LineData(dataSets);
             chartData.setDrawValues(false);
+            chart.notifyDataSetChanged();
             chart.setData(chartData);
-            if(isNeedToUpdate) {
-                chart.invalidate();
-            }
+            chart.invalidate();
+
     }
 
     @Override
