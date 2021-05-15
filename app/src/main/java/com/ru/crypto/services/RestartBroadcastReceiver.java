@@ -47,10 +47,6 @@ public class RestartBroadcastReceiver extends BroadcastReceiver {
         jobScheduler.schedule(jobInfo);
     }
 
-    public static void reStartTracker(Context context) {
-        Intent broadcastIntent = new Intent(App.RESTART_INTENT);
-        context.sendBroadcast(broadcastIntent);
-    }
 
     private void registerRestarterReceiver(final Context context) {
 

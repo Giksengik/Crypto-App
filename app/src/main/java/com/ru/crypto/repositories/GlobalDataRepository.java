@@ -1,5 +1,7 @@
 package com.ru.crypto.repositories;
 
+import android.widget.Toast;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -7,8 +9,10 @@ import com.ru.crypto.adapters.TimeRange;
 import com.ru.crypto.adapters.TimeRangeAdapter;
 import com.ru.crypto.api.CryptoCurrencyNetworkService;
 import com.ru.crypto.api.INetworkService;
+import com.ru.crypto.di.App;
 import com.ru.crypto.models.GlobalCryptoData;
 import com.ru.crypto.models.HistoricalCurrencyData;
+import com.ru.crypto.utils.NetworkManager;
 import com.ru.crypto.utils.factories.DefaultLineChartTuner;
 import com.ru.crypto.utils.factories.DefaultLineChartTunerFactory;
 import com.ru.crypto.utils.factories.DefaultPieChartTunerFactory;
@@ -51,7 +55,9 @@ public class GlobalDataRepository {
 
                     @Override
                     public void onFailure(Call<GlobalCryptoData> call, Throwable t) {
-                        t.printStackTrace();
+                        if(NetworkManager.hasConnection(App.getInstance())){
+                            getGlobalData();
+                        } else Toast.makeText(App.getInstance(),"Fail to load data, check internet connection", Toast.LENGTH_LONG ).show();
                     }
                 });
     }
@@ -89,7 +95,9 @@ public class GlobalDataRepository {
 
                     @Override
                     public void onFailure(Call<HistoricalCurrencyData> call, Throwable t) {
-                        loadBitcoinDataInRange(range);
+                        if(NetworkManager.hasConnection(App.getInstance())){
+                            loadBitcoinDataInRange(range);
+                        } else Toast.makeText(App.getInstance(),"Fail to load data, check internet connection", Toast.LENGTH_LONG ).show();
                     }
                 });
     }
@@ -107,7 +115,9 @@ public class GlobalDataRepository {
 
                     @Override
                     public void onFailure(Call<HistoricalCurrencyData> call, Throwable t) {
-                        t.printStackTrace();
+                        if(NetworkManager.hasConnection(App.getInstance())){
+                            loadAllTimeBitcoinData();
+                        } else Toast.makeText(App.getInstance(),"Fail to load data, check internet connection", Toast.LENGTH_LONG ).show();
                     }
                 });
     }

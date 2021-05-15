@@ -1,11 +1,15 @@
 package com.ru.crypto.repositories;
 
+import android.widget.Toast;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.ru.crypto.adapters.TimeRange;
 import com.ru.crypto.api.INetworkService;
+import com.ru.crypto.di.App;
 import com.ru.crypto.models.CurrencyMarketChart;
+import com.ru.crypto.utils.NetworkManager;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -57,7 +61,9 @@ public class CurrencyMarketChartRepository {
 
                         @Override
                         public void onFailure(Call<CurrencyMarketChart> call, Throwable t) {
-                            t.printStackTrace();
+                            if(NetworkManager.hasConnection(App.getInstance())){
+                                loadMarketChartDataInRange(currency, range);
+                            } else Toast.makeText(App.getInstance(),"Fail to load data, check internet connection", Toast.LENGTH_LONG ).show();
                         }
                     });
         }

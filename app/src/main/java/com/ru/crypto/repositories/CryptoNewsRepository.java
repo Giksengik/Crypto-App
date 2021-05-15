@@ -1,5 +1,7 @@
 package com.ru.crypto.repositories;
 
+import android.widget.Toast;
+
 import androidx.lifecycle.LiveData;
 
 import com.ru.crypto.utils.Converters;
@@ -8,6 +10,7 @@ import com.ru.crypto.db.CryptoArticleDatabase;
 import com.ru.crypto.di.App;
 import com.ru.crypto.models.CryptoArticle;
 import com.ru.crypto.models.CryptoNews;
+import com.ru.crypto.utils.NetworkManager;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
@@ -50,7 +53,9 @@ public class CryptoNewsRepository {
 
                     @Override
                     public void onFailure(Call<CryptoNews> call, Throwable t) {
-                        t.printStackTrace();
+                        if(NetworkManager.hasConnection(App.getInstance())){
+                            loadNews();
+                        } else Toast.makeText(App.getInstance(),"Fail to load data, check internet connection", Toast.LENGTH_LONG ).show();
                     }
                 });
     }

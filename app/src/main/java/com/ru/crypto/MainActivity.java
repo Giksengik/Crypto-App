@@ -60,4 +60,6 @@ public class MainActivity extends AppCompatActivity {
     public BottomNavigationView getNav() {
         return mNavigationView;
     }
+
+
 }

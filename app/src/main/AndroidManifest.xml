@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ru.crypto">
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
@@ -13,14 +15,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Crypto">
+
         <service
             android:name=".services.NotificationJobService"
             android:permission="android.permission.BIND_JOB_SERVICE"
-
             />
 
         <service android:name=".services.NotificationService"
-            android:enabled="true"/>
+            android:enabled="true"
+            />
 
         <activity
             android:name=".MainActivity"
@@ -37,7 +40,7 @@
             android:name=".services.RestartBroadcastReceiver"
             android:enabled="true"
             android:exported="true"
-            android:label="RestartServiceWhenStopped"/>
+            android:label="RestartServiceWhenStopped" />
 
         <receiver android:name=".services.NotificationBroadcast"/>
     </application>

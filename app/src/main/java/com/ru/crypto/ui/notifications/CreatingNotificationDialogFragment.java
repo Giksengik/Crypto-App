@@ -125,7 +125,7 @@ public class CreatingNotificationDialogFragment extends DialogFragment {
 
             }
 
-            @Overrideч
+            @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String id = s.toString();
                 if(currenciesID != null) {

@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.widget.Toast;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -18,6 +19,7 @@ import com.ru.crypto.di.App;
 import com.ru.crypto.models.CryptoCurrency;
 import com.ru.crypto.models.CryptoCurrencyName;
 import com.ru.crypto.models.NotificationData;
+import com.ru.crypto.utils.NetworkManager;
 
 
 import java.util.ArrayList;
@@ -94,7 +96,9 @@ public class NotificationRepository {
 
                     @Override
                     public void onFailure(Call<List<CryptoCurrencyName>> call, Throwable t) {
-                        t.printStackTrace();
+                        if(NetworkManager.hasConnection(App.getInstance())){
+                            loadAllCurrencies();
+                        } else Toast.makeText(App.getInstance(),"Fail to load data, check internet connection", Toast.LENGTH_LONG ).show();
                     }
                 });
     }
@@ -180,7 +184,9 @@ public class NotificationRepository {
 
                     @Override
                     public void onFailure(Call<List<CryptoCurrency>> call, Throwable t) {
-
+                        if(NetworkManager.hasConnection(App.getInstance())){
+                            loadCurrentCryptoCurrency(id);
+                        } else Toast.makeText(App.getInstance(),"Fail to load data, check internet connection", Toast.LENGTH_LONG ).show();
                     }
                 });
     }

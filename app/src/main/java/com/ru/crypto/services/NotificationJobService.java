@@ -32,35 +32,13 @@ public class NotificationJobService extends android.app.job.JobService {
         return false;
     }
 
-
-    @Override
-    public boolean onStopJob(JobParameters jobParameters) {
-        Intent broadcastIntent = new Intent(App.RESTART_INTENT);
-        sendBroadcast(broadcastIntent);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                unregisterReceiver(restartBroadcastReceiver);
-            }
-        }, 1000);
-
-        return false;
-    }
-
     private void registerRestarterReceiver() {
-
-        // the context can be null if app just installed and this is called from restartsensorservice
-        // https://stackoverflow.com/questions/24934260/intentreceiver-components-are-not-allowed-to-register-to-receive-intents-when
-        // Final decision: in case it is called from installation of new version (i.e. from manifest, the application is
-        // null. So we must use context.registerReceiver. Otherwise this will crash and we try with context.getApplicationContext
         if (restartBroadcastReceiver == null)
             restartBroadcastReceiver = new RestartBroadcastReceiver();
         else try{
             unregisterReceiver(restartBroadcastReceiver);
         } catch (Exception e){
-            // not registered
         }
-        //give the time to run
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -79,11 +57,26 @@ public class NotificationJobService extends android.app.job.JobService {
         }, 1000);
     }
 
+    @Override
+    public boolean onStopJob(JobParameters jobParameters) {
+        Intent broadcastIntent = new Intent(App.RESTART_INTENT);
+        sendBroadcast(broadcastIntent);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                unregisterReceiver(restartBroadcastReceiver);
+            }
+        }, 1000);
+
+        return false;
+    }
+
     public static void stopJob(Context context) {
         if (instance!=null && jobParameters!=null) {
             try{
                 instance.unregisterReceiver(restartBroadcastReceiver);
             } catch (Exception e){
+                // not registered
             }
             instance.jobFinished(jobParameters, true);
         }

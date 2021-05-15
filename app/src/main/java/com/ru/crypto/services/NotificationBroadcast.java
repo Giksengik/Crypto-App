@@ -4,6 +4,7 @@ import android.app.Notification;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -19,6 +20,7 @@ import com.ru.crypto.di.components.CryptoCurrencyNetworkServiceComponent;
 import com.ru.crypto.di.components.DaggerCryptoCurrencyNetworkServiceComponent;
 import com.ru.crypto.models.CryptoCurrency;
 import com.ru.crypto.models.NotificationData;
+import com.ru.crypto.utils.NetworkManager;
 
 import java.util.List;
 
@@ -47,8 +49,6 @@ public class NotificationBroadcast extends BroadcastReceiver {
                     comparePriceAndBorders(notificationData, context);
                     break;
                 case NotificationData.TYPE_SINGLE:
-                    getCurrencyData(notificationData, context);
-                    break;
                 case NotificationData.TYPE_CYCLICAL_PRICE:
                     getCurrencyData(notificationData, context);
                     break;
@@ -70,7 +70,9 @@ public class NotificationBroadcast extends BroadcastReceiver {
 
                     @Override
                     public void onFailure(Call<List<CryptoCurrency>> call, Throwable t) {
-                        t.printStackTrace();
+                        if(NetworkManager.hasConnection(App.getInstance())){
+                            getCurrencyData(notificationData, context);
+                        }
                     }
                 });
     }
@@ -107,7 +109,9 @@ public class NotificationBroadcast extends BroadcastReceiver {
 
                     @Override
                     public void onFailure(Call<List<CryptoCurrency>> call, Throwable t) {
-
+                        if(NetworkManager.hasConnection(App.getInstance())){
+                            comparePriceAndBorders(notificationData, context);
+                        }
                     }
                 });
     }

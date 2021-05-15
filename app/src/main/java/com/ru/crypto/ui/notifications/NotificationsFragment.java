@@ -21,9 +21,6 @@ import com.google.android.material.snackbar.Snackbar;
 import com.ru.crypto.R;
 import com.ru.crypto.adapters.NotificationAdapter;
 import com.ru.crypto.adapters.NotificationSwipeCallback;
-import com.ru.crypto.services.RestartBroadcastReceiver;
-import com.ru.crypto.services.ServiceAdmin;
-import com.ru.crypto.databinding.FragmentDialogCreationBinding;
 import com.ru.crypto.databinding.FragmentNotificationsBinding;
 import com.ru.crypto.models.NotificationData;
 

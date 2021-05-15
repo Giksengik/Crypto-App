@@ -1,17 +1,20 @@
 package com.ru.crypto.repositories;
 
 import android.app.Application;
+import android.widget.Toast;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.DiffUtil;
 
 import com.ru.crypto.db.CryptoCurrencyDatabase;
+import com.ru.crypto.di.App;
 import com.ru.crypto.utils.Converters;
 import com.ru.crypto.adapters.CryptoCurrencyDiffUtilCallback;
 import com.ru.crypto.api.INetworkService;
 import com.ru.crypto.models.CryptoID;
 import com.ru.crypto.models.CryptoCurrency;
+import com.ru.crypto.utils.NetworkManager;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
@@ -85,13 +88,16 @@ public class CryptoCurrencyRepository {
                     }
                     @Override
                     public void onFailure(Call<List<CryptoCurrency>> call, Throwable t) {
-
+                        if(NetworkManager.hasConnection(App.getInstance())){
+                            loadCurrenciesInfo(currencies);
+                        } else Toast.makeText(App.getInstance(),"Fail to load data, check internet connection", Toast.LENGTH_LONG ).show();
                     }
                 });
     }
     public void loadCurrenciesInfo(int page) {
         final int currentPage = page;
         final int nextPage = ++page;
+        int finalPage = page;
         Single.create((SingleOnSubscribe<List<CryptoID>>) emitter -> mCryptoCurrencyNetworkService.getJSONApi()
                 .getCryptoCurrencyList(CURRENT_CURRENCY,currentPage)
                 .enqueue(new Callback<List<CryptoID>>() {
@@ -103,7 +109,9 @@ public class CryptoCurrencyRepository {
 
                     @Override
                     public void onFailure(Call<List<CryptoID>> call, Throwable t) {
-                        t.printStackTrace();
+                        if(NetworkManager.hasConnection(App.getInstance())){
+                            loadCurrenciesInfo(finalPage);
+                        } else Toast.makeText(App.getInstance(),"Fail to load data, check internet connection", Toast.LENGTH_LONG ).show();
                     }
                 })).subscribeOn(Schedulers.newThread())
                 .subscribe(new DisposableSingleObserver<List<CryptoID>>() {
@@ -116,7 +124,6 @@ public class CryptoCurrencyRepository {
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-
                     }
                 });
 
