@@ -27,6 +27,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.ru.crypto.MainActivity;
 import com.ru.crypto.R;
 import com.ru.crypto.databinding.FragmentDialogCreationBinding;
+import com.ru.crypto.di.App;
 import com.ru.crypto.models.CryptoCurrency;
 import com.ru.crypto.models.CryptoCurrencyName;
 import com.ru.crypto.models.NotificationData;
@@ -82,24 +83,27 @@ public class CreatingNotificationDialogFragment extends DialogFragment {
         binding.buttcnCancelCreating.setOnClickListener(v -> dismiss());
 
         binding.buttonCreatingOk.setOnClickListener(v -> {
-            if(Arrays.asList(currenciesID).contains(binding.autoCompleteIDOfCryptoCurrency.getText().toString())) {
-                if (binding.notificationTypeSpinner.getSelectedItem().equals("Single")) {
-                    addSingleNotification(binding.autoCompleteIDOfCryptoCurrency.getText().toString(),
-                            getTimeInMilliseconds((String) binding.notificationIntervalSpinner.getSelectedItem()));
-                    dismiss();
-                }
-                else if (binding.notificationTypeSpinner.getSelectedItem().equals("Cyclical")) {
-                    addCyclicalNotification(binding.autoCompleteIDOfCryptoCurrency.getText().toString(),
-                            getTimeInMilliseconds((String) binding.notificationIntervalSpinner.getSelectedItem()));
-                    dismiss();
-                }
-                else if (binding.notificationTypeSpinner.getSelectedItem().equals("Border")) {
-                    if(binding.editTextTextTopBorder.getText().toString().matches("[0-9[,.]]+")
-                    && binding.editTextBottomBorder.getText().toString().matches("[0-9[,.]]+"))
-                    addBorderNotification();
-                    dismiss();
-                }
-            }else Toast.makeText(getContext(), "Choose currency crypto currency!", Toast.LENGTH_SHORT).show();
+            if(currenciesID != null) {
+                if (Arrays.asList(currenciesID).contains(binding.autoCompleteIDOfCryptoCurrency.getText().toString())) {
+                    if (binding.notificationTypeSpinner.getSelectedItem().equals("Single")) {
+                        addSingleNotification(binding.autoCompleteIDOfCryptoCurrency.getText().toString(),
+                                getTimeInMilliseconds((String) binding.notificationIntervalSpinner.getSelectedItem()));
+                        dismiss();
+                    } else if (binding.notificationTypeSpinner.getSelectedItem().equals("Cyclical")) {
+                        addCyclicalNotification(binding.autoCompleteIDOfCryptoCurrency.getText().toString(),
+                                getTimeInMilliseconds((String) binding.notificationIntervalSpinner.getSelectedItem()));
+                        dismiss();
+                    } else if (binding.notificationTypeSpinner.getSelectedItem().equals("Border")) {
+                        if (binding.editTextTextTopBorder.getText().toString().matches("[0-9[,.]]+")
+                                && binding.editTextBottomBorder.getText().toString().matches("[0-9[,.]]+"))
+                            addBorderNotification();
+                        dismiss();
+                    }
+                } else
+                    Toast.makeText(getContext(), "Choose currency crypto currency!", Toast.LENGTH_SHORT).show();
+            }
+            else
+                Toast.makeText(App.getInstance(),"Fail to load data, check internet connection", Toast.LENGTH_LONG ).show();
         });
 
         binding.notificationTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
