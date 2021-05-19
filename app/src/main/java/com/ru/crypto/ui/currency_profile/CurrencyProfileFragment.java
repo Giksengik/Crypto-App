@@ -74,5 +74,7 @@ public class CurrencyProfileFragment extends Fragment {
         super.onDestroy();
         ImageButton buttonBack = getActivity().findViewById(R.id.button_back);
         buttonBack.setVisibility(View.GONE);
+        binding = null;
     }
+
 }

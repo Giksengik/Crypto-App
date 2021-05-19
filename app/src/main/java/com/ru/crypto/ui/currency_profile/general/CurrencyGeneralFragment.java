@@ -86,4 +86,10 @@ public class CurrencyGeneralFragment extends Fragment implements TimeRangeFragme
     public void onTimeRangeClick(String timeRange) {
         mCurrencyGeneralViewModel.loadCurrencyMarketChartByTimeRange(mCurrency.getId(), timeRange);
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        binding = null;
+    }
 }

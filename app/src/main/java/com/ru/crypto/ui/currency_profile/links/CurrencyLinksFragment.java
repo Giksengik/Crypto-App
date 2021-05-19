@@ -65,4 +65,9 @@ public class CurrencyLinksFragment extends Fragment {
         CurrencyProfileFragment fragment = (CurrencyProfileFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
         return fragment.getCurrency();
     }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        binding = null;
+    }
 }
