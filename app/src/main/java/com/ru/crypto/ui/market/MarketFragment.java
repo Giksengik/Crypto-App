@@ -156,7 +156,6 @@ public class MarketFragment extends Fragment implements LifecycleOwner {
         super.onDestroyView();
         closeSearchView();
         binding = null;
-        currencyAdapter = null;
     }
 
 }
